@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function getIsPatientAttribute() {
         return $this->userable_type == Patient::class;
     }
+
+    public function getIsDoctorAttribute() {
+        return $this->userable_type == Doctor::class;
+    }
 }
