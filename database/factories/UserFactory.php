@@ -27,7 +27,8 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
         'userable_type' => $faker->randomElement([
             App\Doctor::class, 
-            App\Patient::class
+            App\Patient::class,
+            App\Employee::class
         ]),
         'userable_id' => function(array $user) {
             return factory($user['userable_type']);
