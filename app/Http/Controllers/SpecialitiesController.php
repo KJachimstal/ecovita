@@ -46,7 +46,7 @@ class SpecialitiesController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('specialities.show', ['speciality' => Speciality::find($id)]);
     }
 
     /**

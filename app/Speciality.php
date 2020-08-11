@@ -11,6 +11,6 @@ class Speciality extends Model
     ];
 
     public function doctors() {
-        return $this->belogsToMany('App\Doctor');
+        return $this->belongsToMany('App\Doctor');
     }
 }
