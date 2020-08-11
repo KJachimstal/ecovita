@@ -19,6 +19,6 @@ use Illuminate\Support\Str;
 
 $factory->define(Doctor::class, function (Faker $faker) {
     return [
-        'licensure' => $faker->pesel,
+        'licensure' => $faker->ean8,
     ];
 });

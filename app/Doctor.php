@@ -9,4 +9,8 @@ class Doctor extends Model
     public function user() {
         return $this->morphOne('App\User', 'userable');
     }
+
+    public function specialities() {
+        return $this->belongsToMany('App\Speciality');
+    }
 }
