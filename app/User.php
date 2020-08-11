@@ -48,4 +48,8 @@ class User extends Authenticatable
     public function getIsDoctorAttribute() {
         return $this->userable_type == Doctor::class;
     }
+
+    public function getIsEmployeeAttribute() {
+        return $this->userable_type == Employee::class;
+    }
 }
