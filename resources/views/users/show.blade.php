@@ -1,4 +1,5 @@
 <h1>{{ $user->name }} {{ $user->surname }}</h1>
+<p>{{ $user->email }}</p>
 
 @if ($user->isPatient)
     <p>Ten użytkownik jest pacjentem.</p>

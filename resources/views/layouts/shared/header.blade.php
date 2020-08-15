@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <div class="container">
-    <a class="navbar-brand" href="">EcoVita</a>
+    <a class="navbar-brand" href="/">EcoVita</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -32,40 +32,20 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <strong>Zaloguj się</strong>
-          </a>
-          <ul id="login-dp" class="dropdown-menu p-3">
-            <li>
-              <div class="row">
-                  <div class="col-md-12">
-                    Login
-                    <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
-                        <div class="form-group">
-                          <label class="sr-only" for="exampleInputEmail2">Adres e-mail</label>
-                          <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Adres e-mail" required>
-                        </div>
-                        <div class="form-group">
-                          <label class="sr-only" for="exampleInputPassword2">Hasło</label>
-                          <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Hasło" required>
-                                                <div class="help-block text-right"><a href="">Zapomniałeś hasła?</a></div>
-                        </div>
-                        <div class="form-group">
-                          <button type="submit" class="btn btn-primary btn-block">Zaloguj</button>
-                        </div>
-                        <div class="checkbox">
-                          <label>
-                          <input type="checkbox"> Zostań zalogowany
-                          </label>
-                        </div>
-                    </form>
-                  </div>
-                  <div class="bottom text-center">
-                    <a href="#signup">Zarejestruj się</a>
-                  </div>
-              </div>
+        @guest
+        <li class="nav-item {{ Request::is('login*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('login') }}">Zaloguj się</a>
         </li>
+        <li class="nav-item {{ Request::is('register*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('register') }}">Utwórz konto</a>
+        </li>
+        @endguest
+
+        @auth
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('logout') }}">Wyloguj się</a>
+        </li>
+        @endauth
       </ul>
     </div>
   </div>

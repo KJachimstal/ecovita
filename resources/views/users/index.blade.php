@@ -6,7 +6,7 @@
     @forelse ($users as $user)
         <li>
             <a href="{{ url('users', [$user->id]) }}">
-                {{ $user->name }} {{ $user->surname }}
+                {{ $user->name }} {{ $user->surname }} ({{ $user->email }})
             </a>
         </li>
     @empty

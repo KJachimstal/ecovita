@@ -17,7 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('logout', 'LoginController@logout');
+
 Route::resource('/users', 'UsersController');
 Route::resource('/specialities', 'SpecialitiesController');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
