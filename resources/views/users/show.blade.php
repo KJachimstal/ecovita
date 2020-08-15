@@ -1,3 +1,7 @@
+@extends('layouts.default')
+@section('title', 'Użytkownik')
+@section('content')
+
 <h1>{{ $user->name }} {{ $user->surname }}</h1>
 <p>{{ $user->email }}</p>
 
@@ -23,3 +27,4 @@
         @endforelse
     </ul>
 @endif
+@endsection

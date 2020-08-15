@@ -1,3 +1,7 @@
+@extends('layouts.default')
+@section('title', 'Specjalność')
+@section('content')
+    
 <h1>{{ $speciality->name }}</h1>
 
 <h2>Lekarze</h2>
@@ -12,4 +16,4 @@
         <li>No doctors</li>
     @endforelse
 </ul>
-
+@endsection
