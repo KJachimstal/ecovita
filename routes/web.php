@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('logout', 'LoginController@logout');
+Route::get('logout', 'Auth\LoginController@logout');
 
 Route::resource('/users', 'UsersController');
 Route::resource('/specialities', 'SpecialitiesController');

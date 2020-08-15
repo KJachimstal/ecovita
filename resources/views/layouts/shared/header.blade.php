@@ -1,6 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand" href="/">EcoVita</a>
+    <a class="navbar-brand text-primary" href="/">
+      <img src="{{ asset('images/logo.png') }}" alt="EcoVita" height="30" />
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -42,9 +44,7 @@
         @endguest
 
         @auth
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('logout') }}">Wyloguj się</a>
-        </li>
+          @include('layouts.shared.user')
         @endauth
       </ul>
     </div>
