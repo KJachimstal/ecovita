@@ -27,4 +27,9 @@
         @endforelse
     </ul>
 @endif
+
+@if ($user->isEmployee)
+    <p>Ten użytkownik jest pracownikiem.</p>
+@endif
+
 @endsection
