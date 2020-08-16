@@ -17,4 +17,8 @@ class Doctor extends Model
     public function specialities() {
         return $this->belongsToMany('App\Speciality');
     }
+
+    public function appointments() {
+        return $this->hasManyThrough('App\DoctorSpeciality', 'App\Appointment');
+    }
 }
