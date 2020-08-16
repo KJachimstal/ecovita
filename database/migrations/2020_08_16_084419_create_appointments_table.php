@@ -15,9 +15,9 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreginId('doctor_speciality_id')->constrained()->onDelete('cascade');
+            $table->foreignId('doctor_speciality_id')->constrained('doctor_speciality')->onDelete('cascade');
             $table->dateTime('begin_date');
-            $table->foreginId('patient_id')->constrained()->nullable();
+            $table->foreignId('patient_id')->nullable()->constrained();
             $table->boolean('is_available');
             $table->timestamps();
         });
