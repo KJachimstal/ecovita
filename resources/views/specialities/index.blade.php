@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'Spacjaliści')
+@section('title', 'Specjalności')
 
 
 @section('content')

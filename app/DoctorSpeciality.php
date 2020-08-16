@@ -11,4 +11,8 @@ class DoctorSpeciality extends Model
     public function appointments() {
         return $this->hasMany('App\Appointment');
     }
+
+    public function doctor() {
+        return $this->belongsTo('App\Doctor');
+    }
 }
