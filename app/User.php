@@ -52,4 +52,8 @@ class User extends Authenticatable
     public function getIsEmployeeAttribute() {
         return $this->userable_type == Employee::class;
     }
+
+    public function getFullNameAttribute() {
+        return "{$this->name} {$this->surname}";
+    }
 }
