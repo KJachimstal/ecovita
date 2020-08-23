@@ -21,6 +21,8 @@ class CreatePatientsTable extends Migration
             $table->string('post_code');
             $table->string('street');
             $table->string('street_number');
+            $table->boolean('is_verified')->default(0);
+            $table->boolean('is_pending')->default(0);
             $table->timestamps();
         });
     }
