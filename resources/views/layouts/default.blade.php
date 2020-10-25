@@ -18,5 +18,6 @@
         <div class="container p-4">
             @yield('content')
         </div>
+        @include('layouts.shared.footer')
     </body>
 </html>
