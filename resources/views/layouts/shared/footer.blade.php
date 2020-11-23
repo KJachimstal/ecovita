@@ -1,4 +1,4 @@
-<footer class="page-footer font-small blue pt-4 fixed-bottom">
+<footer class="page-footer font-small blue pt-4">
   <div class="container text-center ">
     <div class="row">
       <div class="col-md-6 mt-md-0 mt-3">
@@ -21,16 +21,16 @@
         <h5>ODNOŚNIKI</h5>
         <ul class="list-unstyled">
           <li>
-            <a href="#!">Strona główna</a>
+            <a href="/">Strona główna</a>
           </li>
           <li>
-            <a href="#!">Specjalności</a>
+            <a href="{{ route('specialities.index') }}">Specjalności</a>
           </li>
           <li>
-            <a href="#!">Użytkownicy</a>
+            <a href="{{ route('users.index') }}">Użytkownicy</a>
           </li>
           <li>
-            <a href="#!">Wizyty</a>
+            <a href="{{ route('appointments.index') }}">Wizyty</a>
           </li>
         </ul>
       </div>
