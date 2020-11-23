@@ -1,15 +1,41 @@
-<nav class="navbar navbar-expand-lg navbar-light bd-white shadow-sm fixed-bottom">
-  <div class="container">
-    <div class="col mx-1 shadow p-3 mb-1 bg-white rounded">
-      <h4><p class="d-flex justify-content-center">Adres</p></h4><br>
-      <h6><p class="d-flex justify-content-around">11-405 Gniezno<br>Ul. Szarych szeregów</p></h6>
-    </div>
-    <div class="col mx-1 shadow p-3 mb-1 bg-white rounded">
-      <h4><p class="d-flex justify-content-center">Rejestracja</p></h4><br>
-      <h6><p class="d-flex justify-content-around">Tel. 123-456-789<br>Tel. 42 123-12-34</p></h6>
-    </div>
-    <div class="col mx-1 d-flex shadow p-3 mb-1 bg-white rounded">
-      <h4>Mapa</h4>
+<footer class="page-footer font-small blue pt-4 fixed-bottom">
+  <div class="container text-center ">
+    <div class="row">
+      <div class="col-md-6 mt-md-0 mt-3">
+        <h5 class="text-uppercase">Nasze placówki</h5>
+         <div class="row">
+          <div class="col-md-6">
+            <b>90-051 Łódź</b><br>
+            ul. Piotrkowska 41A<br>
+            Tel: 123-456-789
+          </div>
+          <div class="col-md-6">
+            <b>00-117 Warszawa</b><br>
+            ul. Dynasy 37/2<br>
+            Tel: 123-456-789
+          </div>
+         </div>
+      </div>
+      <hr class=" d-md-none ">
+      <div class="col-md-6 mb-md-0 mb-3">
+        <h5>ODNOŚNIKI</h5>
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!">Strona główna</a>
+          </li>
+          <li>
+            <a href="#!">Specjalności</a>
+          </li>
+          <li>
+            <a href="#!">Użytkownicy</a>
+          </li>
+          <li>
+            <a href="#!">Wizyty</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-</nav>
+  <div class="footer-copyright text-center">© 2020 Copyright: Konrad Jachimstal
+  </div>
+</footer>
