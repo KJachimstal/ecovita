@@ -8,15 +8,16 @@
     </head>
     <body>
         @include('layouts.shared.header')
-        @if (session('success'))
-            <div class="container p-3">
-            <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
+        @if ($message = Session::get('success'))
+          <div class="container mt-3 px-3">
+            <div class="alert alert-success alert-block">
+              <button type="button" class="close" data-dismiss="alert">×</button>    
+              <strong>{{ $message }}</strong>
             </div>
+          </div>
         @endif
         <div class="container p-4">
-            @yield('content')
+          @yield('content')
         </div>
         @include('layouts.shared.footer')
     </body>

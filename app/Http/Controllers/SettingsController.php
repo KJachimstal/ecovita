@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class SettingsController extends Controller
 {
@@ -30,6 +32,24 @@ class SettingsController extends Controller
 
     public function update_password(Request $request)
     {
+        $request->validate([
+            'password' => ['required'],
+            'new_password' => ['required', 'confirmed', 'between:8,50']
+        ]);
         
+        $requestData = $request->all();
+        $currentPassword = Auth::user()->password;
+        if(Hash::check($requestData['password'], $currentPassword))
+        {
+            $userId = Auth::user()->id;
+            $user = User::find($userId);
+            $user->password = Hash::make($requestData['new_password']);;
+            $user->save();
+            return back()->with('success', 'Your password has been updated successfully.');
+        }
+        else
+        {
+            return back()->withErrors(['Sorry, your current password was not recognised. Please try again.']);
+        }
     }
 }
