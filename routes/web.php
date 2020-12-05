@@ -24,6 +24,11 @@ Route::resource('specialities', 'SpecialitiesController');
 Route::resource('appointments', 'AppointmentsController');
 Route::resource('patients', 'PatientsController')->only(['update', 'edit'])->middleware('auth');
 
+// ----------------------------------- \/
+Route::get('settings/profile', 'SettingsController@edit_profile')->name('settings.edit_profile');
+Route::put('settings/profile', 'SettingsController@update_profile')->name('settings.update_profile');
+Route::get('settings/password', 'SettingsController@edit_password')->name('settings.edit_password');
+Route::put('settings/password', 'SettingsController@update_password')->name('settings.update_password');
 
 Auth::routes();
 

@@ -6,3 +6,39 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100vh;
+}
+
+body {
+  margin-bottom: 210px; /* Margin bottom by footer height */
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-shadow: rgba($black, 0.05) 0 -2px 5px;
+}
+
+.nav-tabs {
+  .nav-link {
+    border: 0;
+
+    &:hover {
+      background-color: rgba($black, 0.03);
+    }
+
+    &.active, &.active:hover {
+      background-color: $white;
+      border: 0;
+      position: relative;
+      bottom: -2px;
+      box-shadow: rgba($black, 0.05) 0 -2px 5px;
+    }
+  }
+}

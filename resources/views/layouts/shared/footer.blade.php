@@ -1,25 +1,25 @@
-<footer class="page-footer font-small blue pt-4">
-  <div class="container text-center ">
+<footer class="footer py-4 bg-white">
+  <div class="container">
     <div class="row">
       <div class="col-md-6 mt-md-0 mt-3">
-        <h5 class="text-uppercase">Nasze placówki</h5>
-         <div class="row">
+        <span class="text-uppercase text-muted">Nasze placówki</span>
+        <div class="row mt-2">
           <div class="col-md-6">
-            <b>90-051 Łódź</b><br>
-            ul. Piotrkowska 41A<br>
-            Tel: 123-456-789
+            <div class="font-weight-bold">90-051 Łódź</div>
+            <div>ul. Piotrkowska 41A</div> 
+            <div>Tel: 123-456-789</div>
           </div>
           <div class="col-md-6">
-            <b>00-117 Warszawa</b><br>
-            ul. Dynasy 37/2<br>
-            Tel: 123-456-789
+            <div class="font-weight-bold">00-117 Warszawa</div>
+            <div>ul. Dynasy 37/2</div> 
+            <div>Tel: 123-456-789</div>
           </div>
-         </div>
+        </div>
       </div>
       <hr class=" d-md-none ">
-      <div class="col-md-6 mb-md-0 mb-3">
-        <h5>ODNOŚNIKI</h5>
-        <ul class="list-unstyled">
+      <div class="col-md-6 mb-md-0 mb-3 text-right">
+        <span class="text-uppercase text-muted">Odnośniki</span>
+        <ul class="list-unstyled mt-2">
           <li>
             <a href="/">Strona główna</a>
           </li>
