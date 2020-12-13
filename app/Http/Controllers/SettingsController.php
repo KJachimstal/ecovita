@@ -45,11 +45,11 @@ class SettingsController extends Controller
             $user = User::find($userId);
             $user->password = Hash::make($requestData['new_password']);;
             $user->save();
-            return back()->with('success', 'Your password has been updated successfully.');
+            return back()->with('success', 'Hasło zostało pomyślnie zmienione.');
         }
         else
         {
-            return back()->withErrors(['Sorry, your current password was not recognised. Please try again.']);
+            return back()->withErrors(['Przepraszamy twoje hasło nie zostało rozpoznane. Spróbuj ponownie.']);
         }
     }
 }

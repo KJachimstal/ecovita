@@ -29,7 +29,7 @@ return [
         'array'   => 'Pole :attribute musi składać się z :min - :max elementów.',
     ],
     'boolean'        => 'Pole :attribute musi mieć wartość logiczną prawda albo fałsz.',
-    'confirmed'      => 'Potwierdzenie pola :attribute nie zgadza się.',
+    'confirmed'      => 'Podane hasła nie zgadzają się.',
     'date'           => 'Pole :attribute nie jest prawidłową datą.',
     'date_equals'    => 'Pole :attribute musi być datą równą :date.',
     'date_format'    => 'Pole :attribute nie jest w formacie :format.',
@@ -149,6 +149,12 @@ return [
         'phone_number' => "numer telefonu",
         'city' => "miasto",
         'post_code' => "kod pocztowy",
-        'street' => "ulica"
+        'street' => "ulica",
+        'new_password' => "nowe hasło",
+        'street_number' => "numer ulicy",
+        'name' => "imię",
+        'surname' => "nazwisko", 
+        'password' => "hasło",
+        
     ],
 ];

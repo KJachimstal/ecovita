@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Patient;
 
 class RegisterController extends Controller
 {
@@ -54,6 +55,12 @@ class RegisterController extends Controller
             'surname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'pesel' => ['required'],
+            'phone_number' => ['required'],
+            'city' => ['required'],
+            'post_code' => ['required'],
+            'street' => ['required'],
+            'street_number' => ['required'],
         ]);
     }
 
@@ -65,11 +72,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $patient = Patient::create([
+            'pesel' => $data['pesel'],
+            'phone_number' => $data['phone_number'],
+            'city' => $data['city'],
+            'post_code' => $data['post_code'],
+            'street' => $data['street'],
+            'street_number' => $data['street_number'],
+        ]);
+
         return User::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'userable_type' => Patient::class,
+            'userable_id' => $patient->id,
         ]);
     }
 }
