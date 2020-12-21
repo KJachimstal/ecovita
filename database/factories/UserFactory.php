@@ -25,12 +25,22 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
+        'pesel' => $faker->pesel,
+        'phone_number' => $faker->phoneNumber,
+        'city' => $faker->city,
+        'post_code' => $faker->postcode,
+        'street' => $faker->streetName,
+        'street_number' => $faker->streetAddress,
         'userable_type' => $faker->randomElement([
-            App\Doctor::class, 
-            App\Patient::class,
-            App\Employee::class
+            App\Doctor::class,
+            App\Employee::class,
+            null
         ]),
         'userable_id' => function(array $user) {
+            if (!$user['userable_type']) {
+                return null;
+            }
+
             return factory($user['userable_type']);
         }
     ];

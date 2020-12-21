@@ -22,7 +22,6 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::resource('users', 'UsersController');
 Route::resource('specialities', 'SpecialitiesController');
 Route::resource('appointments', 'AppointmentsController');
-Route::resource('patients', 'PatientsController')->only(['update', 'edit'])->middleware('auth');
 
 // ----------------------------------- \/
 Route::get('settings/profile', 'SettingsController@edit_profile')->name('settings.edit_profile');

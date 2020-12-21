@@ -16,7 +16,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'surname', 'userable_type', 'userable_id'
+        'name', 'email', 'password', 'surname', 'userable_type', 'userable_id','pesel', 
+        'phone_number', 'city', 'post_code', 'street', 'street_number',
     ];
 
     /**
@@ -40,11 +41,7 @@ class User extends Authenticatable
     public function userable() {
         return $this->morphTo();
     }
-
-    public function getIsPatientAttribute() {
-        return $this->userable_type == Patient::class;
-    }
-
+    
     public function getIsDoctorAttribute() {
         return $this->userable_type == Doctor::class;
     }

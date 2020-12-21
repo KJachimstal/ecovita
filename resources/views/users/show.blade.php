@@ -4,11 +4,7 @@
 
 <h1>{{ $user->name }} {{ $user->surname }}</h1>
 <p>{{ $user->email }}</p>
-
-@if ($user->isPatient)
-    <p>Ten użytkownik jest pacjentem.</p>
-    <p>Pesel: {{ $user->userable->pesel }}</p>
-@endif
+<p>Pesel: {{ $user->userable->pesel }}</p>
 
 @if ($user->isDoctor)
     <p>Ten użytkownik jest Doktorem.</p>
