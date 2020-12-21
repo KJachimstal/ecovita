@@ -22,7 +22,26 @@ class SettingsController extends Controller
 
     public function update_profile(Request $request)
     {
+        $request->validate([
+            'pesel' => 'digits:11',
+            'phone_number' => 'digits_between:7,9',
+            'city' => ['min:3', 'max:15'],
+            'post_code' => 'regex:/^[0-9]{2}\-[0-9]{3}$/',
+            'street' => '',
+            'street_number' => '',
+        ]);
+
+        $user = Auth::user();
+        $user->pesel = $request->get('pesel');
+        $user->phone_number = $request->get('phone_number');
+        $user->city = $request->get('city');
+        $user->post_code = $request->get('post_code');
+        $user->street = $request->get('street');
+        $user->street_number = $request->get('street_number');
+        $user->is_verified = 0;
+        $user->save();
         
+        return redirect('/')->with('success', __('messages.succed_change'));
     }
 
     public function edit_password()

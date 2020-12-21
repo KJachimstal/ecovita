@@ -77,13 +77,13 @@
             <div class="form-group row">
               {{ Form::label('password', 'Hasło', ['class' => 'col-sm-3 col-form-label']) }}
               <div class="col-sm-9">
-                {{ Form::text('password', null, ['class' => 'form-control']) }}
+                {{ Form::password('password', ['class' => 'form-control']) }}
               </div>
             </div>
             <div class="form-group row">
               {{ Form::label('password_confirmation', 'Potwierdź hasło', ['class' => 'col-sm-3 col-form-label']) }}
               <div class="col-sm-9">
-                {{ Form::text('password_confirmation', null, ['class' => 'form-control']) }}
+                {{ Form::password('password_confirmation', ['class' => 'form-control']) }}
               </div>
             </div>
           </div>

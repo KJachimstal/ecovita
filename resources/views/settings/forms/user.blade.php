@@ -1,15 +1,24 @@
 <div class="p-4 bg-white shadow-sm">
-  {{ Form::model($user->userable, ['route' => ['settings.update_profile'], 'method' => 'PUT']) }}
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+  @endif
+  {{ Form::model($user, ['route' => ['settings.update_profile'], 'method' => 'PUT']) }}
     <div class="form-group row">
       {{ Form::label('name', 'Imie', ['class' => 'col-sm-2 col-form-label']) }}
       <div class="col-sm-10">
-        {{ Form::text('name', $user->name, ['class' => 'form-control', 'disabled']) }}
+        {{ Form::text('name', null, ['class' => 'form-control', 'disabled']) }}
       </div>
     </div>
     <div class="form-group row">
       {{ Form::label('surname', 'Nazwisko', ['class' => 'col-sm-2 col-form-label']) }}
       <div class="col-sm-10">
-        {{ Form::text('surname', $user->surname, ['class' => 'form-control', 'disabled']) }}
+        {{ Form::text('surname', null, ['class' => 'form-control', 'disabled']) }}
       </div>
     </div>
     <div class="form-group row">

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
   @include('settings.shared.tabs', ['active' => 'profile'])
-  @include('settings.forms.patient', ['user' => $user])
+  @include('settings.forms.user', ['user' => $user])
   @if (Auth::user()->isEmployee)
     @include('settings.forms.employee')
   @elseif (Auth::user()->isDoctor)
