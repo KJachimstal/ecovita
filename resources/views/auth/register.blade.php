@@ -61,7 +61,7 @@
               </div>
             </div>
             <div class="form-group row">
-              {{ Form::label('street_number', 'Numer ulicy', ['class' => 'col-sm-3 col-form-label']) }}
+              {{ Form::label('street_number', 'Numer domu', ['class' => 'col-sm-3 col-form-label']) }}
               <div class="col-sm-9">
                 {{ Form::text('street_number', null, ['class' => 'form-control']) }}
               </div>
