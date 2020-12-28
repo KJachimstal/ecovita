@@ -31,4 +31,7 @@ Route::put('settings/password', 'SettingsController@update_password')->name('set
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
+
+Route::get('appointments/{id}/enroll', 'AppointmentsController@prepare_enroll');
+Route::post('appointments/{id}/enroll', 'AppointmentsController@enroll');

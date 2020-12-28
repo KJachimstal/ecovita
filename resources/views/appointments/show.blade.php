@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'Specjalność')
+@section('title', 'Wizyta')
 @section('content')
 
 <ul>

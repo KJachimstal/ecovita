@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Appointment;
 use App\Speciality;
 use App\Doctor;
 use DB;
 use DateTime;
+
 
 class AppointmentsController extends Controller
 {
@@ -120,5 +122,26 @@ class AppointmentsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function prepare_enroll($id)
+    {
+        $appointment = Appointment::find($id);
+    
+        return view('appointments.prepare_enroll', ['appointment' => $appointment]);
+    }
+
+    public function enroll($id)
+    {
+        $appointment = Appointment::find($id);
+        if ($appointment->is_available) {
+            $appointment->user_id = Auth::user()->id;
+            $appointment->is_available = false;
+            $appointment->save();
+
+            return redirect('/appointments')->with('success', __('messages.appointment_succed'));
+        } else {
+            return redirect('/appointments')->with('error', __('messages.appointment_unavailable'));
+        }
     }
 }
