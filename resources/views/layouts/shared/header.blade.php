@@ -21,6 +21,11 @@
         <li class="nav-item {{ Request::is('appointments*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('appointments.index') }}">Wizyty</a>
         </li>
+        @auth
+        <li class="nav-item {{ Request::is('users.appointments*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('users.appointments.index', ['user' => Auth::user()]) }}">Moje wizyty</a>
+        </li>
+        @endauth
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Więcej
