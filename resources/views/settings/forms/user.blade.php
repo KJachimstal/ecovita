@@ -12,13 +12,13 @@
     <div class="form-group row">
       {{ Form::label('name', 'Imie', ['class' => 'col-sm-2 col-form-label']) }}
       <div class="col-sm-10">
-        {{ Form::text('name', null, ['class' => 'form-control', 'disabled']) }}
+        {{ Form::text('name', null, ['class' => 'form-control']) }}
       </div>
     </div>
     <div class="form-group row">
       {{ Form::label('surname', 'Nazwisko', ['class' => 'col-sm-2 col-form-label']) }}
       <div class="col-sm-10">
-        {{ Form::text('surname', null, ['class' => 'form-control', 'disabled']) }}
+        {{ Form::text('surname', null, ['class' => 'form-control']) }}
       </div>
     </div>
     <div class="form-group row">

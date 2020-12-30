@@ -23,6 +23,8 @@ class SettingsController extends Controller
     public function update_profile(Request $request)
     {
         $request->validate([
+            'name' => ['min:3', 'max:15'],
+            'surname' => ['min:3', 'max:25'],
             'pesel' => 'digits:11',
             'phone_number' => 'digits_between:7,9',
             'city' => ['min:3', 'max:15'],
