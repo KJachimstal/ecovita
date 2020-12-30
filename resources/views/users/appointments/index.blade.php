@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'Wizyty')
+@section('title', 'Moje wizyty')
 
 
 @section('content')
@@ -27,7 +27,7 @@
               {{ $appointment->doctorSpeciality->doctor->user->fullName }}
             </td>
             <td>
-              <a href="{{ url("appointments/{$appointment->id}/enroll") }}">Odwołaj wizytę</a>
+              <a href="{{ url("users/{$appointment->user_id}/appointments/{$appointment->id}/cancel") }}">Odwołaj wizytę</a>
             </td>
           </tr>
       @empty

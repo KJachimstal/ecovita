@@ -15,14 +15,14 @@
         <li class="nav-item {{ Request::is('specialities*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('specialities.index') }}">Specjalności</a>
         </li>
-        <li class="nav-item {{ Request::is('users*') ? 'active' : '' }}">
+        <li class="nav-item {{ Request::is('users/*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('users.index') }}">Użytkownicy</a>
         </li>
         <li class="nav-item {{ Request::is('appointments*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('appointments.index') }}">Wizyty</a>
         </li>
         @auth
-        <li class="nav-item {{ Request::is('users.appointments*') ? 'active' : '' }}">
+        <li class="nav-item {{ Request::is('users/*/appointments*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('users.appointments.index', ['user' => Auth::user()]) }}">Moje wizyty</a>
         </li>
         @endauth

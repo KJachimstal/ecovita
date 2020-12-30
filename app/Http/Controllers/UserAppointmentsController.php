@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Appointment;
+use App\Speciality;
+use App\Doctor;
+use DB;
+use DateTime;
 
 class UserAppointmentsController extends Controller
 {
@@ -101,5 +106,30 @@ class UserAppointmentsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function prepare_cancel($user_id, $appointment_id)
+    {
+        $appointment = $this->user->appointments->find($appointment_id);
+        if ($appointment) {
+            $user_id = User::find($user_id)->id;
+            return view('users.appointments.prepare_cancel', ['appointment' => $appointment, 'user_id' => $user_id]);
+        } else {
+            return redirect("users/{$user_id}/appointments")->with('error', __('messages.appointment_not_found'));
+        }
+    }
+
+    public function cancel($user_id, $appointment_id)
+    {
+        $appointment = $this->user->appointments->find($appointment_id);
+        if (!$appointment->is_available) {
+            $appointment->user_id = null;
+            $appointment->is_available = true;
+            $appointment->save();
+
+            return redirect("users/{$user_id}/appointments")->with('success', __('messages.cancel_appointment_succed'));
+        } else {
+            return redirect("users/{$user_id}/appointments")->with('error', __('messages.cancel_appointment_unavailable'));
+        }
     }
 }
