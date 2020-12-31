@@ -12,35 +12,16 @@
         <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
           <a class="nav-link" href="/">Strona główna <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item {{ Request::is('specialities*') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('specialities.index') }}">Specjalności</a>
-        </li>
-        <li class="nav-item {{ Request::is('users/*') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('users.index') }}">Użytkownicy</a>
-        </li>
-        <li class="nav-item {{ Request::is('appointments*') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('appointments.index') }}">Wizyty</a>
-        </li>
-        @auth
-        <li class="nav-item {{ Request::is('users/*/appointments*') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('users.appointments.index', ['user' => Auth::user()]) }}">Moje wizyty</a>
-        </li>
-        @endauth
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Więcej
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">O nas</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Kontakt</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"></a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
+        @if (Auth::guest())
+          @include('layouts.shared.panels.guest')
+        @elseif (Auth::user()->isDoctor)
+          @include('layouts.shared.panels.doctor')
+        @elseif (Auth::user()->isEmployee)
+          @include('layouts.shared.panels.employee')
+        @else
+          @include('layouts.shared.panels.patient')
+        @endif
+        
       </ul>
       <ul class="nav navbar-nav navbar-right">
         @guest

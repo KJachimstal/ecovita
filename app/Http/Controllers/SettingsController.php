@@ -60,11 +60,10 @@ class SettingsController extends Controller
         
         $requestData = $request->all();
         $currentPassword = Auth::user()->password;
-        if(Hash::check($requestData['password'], $currentPassword))
+        if (Hash::check($requestData['password'], $currentPassword))
         {
-            $userId = Auth::user()->id;
-            $user = User::find($userId);
-            $user->password = Hash::make($requestData['new_password']);;
+            $user = Auth::user();
+            $user->password = Hash::make($requestData['new_password']);
             $user->save();
             return back()->with('success', 'Hasło zostało pomyślnie zmienione.');
         }
@@ -72,5 +71,13 @@ class SettingsController extends Controller
         {
             return back()->withErrors(['Przepraszamy twoje hasło nie zostało rozpoznane. Spróbuj ponownie.']);
         }
+    }
+
+    public function switch_panel()
+    {
+        $user = Auth::user();
+        $user->is_panel_active = !$user->is_panel_active;
+        $user->save();
+        return redirect('/');
     }
 }

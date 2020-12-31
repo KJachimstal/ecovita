@@ -29,6 +29,7 @@ Route::get('settings/profile', 'SettingsController@edit_profile')->name('setting
 Route::put('settings/profile', 'SettingsController@update_profile')->name('settings.update_profile');
 Route::get('settings/password', 'SettingsController@edit_password')->name('settings.edit_password');
 Route::put('settings/password', 'SettingsController@update_password')->name('settings.update_password');
+Route::get('settings/switch_panel', 'SettingsController@switch_panel')->name('settings.switch_panel');
 
 Auth::routes();
 

@@ -13,9 +13,12 @@
       <strong>{{Auth::user()->name}} {{Auth::user()->surname}}</strong>
     </a>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+      @if (Auth::User()->isEmployee || Auth::User()->isDoctor)
+        <a class="dropdown-item" href="{{ route('settings.switch_panel') }}">Przełącz panel</a>
+      @endif
       <a class="dropdown-item" href="{{ route('settings.edit_profile') }}">Ustawienia</a>
       <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="{{ route('logout') }}">Wyloguj się</a>
     </div>
-  </li>   
+  </li>
 </ul>
