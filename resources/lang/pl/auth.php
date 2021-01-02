@@ -6,4 +6,6 @@ return [
   'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
   'register' => 'Rejestracja',
   'register_button' => 'Zarejestruj',
+  'login' => 'Zaloguj',
+  'email' => 'Adres e-mail'
   ];
