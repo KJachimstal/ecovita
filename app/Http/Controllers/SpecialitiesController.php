@@ -57,7 +57,7 @@ class SpecialitiesController extends Controller
      */
     public function edit($id)
     {
-        return view("specialities/edit", ['speciality' => Speciality::find($id)]);
+        return view("specialities/admin/edit", ['speciality' => Speciality::find($id)]);
     }
 
     /**

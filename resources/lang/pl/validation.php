@@ -156,10 +156,5 @@ return [
         'last_name' => "nazwisko", 
         'first_name' => "imię",
         'password' => "hasło",
-    ],
-    'speciality' => [
-        'attributes' => [
-            'name' => 'dupa'
-        ]
     ]
 ];

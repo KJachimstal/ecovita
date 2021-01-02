@@ -17,9 +17,5 @@
         </ul>
     </div>
 </div>
-@if ((Auth::user()->is_panel_active) && (Auth::user()->is_employee))
-  <div class="mt-4 d-flex justify-content-center">
-    <a href="{{ url("specialities/{$speciality->id}/edit") }}" class="btn btn-success ml-2">Edytuj specjalność</a>
-  </div>
-@endif
+
 @endsection
