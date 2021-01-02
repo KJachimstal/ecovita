@@ -33,7 +33,6 @@
     </tbody>
   </table>
   <a href="{{ url("specialities/create") }}" class="btn btn-success ml-2">Dodaj specjalizację</a>
-
 </div>
 
 @endsection
