@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'Edytuj spacjalizację')
+@section('title', 'Edytuj specjalizację')
 @section('content')
 <div class="container">
   <div class="p-4 bg-white shadow-sm">

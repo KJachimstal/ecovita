@@ -17,8 +17,12 @@
               <a href="{{ url("specialities/{$speciality->id}") }}">{{ $speciality->name }}</a>
             </td>
             <td>
-              <a href="{{ url("specialities/{$speciality->id}/edit") }}" class="btn border btn-light ml-2">Edytuj</a>
-              <a href="{{ url("specialities/{$speciality->id}") }}" class="btn btn-danger ml-2">Usuń</a>
+              {{ Form::open(['method' => 'DELETE', 'route' => ['specialities.destroy', $speciality->id]]) }}
+                <a href="{{ url("specialities/{$speciality->id}/edit") }}" class="btn border btn-light ml-2">Edytuj</a>
+                <button class="btn btn-danger ml-2" onclick="return confirm('Czy chcesz usunąć specjalizację?')">
+                  <i class="fas fa-trash mr-2"></i> Usuń
+                </button>
+              {{ Form::close() }}
             </td>
           </tr>
       @empty

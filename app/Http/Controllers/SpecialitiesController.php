@@ -43,7 +43,7 @@ class SpecialitiesController extends Controller
         $speciality->name = $request->get('name');
         $speciality->save();
 
-        return redirect('specialities')->with('success', __('messages.speciality.succed_add'));
+        return redirect('specialities')->with('success', __('messages.speciality_succed_add'));
     }
 
     /**
@@ -85,7 +85,7 @@ class SpecialitiesController extends Controller
         $speciality->name = $request->get('name');
         $speciality->save();
         
-        return redirect('specialities')->with('success', __('messages.speciality.succed_change'));
+        return redirect('specialities')->with('success', __('messages.speciality_succed_change'));
     }
 
     /**
@@ -96,6 +96,9 @@ class SpecialitiesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $speciality = Speciality::find($id);
+        $speciality->delete();
+
+        return redirect('specialities')->with('success', __('messages.speciality_succed_delete'));
     }
 }
