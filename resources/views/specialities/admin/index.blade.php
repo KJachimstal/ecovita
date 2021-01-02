@@ -18,7 +18,9 @@
             </td>
             <td>
               {{ Form::open(['method' => 'DELETE', 'route' => ['specialities.destroy', $speciality->id]]) }}
-                <a href="{{ url("specialities/{$speciality->id}/edit") }}" class="btn border btn-light ml-2">Edytuj</a>
+                <a href="{{ url("specialities/{$speciality->id}/edit") }}" class="btn border btn-light ml-2">   
+                  <i class="fas fa-edit mr-2"></i> Edytuj
+                </a>
                 <button class="btn btn-danger ml-2" onclick="return confirm('Czy chcesz usunąć specjalizację?')">
                   <i class="fas fa-trash mr-2"></i> Usuń
                 </button>

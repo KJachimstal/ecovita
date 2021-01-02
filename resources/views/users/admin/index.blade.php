@@ -36,8 +36,10 @@
               </td>
               <td>
                 {{ Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) }}
-                  <a href="{{ url("users/{$user->id}/edit") }}" class="btn border btn-light ml-2">Edytuj</a>
-                  <button class="btn btn-danger ml-2" onclick="return confirm('Czy chcesz usunąć specjalizację?')">
+                  <a href="{{ url("users/{$user->id}/edit") }}" class="btn border btn-light ml-2">
+                    <i class="fas fa-user-edit mr-2"></i> Edytuj
+                  </a>
+                  <button class="btn btn-danger ml-2" onclick="return confirm('Czy chcesz usunąć użytkownika?')">
                     <i class="fas fa-trash mr-2"></i> Usuń
                   </button>
                 {{ Form::close() }}

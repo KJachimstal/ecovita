@@ -3,8 +3,10 @@
 
 
 @section('content')
+@auth
 @if ((Auth::user()->is_panel_active) && (Auth::user()->is_employee))
   @include('users.admin.index')
+@endauth
 @else
   <div class="bg-white rounded p-4 mt-2 shadow-sm">
     {{-- <form action="" class="form-inline">
