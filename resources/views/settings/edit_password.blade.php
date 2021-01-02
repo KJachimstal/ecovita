@@ -5,15 +5,7 @@
   @include('settings.shared.tabs', ['active' => 'password'])
 
   <div class="p-4 bg-white shadow-sm">
-    @if ($errors->any())
-      <div class="alert alert-danger">
-          <ul class="mb-0">
-              @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-              @endforeach
-          </ul>
-      </div>
-    @endif
+    @include('shared.errors')
 
     {{Form::open(['route' => ['settings.update_password'], 'method' => 'PUT'])}}
       <input type="hidden" name="_token" value="{{ csrf_token() }}">

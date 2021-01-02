@@ -1,13 +1,5 @@
 <div class="p-4 bg-white shadow-sm">
-  @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-  @endif
+  @include('shared.errors')
   {{ Form::model($user, ['route' => ['settings.update_profile'], 'method' => 'PUT']) }}
     <div class="form-group row">
       {{ Form::label('first_name', 'Imie', ['class' => 'col-sm-2 col-form-label']) }}

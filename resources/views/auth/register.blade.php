@@ -7,15 +7,7 @@
       <div class="card">
         <div class="card-header">{{ __('auth.register') }}</div>
         <div class="card-body">
-          @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-          @endif
+          @include('shared.errors')
           {{ Form::open(['route' => ['register'], 'method' => 'POST']) }}
           <div class="border rounded p-4 mb-3">
             <div class="form-group row">

@@ -3,15 +3,7 @@
 
 
 @section('content')
-  @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-  @endif
+@include('shared.errors')
   {{ Form::model($patient, ['route' => ['patients.update', $patient->id], 'method' => 'PUT']) }}
     {{ Form::label('pesel', 'Pesel') }}
     {{ Form::text('pesel', null, ['class' => 'form-control']) }}
