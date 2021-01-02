@@ -152,9 +152,14 @@ return [
         'street' => "ulica",
         'new_password' => "nowe hasło",
         'street_number' => "numer ulicy",
-        'name' => "imię",
-        'surname' => "nazwisko", 
+        'name' => "nazwa",
+        'last_name' => "nazwisko", 
+        'first_name' => "imię",
         'password' => "hasło",
-        
     ],
+    'speciality' => [
+        'attributes' => [
+            'name' => 'dupa'
+        ]
+    ]
 ];

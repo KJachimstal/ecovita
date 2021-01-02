@@ -25,10 +25,10 @@
           @forelse ($users as $user)
               <tr>
                 <td>
-                  {{ $user->name }}
+                  {{ $user->first_name }}
                 </td>
                 <td>
-                  {{ $user->surname }}
+                  {{ $user->last_name }}
                 </td>
                 <td>
                   {{ $user->email }}

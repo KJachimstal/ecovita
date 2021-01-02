@@ -2,7 +2,7 @@
 @section('title', 'Użytkownik')
 @section('content')
 
-<h1>{{ $user->name }} {{ $user->surname }}</h1>
+<h1>{{ $user->first_name }} {{ $user->last_name }}</h1>
 <p>{{ $user->email }}</p>
 <p>Pesel: {{ $user->pesel }}</p>
 

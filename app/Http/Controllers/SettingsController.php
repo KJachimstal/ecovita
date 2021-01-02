@@ -23,8 +23,8 @@ class SettingsController extends Controller
     public function update_profile(Request $request)
     {
         $request->validate([
-            'name' => ['min:3', 'max:15'],
-            'surname' => ['min:3', 'max:25'],
+            'first_name' => ['min:3', 'max:15'],
+            'last_name' => ['min:3', 'max:25'],
             'pesel' => 'digits:11',
             'phone_number' => 'digits_between:7,9',
             'city' => ['min:3', 'max:15'],
@@ -34,6 +34,8 @@ class SettingsController extends Controller
         ]);
 
         $user = Auth::user();
+        $user->firt_name = $request->get('first_name');
+        $user->last_name = $request->get('last_name');
         $user->pesel = $request->get('pesel');
         $user->phone_number = $request->get('phone_number');
         $user->city = $request->get('city');

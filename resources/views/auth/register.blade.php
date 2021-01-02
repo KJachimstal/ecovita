@@ -19,15 +19,15 @@
           {{ Form::open(['route' => ['register'], 'method' => 'POST']) }}
           <div class="border rounded p-4 mb-3">
             <div class="form-group row">
-              {{ Form::label('name', 'Imię', ['class' => 'col-sm-3 col-form-label']) }}
+              {{ Form::label('first_name', 'Imię', ['class' => 'col-sm-3 col-form-label']) }}
               <div class="col-sm-9">
-                {{ Form::text('name', null, ['class' => 'form-control']) }}
+                {{ Form::text('first_name', null, ['class' => 'form-control']) }}
               </div>
             </div>
             <div class="form-group row">
-              {{ Form::label('surname', 'Nazwisko', ['class' => 'col-sm-3 col-form-label']) }}
+              {{ Form::label('last_name', 'Nazwisko', ['class' => 'col-sm-3 col-form-label']) }}
               <div class="col-sm-9">
-                {{ Form::text('surname', null, ['class' => 'form-control']) }}
+                {{ Form::text('last_name', null, ['class' => 'form-control']) }}
               </div>
             </div>
             <div class="form-group row">

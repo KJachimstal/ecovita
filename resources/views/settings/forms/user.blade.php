@@ -10,15 +10,15 @@
   @endif
   {{ Form::model($user, ['route' => ['settings.update_profile'], 'method' => 'PUT']) }}
     <div class="form-group row">
-      {{ Form::label('name', 'Imie', ['class' => 'col-sm-2 col-form-label']) }}
+      {{ Form::label('first_name', 'Imie', ['class' => 'col-sm-2 col-form-label']) }}
       <div class="col-sm-10">
-        {{ Form::text('name', null, ['class' => 'form-control']) }}
+        {{ Form::text('first_name', null, ['class' => 'form-control']) }}
       </div>
     </div>
     <div class="form-group row">
-      {{ Form::label('surname', 'Nazwisko', ['class' => 'col-sm-2 col-form-label']) }}
+      {{ Form::label('last_name', 'Nazwisko', ['class' => 'col-sm-2 col-form-label']) }}
       <div class="col-sm-10">
-        {{ Form::text('surname', null, ['class' => 'form-control']) }}
+        {{ Form::text('last_name', null, ['class' => 'form-control']) }}
       </div>
     </div>
     <div class="form-group row">

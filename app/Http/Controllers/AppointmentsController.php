@@ -29,7 +29,7 @@ class AppointmentsController extends Controller
         $doctors = Doctor::leftJoin('users', function($join) {
             $join->on('users.userable_id', '=', 'doctors.id');
             $join->where('users.userable_type', '=', 'App\Doctor');
-        })->select(DB::raw('CONCAT(users.name, " ", users.surname) AS full_name'), 'doctors.id')->pluck('full_name', 'id');
+        })->select(DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'), 'doctors.id')->pluck('full_name', 'id');
         
         $appointsments = Appointment::where('is_available', true);
 
