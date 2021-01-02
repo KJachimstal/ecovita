@@ -24,7 +24,7 @@ class SpecialitiesController extends Controller
      */
     public function create()
     {
-        //
+        return view('specialities/admin/create');
     }
 
     /**
@@ -35,7 +35,15 @@ class SpecialitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'min:3']
+        ]);
+
+        $speciality = new Speciality;
+        $speciality->name = $request->get('name');
+        $speciality->save();
+
+        return redirect('specialities')->with('success', __('messages.speciality.succed_add'));
     }
 
     /**
