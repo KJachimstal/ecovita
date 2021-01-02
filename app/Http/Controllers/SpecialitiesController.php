@@ -57,7 +57,7 @@ class SpecialitiesController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("specialities/edit", ['speciality' => Speciality::find($id)]);
     }
 
     /**
@@ -69,7 +69,15 @@ class SpecialitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'min:3']
+        ]);
+
+        $speciality = Speciality::find($id);
+        $speciality->name = $request->get('name');
+        $speciality->save();
+        
+        return redirect('specialities')->with('success', __('messages.speciality.succed_change'));
     }
 
     /**
