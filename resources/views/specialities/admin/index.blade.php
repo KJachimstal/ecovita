@@ -1,8 +1,11 @@
 @extends('layouts.default')
 @section('title', 'Zarządzaj specjalnościami')
 @section('content')
-
 <div class="bg-white rounded p-4 mt-2 shadow-sm text-capitalize">
+  <form action="" class="form-inline">
+    {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...'])}}
+    <button type="submit" class="btn btn-primary">Filtruj</button>
+  </form>
   <table class="table table-striped">
     <thead>
         <tr>

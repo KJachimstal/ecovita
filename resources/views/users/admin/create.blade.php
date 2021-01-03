@@ -13,6 +13,7 @@
             {{ Form::select('userable_type', array('App\Patient' => 'Pacjent', 'App\Employee' => 'Pracownik', 'App\Doctor' => 'Doktor'), 'S', ['class' => 'form-control']) }}
           </div>
         </div>
+      </div>
       <div class="mt-4 d-flex justify-content-center">
         {{ Form::submit('Dodaj użytkownika', ['class' => 'btn btn-success'])}}
         <a href="{{ url("users") }}" class="btn border btn-light ml-2">Powrót</a>

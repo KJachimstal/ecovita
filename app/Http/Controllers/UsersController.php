@@ -58,7 +58,7 @@ class UsersController extends Controller
 
     public function edit($id) 
     {
-        return view('users.edit', ['user' => User::find($id)]);
+        return view('users/admin/edit', ['user' => User::find($id)]);
     }
 
     public function update(Request $request, $id)
@@ -66,8 +66,7 @@ class UsersController extends Controller
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'pesel' => ['required'],
             'phone_number' => ['required'],
             'city' => ['required'],

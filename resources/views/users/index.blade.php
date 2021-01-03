@@ -42,7 +42,7 @@
                   {{ $user->userable_type }}
                 </td>
                 <td>
-                  <a href="{{ url("users/{$user->id}") }}">Opcje</a>
+                  <a href="{{ url("users/{$user->id}") }}">Podgląd</a>
                 </td>
               </tr>
           @empty

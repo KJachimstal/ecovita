@@ -1,12 +1,25 @@
 @extends('layouts.default')
 @section('title', 'Edytuj użytkownika')
 @section('content')
-{{-- <div class="container">
+<div class="container">
   <div class="p-4 bg-white shadow-sm">
     @include('shared.errors')
-    {{ Form::model(null, ['route' => ['specialities.store'], 'method' => 'POST']) }}
-      @include('specialities.shared.form')
+    {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'PUT']) }}
+      @include('auth/shared/register_form')
+      <div class="border rounded p-4 mb-3">
+        <div class="form-group row">
+          {{ Form::label('userable_type', 'Rodzaj konta', ['class' => 'col-sm-3 col-form-label']) }}
+          <div class="col-sm-9">
+            {{ Form::select('userable_type', array('App\Patient' => 'Pacjent', 'App\Employee' => 'Pracownik', 'App\Doctor' => 'Doktor'), $user->userable_type, 
+            ['class' => 'form-control']) }}
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 d-flex justify-content-center">
+        {{ Form::submit('Zapisz zmiany', ['class' => 'btn btn-success'])}}
+        <a href="{{ url("users") }}" class="btn border btn-light ml-2">Powrót</a>
+      </div>
     {{ Form::close() }}
   </div>
-</div> --}}
+</div>
 @endsection

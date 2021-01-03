@@ -8,6 +8,5 @@
       @include('specialities.shared.form', ['speciality' => $speciality])
     {{ Form::close() }}
   </div>
-
 </div>
 @endsection
