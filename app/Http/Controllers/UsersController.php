@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Doctor;
+use App\Speciality;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class UsersController extends Controller
 {
-    public function index() 
+    public function index(Request $request) 
     {
-        return view('users.index', ['users' => User::all()]);
+        $users = User::query();
+        
+        if ($request->filled('search')){
+            $users->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%{$request->search}%'");
+        }
+        return view('users.index', ['users' => $users->paginate(8)]);
     }
 
     public function create() 
@@ -93,11 +101,27 @@ class UsersController extends Controller
         return redirect('users')->with('success', __('messages.user_succed_change'));
     }
 
-    public function destroy($id)
+    // public function destroy($id)
+    // {
+    //     $user = User::find($id);
+    //     $user->delete();
+
+    //     return redirect('users')->with('success', __('messages.user_succed_delete'));
+    // }
+
+    public function edit_doctor_prepare($id)
+    {
+        $specialities = Speciality::pluck('name', 'id');
+        return view('users.admin.edit_doctor', ['user' => User::find($id), 'specialities' => $specialities]);
+    }
+
+    public function edit_doctor(Request $request, $id)
     {
         $user = User::find($id);
-        $user->delete();
+        $doctor = Doctor::find($user->userable->id);
+        $doctor->licensure = $request->get('licensure');
+        $doctor->save();
 
-        return redirect('users')->with('success', __('messages.user_succed_delete'));
+        return redirect('users')->with('success', __('messages.doctor_succed_change'));
     }
 }

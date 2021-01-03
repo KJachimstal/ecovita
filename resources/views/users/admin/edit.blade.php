@@ -2,6 +2,7 @@
 @section('title', 'Edytuj użytkownika')
 @section('content')
 <div class="container">
+  @include('users.shared.tabs', ['active' => 'profile', 'user_id' => $user->id])
   <div class="p-4 bg-white shadow-sm">
     @include('shared.errors')
     {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'PUT']) }}
@@ -10,7 +11,7 @@
         <div class="form-group row">
           {{ Form::label('userable_type', 'Rodzaj konta', ['class' => 'col-sm-3 col-form-label']) }}
           <div class="col-sm-9">
-            {{ Form::select('userable_type', array('App\Patient' => 'Pacjent', 'App\Employee' => 'Pracownik', 'App\Doctor' => 'Doktor'), $user->userable_type, 
+            {{ Form::select('userable_type', array(null => 'Pacjent', 'App\Employee' => 'Pracownik', 'App\Doctor' => 'Doktor'), $user->userable_type, 
             ['class' => 'form-control']) }}
           </div>
         </div>

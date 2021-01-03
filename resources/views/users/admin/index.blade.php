@@ -1,19 +1,23 @@
 @extends('layouts.default')
 @section('title', 'Zarządzaj specjalizacjami')
 @section('content')
-<div class="bg-white rounded p-4 mt-2 shadow-sm">
-  {{-- <form action="" class="form-inline">
-    {{Form::select('user_id', $users, app('request')->userable_type, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz typ konta...'])}}
-    {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz lekarza...'])}}
-    <button type="submit" class="btn btn-primary">Filtruj</button>
-  </form> --}}
 
-  <a href="{{ url("users/create") }}" class="btn btn-success ml-2">Dodaj użytkownika</a>
+<div class="bg-white rounded p-4 mt-2 shadow-sm">
+  <div class="row">
+    <div class="col-8">
+      <form action="" class="form-inline">
+        {{Form::text('search', null, ['class' => 'form-control mr-sm-3', 'placeholder' => 'Wpisz słowo...'])}}
+        <button type="submit" class="btn btn-primary">Filtruj</button>
+      </form>
+    </div>
+    <div class="col-4 text-right">
+      <a href="{{ url("users/create") }}" class="btn btn-success ml-2">Dodaj użytkownika</a>
+    </div>
+  </div>
   <table class="table table-striped">
       <thead>
           <tr>
-              <th scope="col">Imię</th>
-              <th scope="col">Nazwisko</th>   
+              <th scope="col">Imię i nazwisko</th>
               <th scope="col">E-mail</th>
               <th scope="col">Typ konta</th>
               <th scope="col">Opcje</th>
@@ -23,10 +27,7 @@
         @forelse ($users as $user)
             <tr>
               <td>
-                {{ $user->first_name }}
-              </td>
-              <td>
-                {{ $user->last_name }}
+                {{ $user->fullName }}
               </td>
               <td>
                 {{ $user->email }}
@@ -35,14 +36,14 @@
                 {{ $user->userable_type }}
               </td>
               <td>
-                {{ Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) }}
-                  <a href="{{ url("users/{$user->id}/edit") }}" class="btn border btn-light ml-2">
-                    <i class="fas fa-user-edit mr-2"></i> Edytuj
+                {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) }} --}}
+                  <a href="{{ url("users/{$user->id}/edit") }}" class="btn btn-sm border btn-light">
+                    <i class="fas fa-user-edit"></i>
                   </a>
-                  <button class="btn btn-danger ml-2" onclick="return confirm('Czy chcesz usunąć użytkownika?')">
-                    <i class="fas fa-trash mr-2"></i> Usuń
-                  </button>
-                {{ Form::close() }}
+                  {{-- <button class="btn btn-sm btn-danger" onclick="return confirm('Czy chcesz usunąć użytkownika?')">
+                    <i class="fas fa-trash"></i>
+                  </button> --}}
+                {{-- {{ Form::close() }} --}}
               </td>
             </tr>
         @empty
@@ -52,5 +53,6 @@
         @endforelse
       </tbody>
   </table>
+  {{ $users->links() }}
 </div>
 @endsection
