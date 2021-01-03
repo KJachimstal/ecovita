@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Speciality;
+use DB;
 
 class SpecialitiesController extends Controller
 {
@@ -12,9 +13,15 @@ class SpecialitiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('specialities.index', ['specialities' => Speciality::all()]);
+        $specialities = DB::table('specialities');
+        
+        if ($request->filled('name')) {
+            $specialities->where('name', 'like', "%{$request->name}%");
+        }
+
+        return view('specialities.index', ['specialities' => $specialities->paginate(8)]);
     }
 
     /**

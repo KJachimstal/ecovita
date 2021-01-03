@@ -2,10 +2,17 @@
 @section('title', 'Zarządzaj specjalnościami')
 @section('content')
 <div class="bg-white rounded p-4 mt-2 shadow-sm text-capitalize">
-  <form action="" class="form-inline">
-    {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...'])}}
-    <button type="submit" class="btn btn-primary">Filtruj</button>
-  </form>
+  <div class="row">
+    <div class="col-8">
+      <form action="" class="form-inline">
+        {{Form::text('name', null, ['class' => 'form-control mr-sm-3', 'placeholder' => 'Wpisz nazwę specjalizacji...'])}}
+        <button type="submit" class="btn btn-primary">Filtruj</button>
+      </form>
+    </div>
+    <div class="col-4 text-right">
+      <a href="{{ url("specialities/create") }}" class="btn btn-success ml-2">Dodaj specjalizację</a>
+    </div>
+  </div>
   <table class="table table-striped">
     <thead>
         <tr>
@@ -37,7 +44,7 @@
       @endforelse
     </tbody>
   </table>
-  <a href="{{ url("specialities/create") }}" class="btn btn-success ml-2">Dodaj specjalizację</a>
+  {{ $specialities->links() }}
 </div>
 
 @endsection
