@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Route::get('logout', 'Auth\LoginController@logout');
+Route::get('users/search', 'UsersController@search')->name('users.search');
+Route::get('doctor_specialities/search', 'DoctorsSpecialitiesController@search')->name('doctor_specialities.search');
 
 Route::resource('users', 'UsersController');
 Route::resource('specialities', 'SpecialitiesController');

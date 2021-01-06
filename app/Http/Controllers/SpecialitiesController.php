@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
 use App\Speciality;
 use DB;
 
@@ -20,8 +22,8 @@ class SpecialitiesController extends Controller
         if ($request->filled('name')) {
             $specialities->where('name', 'like', "%{$request->name}%");
         }
-
-        return view('specialities.index', ['specialities' => $specialities->paginate(8)]);
+        $viewName = Auth::user()->isActiveEmployee ? 'specialities.admin.index' : 'specialities.index';
+        return view($viewName, ['specialities' => $specialities->paginate(8)]);
     }
 
     /**

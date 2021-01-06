@@ -11,7 +11,7 @@
         <div class="form-group row">
           {{ Form::label('userable_type', 'Rodzaj konta', ['class' => 'col-sm-3 col-form-label']) }}
           <div class="col-sm-9">
-            {{ Form::select('userable_type', array(null => 'Pacjent', 'App\Employee' => 'Pracownik', 'App\Doctor' => 'Doktor'), $user->userable_type, 
+            {{ Form::select('userable_type', [null => 'Pacjent', 'App\Employee' => 'Pracownik', 'App\Doctor' => 'Doktor'], $user->userable_type, 
             ['class' => 'form-control']) }}
           </div>
         </div>

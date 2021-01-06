@@ -31,28 +31,31 @@ class AppointmentsController extends Controller
             $join->where('users.userable_type', '=', 'App\Doctor');
         })->select(DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'), 'doctors.id')->pluck('full_name', 'id');
         
-        $appointsments = Appointment::where('is_available', true);
+
+        $appointments = Auth::user()->isActiveEmployee ? Appointment::query() : Appointment::where('is_available', true);
+        
 
         if ($request->filled('speciality_id') || $request->filled('doctor_id')) {
-            $appointsments->leftJoin('doctor_speciality', 'doctor_speciality.id', '=', 'doctor_speciality_id');
+            $appointments->leftJoin('doctor_speciality', 'doctor_speciality.id', '=', 'doctor_speciality_id');
 
             if ($request->filled('speciality_id')) {
-                $appointsments->where('doctor_speciality.speciality_id', $request->speciality_id);
+                $appointments->where('doctor_speciality.speciality_id', $request->speciality_id);
             }
 
             if ($request->filled('doctor_id')) {
-                $appointsments->where('doctor_speciality.doctor_id', $request->doctor_id);
+                $appointments->where('doctor_speciality.doctor_id', $request->doctor_id);
             }
         }
 
         if ($request->filled('begin_date')) {
-            $appointsments->whereBetween('begin_date', ["{$request->begin_date} 00:00:00", "{$request->begin_date} 23:59:59"]);
+            $appointments->whereBetween('begin_date', ["{$request->begin_date} 00:00:00", "{$request->begin_date} 23:59:59"]);
         }
 
-        $appointsments->orderBy('begin_date');
+        $appointments->orderBy('begin_date');
 
-        return view('appointments.index', 
-            ['appointments' => $appointsments->get(), 
+        $viewName = Auth::user()->isActiveEmployee ? 'appointments.admin.index' : 'appointments.index';
+        return view($viewName, 
+            ['appointments' => $appointments->paginate(8),
             'specialities' => $specialities,
             'doctors' => $doctors]
         );
@@ -98,7 +101,7 @@ class AppointmentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('appointments.admin.edit', ['appointment' => Appointment::find($id)]);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Doctor;
 use App\Speciality;
@@ -11,6 +12,20 @@ use DB;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+        $this->middleware(function ($request, $next) {
+
+            if (!Auth::user()->IsActiveEmployee) {
+                return redirect('home')->with('error', __('messages.unauthorized'));
+            }
+            
+            return $next($request);
+        });
+    }
+
     public function index(Request $request) 
     {
         $users = User::query();
@@ -18,7 +33,9 @@ class UsersController extends Controller
         if ($request->filled('search')){
             $users->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%{$request->search}%'");
         }
-        return view('users.index', ['users' => $users->paginate(8)]);
+
+        $viewName = Auth::user()->isActiveEmployee ? 'users.admin.index' : 'users.index';
+        return view($viewName, ['users' => $users->paginate(8)]);
     }
 
     public function create() 
@@ -123,5 +140,21 @@ class UsersController extends Controller
         $doctor->save();
 
         return redirect('users')->with('success', __('messages.doctor_succed_change'));
+    }
+
+    public function search(Request $request)
+    {
+        $users = [];
+
+        if ($request->has('q')) {
+            $search = $request->q;
+
+            $users = User::select('id', 'first_name', 'last_name')
+                        ->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%$search%'")
+                        ->limit(20)
+                        ->get();
+        }
+
+        return response()->json($users);
     }
 }

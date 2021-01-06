@@ -54,6 +54,10 @@ class User extends Authenticatable
         return $this->userable_type == Employee::class;
     }
 
+    public function getIsActiveEmployeeAttribute() {
+        return $this->isEmployee && $this->is_panel_active;
+    }
+
     public function getFullNameAttribute() {
         return "{$this->first_name} {$this->last_name}";
     }
