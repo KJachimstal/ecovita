@@ -156,5 +156,7 @@ return [
         'last_name' => "nazwisko", 
         'first_name' => "imię",
         'password' => "hasło",
+        'doctor_speciality_id' => "doktor",
+        'begin_date' => "data wizyty"
     ]
 ];

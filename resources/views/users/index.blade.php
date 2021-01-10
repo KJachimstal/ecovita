@@ -1,5 +1,6 @@
 @extends('layouts.default')
 @section('title', 'Użytkownicy')
+@section('content')
 <div class="bg-white rounded p-4 mt-2 shadow-sm">    
   <table class="table table-striped">
       <thead>

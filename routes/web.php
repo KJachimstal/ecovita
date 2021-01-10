@@ -43,5 +43,5 @@ Route::post('appointments/{appointment}/enroll', 'AppointmentsController@enroll'
 Route::get('users/{user}/appointments/{appointment}/cancel', 'UserAppointmentsController@prepare_cancel');
 Route::post('users/{user}/appointments/{appointment}/cancel', 'UserAppointmentsController@cancel');
 
-Route::get('users/{user}/edit_doctor', 'UsersController@edit_doctor_prepare')->name('users.edit_doctor_prepare');
-Route::post('users/{user}/edit_doctor', 'UsersController@edit_doctor')->name('users.edit_doctor');
+Route::get('users/{user}/edit_doctor', 'UsersController@edit_doctor')->name('users.edit_doctor');
+Route::post('users/{user}/update_doctor', 'UsersController@update_doctor')->name('users.update_doctor');

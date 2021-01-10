@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\DoctorSpeciality;
+use App\User;
 
 class Appointment extends Model
 {
@@ -11,6 +13,10 @@ class Appointment extends Model
     ];
     
     public function doctorSpeciality() {
-        return $this->belongsTo('App\DoctorSpeciality');
+        return $this->belongsTo(DoctorSpeciality::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

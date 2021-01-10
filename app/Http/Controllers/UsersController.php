@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Doctor;
 use App\Speciality;
+use App\Appointment;
+use App\DoctorSpeciality;
 use Illuminate\Support\Facades\Hash;
 use DB;
 
@@ -126,15 +128,45 @@ class UsersController extends Controller
     //     return redirect('users')->with('success', __('messages.user_succed_delete'));
     // }
 
-    public function edit_doctor_prepare($id)
+    public function edit_doctor($id)
     {
         $specialities = Speciality::pluck('name', 'id');
         return view('users.admin.edit_doctor', ['user' => User::find($id), 'specialities' => $specialities]);
     }
 
-    public function edit_doctor(Request $request, $id)
+    public function update_doctor(Request $request, $id)
     {
         $user = User::find($id);
+        $doctor = $user->userable;
+        $currentSpecialities = $doctor->specialities->pluck('id')->toArray();
+        $formSpecialities = $request->get('specialities');
+        $removedSpecialities = array_diff($currentSpecialities, $formSpecialities);
+        
+        DB::beginTransaction();
+        try {
+            foreach ($removedSpecialities as $speciality_id) {
+                $doctorSpeciality = $doctor->doctorSpecialities->where('speciality_id', $speciality_id)->first();
+
+                print_r($doctorSpeciality->appointments);
+
+                // if ($doctorSpeciality->appointments->isNotEmpty()) {
+                //     throw new \Exception();
+                // }
+
+                // $doctorSpeciality->destroy();
+            }
+
+            // DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            // print_r($e);
+            return redirect('users')->with('error', __('messages.active_appointment_error'));
+        }
+
+        return;
+
+        
+
         $doctor = Doctor::find($user->userable->id);
         $doctor->licensure = $request->get('licensure');
         $doctor->save();
@@ -144,17 +176,16 @@ class UsersController extends Controller
 
     public function search(Request $request)
     {
-        $users = [];
+        $users = User::select('id', 'first_name', 'last_name')
+                ->limit(20);
 
         if ($request->has('q')) {
             $search = $request->q;
 
             $users = User::select('id', 'first_name', 'last_name')
-                        ->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%$search%'")
-                        ->limit(20)
-                        ->get();
+                        ->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%$search%'");
         }
 
-        return response()->json($users);
+        return response()->json($users->get());
     }
 }

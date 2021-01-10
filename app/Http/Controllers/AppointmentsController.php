@@ -68,7 +68,7 @@ class AppointmentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('appointments.admin.create');
     }
 
     /**
@@ -79,7 +79,19 @@ class AppointmentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'doctor_speciality_id' => ['required'],
+            'begin_date' => ['required']
+        ]);
+
+        $appointment = new Appointment;
+        $appointment->user_id = $request->get('user_id');
+        $appointment->doctor_speciality_id = $request->get('doctor_speciality_id');
+        $appointment->begin_date = $request->get('begin_date');
+        $appointment->is_available = empty($request->get('user_id'));
+        $appointment->save();
+
+        return redirect('appointments')->with('success', __('messages.appointments_succed_create'));
     }
 
     /**
@@ -101,7 +113,17 @@ class AppointmentsController extends Controller
      */
     public function edit($id)
     {
-        return view('appointments.admin.edit', ['appointment' => Appointment::find($id)]);
+        $appointment = Appointment::find($id);
+        $doctor_speciality = [ $appointment->doctor_speciality_id => $appointment->doctorSpeciality->name ];
+        $user = !empty($appointment->user_id) ? [$appointment->user_id => $appointment->user->fullName] : [];
+        $date = date('Y-m-d\Th:m:s',  strtotime($appointment->begin_date));
+        
+        return view('appointments.admin.edit', [
+            'appointment' => $appointment, 
+            'doctor_speciality' => $doctor_speciality, 
+            'user' => $user,
+            'date' => $date
+        ]);
     }
 
     /**
@@ -113,7 +135,14 @@ class AppointmentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $appointment->user_id = $request->get('user_id');
+        $appointment->doctor_speciality_id = $request->get('doctor_speciality_id');
+        $appointment->begin_date = $request->get('begin_date');
+        $appointment->is_available = empty($appointment->user_id);
+        $appointment->save();
+
+        return redirect('appointments')->with('success', __('messages.appointment_succed_change'));
     }
 
     /**
@@ -124,7 +153,10 @@ class AppointmentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $appointment->delete();
+
+        return redirect('appointments')->with('success', __('messages.appointments_succed_delete'));
     }
 
     public function prepare_enroll($id)

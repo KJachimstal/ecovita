@@ -33,7 +33,7 @@
                 {{ $user->email }}
               </td>
               <td>
-                {{ $user->userable_type }}
+                {{ $user->userable_type ?? 'Pacjent' }}
               </td>
               <td>
                 {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) }} --}}

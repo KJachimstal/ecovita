@@ -16,13 +16,13 @@
       </div>
     </div>
 
-
   <table class="table table-striped">
       <thead>
           <tr>
               <th scope="col">Termin</th>
               <th scope="col">Specjalizacja</th>   
               <th scope="col">Lekarz</th>
+              <th scope="col">Zapisany pacjent</th>
               <th scope='col'>Dostępna</th>
               <th scope="col">Opcje</th>
           </tr>
@@ -40,7 +40,9 @@
                 {{ $appointment->doctorSpeciality->doctor->user->fullName }}
               </td>
               <td>
-                {{ $appointment->doctorSpeciality->doctor->user->fullName }}
+                @if (!empty($appointment->user->fullName)) 
+                  {{ $appointment->user->fullName }}
+                @endif
               </td>
               <td>
                 @if ($appointment->is_available)

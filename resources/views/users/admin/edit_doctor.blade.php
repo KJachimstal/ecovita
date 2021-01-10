@@ -1,9 +1,9 @@
 @extends('layouts.default')
-@section('title', 'Edytuj użytkownika')
+@section('title', 'Edytuj doktora')
 @section('content')
 <div class="container">
   @include('users.shared.tabs', ['active' => 'specialities', 'user_id' => $user->id])
-  {{ Form::model($user->userable, ['route' => ['users.edit_doctor', $user->id], 'method' => 'POST']) }}
+  {{ Form::model($user->userable, ['route' => ['users.update_doctor', $user->id], 'method' => 'POST']) }}
     <div class="border rounded p-4 mb-3">
       <div class="form-group row">
         {{ Form::label('licensure', 'PWZ', ['class' => 'col-sm-3 col-form-label']) }}
