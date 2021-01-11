@@ -107,6 +107,34 @@ class UsersController extends Controller
         $user->last_name = $request->get('last_name');
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));
+
+        if ($user->userable_type != null && $request->get('userable_type') == null) {
+            if ($user->isDoctor) {
+                $appointments = $user->userable->appointments->toArray();
+
+                if (!empty($appointments)) {
+                    return redirect('users')->with('error', __('messages.active_appointment_error'));  
+
+                }
+
+            }
+
+            $user->userable->delete();
+            $user->userable_id = null;
+        }
+
+        if ($request->get('userable_type') == 'App\Doctor') {
+            $doctor = new Doctor;
+            $doctor->licensure = 0;
+            $doctor->save();
+            $user->userable_id = $doctor->id;
+        }
+
+        // if ($request->get('userable_type') == 'App\Employee') {
+        //     $employee = new Employee;
+        //     $employee->save();
+        // }
+
         $user->userable_type = $request->get('userable_type');
         $user->pesel = $request->get('pesel');
         $user->phone_number = $request->get('phone_number');
@@ -139,28 +167,37 @@ class UsersController extends Controller
         $user = User::find($id);
         $doctor = $user->userable;
         $currentSpecialities = $doctor->specialities->pluck('id')->toArray();
-        $formSpecialities = $request->get('specialities');
+        $formSpecialities = $request->get('specialities') ?? [];
         $removedSpecialities = array_diff($currentSpecialities, $formSpecialities);
+        $addedSpecialities = array_diff($formSpecialities, $currentSpecialities);
         
         DB::beginTransaction();
         try {
             foreach ($removedSpecialities as $speciality_id) {
                 $doctorSpeciality = $doctor->doctorSpecialities->where('speciality_id', $speciality_id)->first();
 
-                print_r($doctorSpeciality->appointments);
+                if ($doctorSpeciality->appointments->isNotEmpty()) {
+                    throw new \Exception();
+                }
 
-                // if ($doctorSpeciality->appointments->isNotEmpty()) {
-                //     throw new \Exception();
-                // }
-
-                // $doctorSpeciality->destroy();
+                $doctorSpeciality->delete();
             }
 
-            // DB::commit();
+            foreach ($addedSpecialities as $speciality_id) {
+                $doctorSpeciality = new DoctorSpeciality;
+                $doctorSpeciality->doctor_id = $doctor->id;
+                $doctorSpeciality->speciality_id = $speciality_id;
+                $doctorSpeciality->save();
+
+            }
+
+            DB::commit();
+            return redirect('users')->with('success', __('messages.doctor_succes_change'));
+
         } catch (\Exception $e) {
             DB::rollback();
-            // print_r($e);
             return redirect('users')->with('error', __('messages.active_appointment_error'));
+            
         }
 
         return;

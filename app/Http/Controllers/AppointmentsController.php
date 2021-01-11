@@ -36,7 +36,8 @@ class AppointmentsController extends Controller
         
 
         if ($request->filled('speciality_id') || $request->filled('doctor_id')) {
-            $appointments->leftJoin('doctor_speciality', 'doctor_speciality.id', '=', 'doctor_speciality_id');
+            $appointments->leftJoin('doctor_speciality as doctor_speciality', 'doctor_speciality.id', '=', 'doctor_speciality_id')
+            ->select('appointments.*');
 
             if ($request->filled('speciality_id')) {
                 $appointments->where('doctor_speciality.speciality_id', $request->speciality_id);
@@ -154,6 +155,7 @@ class AppointmentsController extends Controller
     public function destroy($id)
     {
         $appointment = Appointment::find($id);
+        print_r($appointment);
         $appointment->delete();
 
         return redirect('appointments')->with('success', __('messages.appointments_succed_delete'));

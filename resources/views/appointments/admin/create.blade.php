@@ -9,5 +9,4 @@
     {{ Form::close() }}
   </div>
 </div>
-@include('appointments.shared.search')
 @endsection
