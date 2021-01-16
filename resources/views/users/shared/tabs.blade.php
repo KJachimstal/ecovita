@@ -4,7 +4,7 @@
   </li>
   @if ($user->is_doctor)
   <li class="nav-item">
-    <a class="nav-link{{ $active == 'specialities' ? ' active' : '' }}" href="{{ route('users.edit_doctor', $user) }}">Edytuj specjalne</a>
+    <a class="nav-link{{ $active == 'specialities' ? ' active' : '' }}" href="{{ route('users.edit_doctor', $user) }}">Edytuj specjalizacje</a>
   </li>
   @endif
 </ul>

@@ -1,12 +1,13 @@
 @extends('layouts.default')
 @section('title', 'Zarządzaj specjalizacjami')
 @section('content')
-
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
   <div class="row">
     <div class="col-8">
       <form action="" class="form-inline">
-        {{Form::text('search', null, ['class' => 'form-control mr-sm-3', 'placeholder' => 'Wpisz słowo...'])}}
+        {{ Form::text('search', null, ['class' => 'form-control mr-sm-3', 'placeholder' => 'Wpisz słowo...']) }}
+        {{ Form::checkbox('is_unverified', 'is_unverified', app('request')->is_unverified, ['id' => 'is_unverified']) }}
+        {{ Form::label('is_unverified', 'Pokaż tylko niezweryfikowanych', ['class' => 'mr-3 ml-2']) }}
         <button type="submit" class="btn btn-primary">Filtruj</button>
       </form>
     </div>

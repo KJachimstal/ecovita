@@ -5,12 +5,12 @@
   @include('users.shared.tabs', ['active' => 'specialities', 'user_id' => $user->id])
   {{ Form::model($user->userable, ['route' => ['users.update_doctor', $user->id], 'method' => 'POST']) }}
     <div class="border rounded p-4 mb-3">
-      <div class="form-group row">
+      {{-- <div class="form-group row">
         {{ Form::label('licensure', 'PWZ', ['class' => 'col-sm-3 col-form-label']) }}
         <div class="col-sm-9">
           {{ Form::text('licensure',  null, ['class' => 'form-control']) }}
         </div>
-      </div>
+      </div> --}}
       <div class="form-group row">
         {{ Form::label('specialities[]', 'Specjalności', ['class' => 'col-sm-3 col-form-label']) }}
         <div class="col-sm-9">

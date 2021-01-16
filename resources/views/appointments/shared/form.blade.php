@@ -20,3 +20,4 @@
   {{ Form::submit('Wyślij', ['class' => 'btn btn-success'])}}
   <a href="{{ url("appointments") }}" class="btn border btn-light ml-2">Powrót</a>
 </div>
+@include('appointments.shared.search')

@@ -10,6 +10,7 @@ use App\Speciality;
 use App\Appointment;
 use App\DoctorSpeciality;
 use Illuminate\Support\Facades\Hash;
+use App\Exceptions\ActiveAppointmentException;
 use DB;
 
 class UsersController extends Controller
@@ -36,6 +37,10 @@ class UsersController extends Controller
             $users->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%{$request->search}%'");
         }
 
+        if ($request->get('is_unverified')) {
+            $users->where('is_verified', false);
+        }
+
         $viewName = Auth::user()->isActiveEmployee ? 'users.admin.index' : 'users.index';
         return view($viewName, ['users' => $users->paginate(8)]);
     }
@@ -52,12 +57,12 @@ class UsersController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'pesel' => ['required'],
-            'phone_number' => ['required'],
+            'pesel' => ['required', 'digits:11'],
+            'phone_number' => ['required', 'digits:9'],
             'city' => ['required'],
             'post_code' => ['required'],
             'street' => ['required'],
-            'street_number' => ['required'],
+            'street_number' => ['required', 'between:1,7']
         ]);
 
         $user = new User;
@@ -65,7 +70,14 @@ class UsersController extends Controller
         $user->last_name = $request->get('last_name');
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));
-        $user->userable_type = $request->get('userable_type');
+
+        if ($request->get('userable_type') == 'App\Doctor') {
+            $user->userable_type = $request->get('userable_type');
+            $doctor = new Doctor;
+            $doctor->licensure = $request->get('licensure');
+            $doctor->save();
+            $user->userable_id = $doctor->id;
+        }
         $user->pesel = $request->get('pesel');
         $user->phone_number = $request->get('phone_number');
         $user->city = $request->get('city');
@@ -94,12 +106,12 @@ class UsersController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'pesel' => ['required'],
-            'phone_number' => ['required'],
+            'pesel' => ['required', 'digits:11'],
+            'phone_number' => ['required', 'digits:9'],
             'city' => ['required'],
             'post_code' => ['required'],
             'street' => ['required'],
-            'street_number' => ['required'],
+            'street_number' => ['required', 'between:1,7']
         ]);
 
         $user = User::find($id);
@@ -122,12 +134,17 @@ class UsersController extends Controller
             $user->userable->delete();
             $user->userable_id = null;
         }
-
-        if ($request->get('userable_type') == 'App\Doctor') {
-            $doctor = new Doctor;
-            $doctor->licensure = 0;
+        if ($user->userable_type == null) { 
+            if ($request->get('userable_type') == 'App\Doctor') {
+                $doctor = new Doctor;
+                $doctor->licensure = 0;
+                $doctor->save();
+                $user->userable_id = $doctor->id;
+            }
+        }else {
+            $doctor = Doctor::find($user->userable_id);
+            $doctor->licensure = $request->get('licensure');
             $doctor->save();
-            $user->userable_id = $doctor->id;
         }
 
         // if ($request->get('userable_type') == 'App\Employee') {
@@ -170,16 +187,17 @@ class UsersController extends Controller
         $formSpecialities = $request->get('specialities') ?? [];
         $removedSpecialities = array_diff($currentSpecialities, $formSpecialities);
         $addedSpecialities = array_diff($formSpecialities, $currentSpecialities);
-        
+
         DB::beginTransaction();
         try {
+            
             foreach ($removedSpecialities as $speciality_id) {
                 $doctorSpeciality = $doctor->doctorSpecialities->where('speciality_id', $speciality_id)->first();
-
+                
                 if ($doctorSpeciality->appointments->isNotEmpty()) {
-                    throw new \Exception();
+                    throw new ActiveAppointmentException();
                 }
-
+                
                 $doctorSpeciality->delete();
             }
 
@@ -188,21 +206,16 @@ class UsersController extends Controller
                 $doctorSpeciality->doctor_id = $doctor->id;
                 $doctorSpeciality->speciality_id = $speciality_id;
                 $doctorSpeciality->save();
-
+                
             }
 
             DB::commit();
             return redirect('users')->with('success', __('messages.doctor_succes_change'));
 
-        } catch (\Exception $e) {
+        } catch (ActiveAppointmentException $e) {
             DB::rollback();
             return redirect('users')->with('error', __('messages.active_appointment_error'));
-            
         }
-
-        return;
-
-        
 
         $doctor = Doctor::find($user->userable->id);
         $doctor->licensure = $request->get('licensure');
@@ -214,13 +227,13 @@ class UsersController extends Controller
     public function search(Request $request)
     {
         $users = User::select('id', 'first_name', 'last_name')
-                ->limit(20);
+        ->limit(20);
 
         if ($request->has('q')) {
             $search = $request->q;
-
+            
             $users = User::select('id', 'first_name', 'last_name')
-                        ->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%$search%'");
+            ->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%$search%'");
         }
 
         return response()->json($users->get());

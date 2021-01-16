@@ -22,7 +22,11 @@ class SpecialitiesController extends Controller
         if ($request->filled('name')) {
             $specialities->where('name', 'like', "%{$request->name}%");
         }
-        $viewName = Auth::user()->isActiveEmployee ? 'specialities.admin.index' : 'specialities.index';
+        if (Auth::guest()){
+            $viewName = 'specialities.index';
+        }else {
+            $viewName = Auth::user()->isActiveEmployee ? 'specialities.admin.index' : 'specialities.index';
+        }
         return view($viewName, ['specialities' => $specialities->paginate(8)]);
     }
 
