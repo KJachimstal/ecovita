@@ -2,6 +2,7 @@
 @section('title', 'Edytuj użytkownika')
 @section('content')
 <div class="container">
+  <h3 class="font-weight-bold mb-4">Edycja użytkownika</h3>
   @include('users.shared.tabs', ['active' => 'profile', 'user_id' => $user->id])
   <div class="p-4 bg-white shadow-sm">
     @include('shared.errors')

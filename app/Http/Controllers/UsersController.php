@@ -126,9 +126,7 @@ class UsersController extends Controller
 
                 if (!empty($appointments)) {
                     return redirect('users')->with('error', __('messages.active_appointment_error'));  
-
                 }
-
             }
 
             $user->userable->delete();
@@ -142,9 +140,11 @@ class UsersController extends Controller
                 $user->userable_id = $doctor->id;
             }
         }else {
+            if ($request->get('userable_type') == 'App\Doctor') {
             $doctor = Doctor::find($user->userable_id);
             $doctor->licensure = $request->get('licensure');
             $doctor->save();
+            }
         }
 
         // if ($request->get('userable_type') == 'App\Employee') {
@@ -159,7 +159,11 @@ class UsersController extends Controller
         $user->post_code = $request->get('post_code');
         $user->street = $request->get('street');
         $user->street_number = $request->get('street_number');
-        $user->is_verified = 0;
+        if ($request->get('is_verified') == null) {
+            $user->is_verified = 0;
+        }else {
+            $user->is_verified = $request->get('is_verified');
+        }
         $user->save();
         
         return redirect('users')->with('success', __('messages.user_succed_change'));

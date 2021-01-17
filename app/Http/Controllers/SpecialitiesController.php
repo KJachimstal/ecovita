@@ -52,9 +52,16 @@ class SpecialitiesController extends Controller
             'name' => ['required', 'min:3']
         ]);
 
-        $speciality = new Speciality;
-        $speciality->name = $request->get('name');
-        $speciality->save();
+        $specialities = Speciality::all();
+        foreach ($specialities as $speciality) {
+            if ($speciality->name == $request->get('name')) {
+                return redirect('specialities')->with('error', __('messages.speciality_error_exists'));
+            }
+        }
+
+        $new_speciality = new Speciality;
+        $new_speciality->name = $request->get('name');
+        $new_speciality->save();
 
         return redirect('specialities')->with('success', __('messages.speciality_succed_add'));
     }

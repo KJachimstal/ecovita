@@ -13,7 +13,16 @@
     </div>
   </div>
 </div>
-
+@if (!empty($user))
+<div class="border rounded p-4 mb-3">
+  <div class="form-group row">
+    {{ Form::label('is_verified', 'Konto zostało zweryfikowane', ['class' => 'col-sm-3 col-form-label']) }}
+    <div class="col-sm-9">
+      {{ Form::checkbox('is_verified', true, app('request')->is_unverified, ['id' => 'is_unverified']) }}
+    </div>
+  </div>
+</div>
+@endif
 <script>
   const DOCTOR_VALUE = 'App\\Doctor';
 

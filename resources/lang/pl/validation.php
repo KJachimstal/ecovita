@@ -151,7 +151,7 @@ return [
         'post_code' => "kod pocztowy",
         'street' => "ulica",
         'new_password' => "nowe hasło",
-        'street_number' => "numer ulicy",
+        'street_number' => "numer domu",
         'name' => "nazwa",
         'last_name' => "nazwisko", 
         'first_name' => "imię",

@@ -1,6 +1,7 @@
 @extends('layouts.default')
-@section('title', 'Zarządzaj specjalizacjami')
+@section('title', 'Zarządzanie użytkownikami')
 @section('content')
+<h3 class="font-weight-bold mb-4">Zarządzanie użytkownikami</h3>
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
   <div class="row">
     <div class="col-8">
@@ -21,6 +22,7 @@
               <th scope="col">Imię i nazwisko</th>
               <th scope="col">E-mail</th>
               <th scope="col">Typ konta</th>
+              <th scope="col">Zweryfikowany</th>
               <th scope="col">Opcje</th>
           </tr>
       </thead>
@@ -34,7 +36,14 @@
                 {{ $user->email }}
               </td>
               <td>
-                {{ $user->userable_type ?? 'Pacjent' }}
+                @if ($user->userable_type == "App\Employee") Pracownik
+                @elseif ($user->userable_type == "App\Doctor") Doktor
+                @else Pacjent
+                @endif
+                {{-- {{ $user->userable_type ?? 'Pacjent' }} --}}
+              </td>
+              <td>
+                {{ Form::checkbox('is_verified', null, $user->is_verified,  ['id' => 'is_unverified']) }}
               </td>
               <td>
                 {{-- {{ Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user->id]]) }} --}}

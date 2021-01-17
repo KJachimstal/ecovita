@@ -2,6 +2,7 @@
 @section('title', 'Dodaj użytkownika')
 @section('content')
 <div class="container">
+  <h3 class="font-weight-bold mb-4">Tworzenie nowego użytkownika</h3>
   <div class="p-4 bg-white shadow-sm">
     @include('shared.errors')
     {{ Form::model(null, ['route' => ['users.store'], 'method' => 'POST']) }}
