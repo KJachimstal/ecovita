@@ -93,6 +93,8 @@ class AppointmentsController extends Controller
         $appointment->is_available = empty($request->get('user_id'));
         $appointment->save();
 
+        log("Dupa dupa");
+
         return redirect('appointments')->with('success', __('messages.appointments_succed_create'));
     }
 

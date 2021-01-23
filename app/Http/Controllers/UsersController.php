@@ -9,7 +9,6 @@ use App\Doctor;
 use App\Speciality;
 use App\Appointment;
 use App\DoctorSpeciality;
-use App\Log;
 use Illuminate\Support\Facades\Hash;
 use App\Exceptions\ActiveAppointmentException;
 use DB;

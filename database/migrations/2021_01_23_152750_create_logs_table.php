@@ -15,9 +15,9 @@ class CreateLogsTable extends Migration
     {
         Schema::connection('pgsql')->create('logs', function (Blueprint $table) {
             $table->id();
-            $table->int('user_id');
+            $table->foreignId('user_id');
             $table->string('full_name');
-            $table->string('ip_adress');
+            $table->string('ip_address');
             $table->string('description');
             $table->timestamps();
         });

@@ -9,12 +9,17 @@ use App\Doctor;
 use App\Speciality;
 use App\Appointment;
 use App\DoctorSpeciality;
+use App\Log;
 use DB;
+use App\Http\Helpers\LogHelper;
 
 class LogController extends Controller
 {
-    public function createLog() 
-    {
-        
-    }
+   public function index() 
+   {
+      LogHelper::log("test");
+      $logs = Log::all();
+
+      return view('logs.index', ['logs' => $logs]);
+   }
 }
