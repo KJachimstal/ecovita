@@ -8,6 +8,7 @@ use App\Appointment;
 use App\Speciality;
 use App\Doctor;
 use DB;
+use App\Log;
 use DateTime;
 
 
