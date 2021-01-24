@@ -6,7 +6,7 @@
       <thead>
           <tr>
               <th scope="col">ID</th>
-              <th scope="col">Data i czas</th>
+              {{-- <th scope="col">Data i czas</th> --}}
               <th scope="col">Imię i nazwisko</th>   
               <th scope="col">Adres IP</th>
               <th scope="col">Opis</th>
@@ -18,9 +18,9 @@
               <td>
                 {{ $log->id }}
               </td>
-              <td>
+              {{-- <td>
                 {{ $log->timestamps }}
-              </td>
+              </td> --}}
               <td>
                 {{ $log->full_name }}
               </td>

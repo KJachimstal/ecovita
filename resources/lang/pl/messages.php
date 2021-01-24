@@ -16,5 +16,6 @@ return [
   'doctor_succes_change' => 'Pomyślnie edytowano doktora',
   'doctor_succed_change_specjalization' => 'Pomyślnie edytowano specjalizację doktora',
   'appointments_succed_create' => 'Pomyślnie utworzono wizytę',
-  'unauthorized' => 'Brak dostępu'
+  'unauthorized' => 'Brak dostępu',
+  'cancel_appointment_succed' => 'Pomyślnie odwołano wizytę'
 ];

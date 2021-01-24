@@ -29,7 +29,7 @@ class SpecialitiesController extends Controller
         }else {
             $viewName = Auth::user()->isActiveEmployee ? 'specialities.admin.index' : 'specialities.index';
         }
-        return view($viewName, ['specialities' => $specialities->paginate(8)]);
+        return view($viewName, ['specialities' => $specialities->paginate(5)]);
     }
 
     /**

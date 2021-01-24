@@ -20,6 +20,6 @@ class LogController extends Controller
    {
       $logs = Log::query();
 
-      return view('logs.index', ['logs' => $logs->paginate(20)]);
+      return view('logs.index', ['logs' => $logs->paginate(8)]);
    }
 }

@@ -36,6 +36,6 @@
       </div>
     </div>
   </div>
-  <div class="footer-copyright text-center">© 2020 Copyright: Konrad Jachimstal
+  <div class="footer-copyright text-center">© 2021 Copyright: Konrad Jachimstal
   </div>
 </footer>
