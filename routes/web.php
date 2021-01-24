@@ -45,4 +45,4 @@ Route::post('users/{user}/appointments/{appointment}/cancel', 'UserAppointmentsC
 
 Route::get('users/{user}/edit_doctor', 'UsersController@edit_doctor')->name('users.edit_doctor');
 Route::post('users/{user}/update_doctor', 'UsersController@update_doctor')->name('users.update_doctor');
-Route::get('logs', 'LogController@index');
+Route::get('logs', 'LogController@index')->name('logs.index');

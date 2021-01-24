@@ -8,6 +8,9 @@
   <li class="nav-item {{ Request::is('appointments*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('appointments.index') }}">Zarządzaj wizytami</a>
   </li>
+  <li class="nav-item {{ Request::is('logs') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('logs.index') }}">Logi</a>
+  </li>
 @else
   @include('layouts.shared.panels.patient')
 @endif

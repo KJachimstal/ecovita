@@ -13,13 +13,14 @@ use App\Log;
 use DB;
 use App\Http\Helpers\LogHelper;
 
+
 class LogController extends Controller
 {
    public function index() 
    {
       LogHelper::log("test");
-      $logs = Log::all();
+      $logs = Log::query();
 
-      return view('logs.index', ['logs' => $logs]);
+      return view('logs.index', ['logs' => $logs->paginate(20)]);
    }
 }
