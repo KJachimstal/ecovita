@@ -122,7 +122,7 @@ class UsersController extends Controller
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));
 
-        if ($user->userable_type != null && $request->get('userable_type') == null) {
+        if ($user->userable_type != null && $request->get('userable_type') == null || $request->get('userable_type') == 'App\Employee') {
             if ($user->isDoctor) {
                 $appointments = $user->userable->appointments->toArray();
 
@@ -218,8 +218,8 @@ class UsersController extends Controller
             }
 
             DB::commit();
-            LogHelper::log(__('logs.doctor_succed_change'));
-            return redirect('users')->with('success', __('messages.doctor_succed_change'));
+            LogHelper::log(__('logs.doctor_succed_change_specjalization'));
+            return redirect('users')->with('success', __('messages.doctor_succed_change_specjalization'));
 
         } catch (ActiveAppointmentException $e) {
             DB::rollback();

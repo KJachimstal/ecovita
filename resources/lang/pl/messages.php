@@ -13,5 +13,8 @@ return [
   'active_appointment_error' => 'Wybrany doktor posiada aktywne wizyty, usuń wizyty przed dokonaniem zmian',
   'user_succed_change' => 'Pomyślnie edytowano użytkownika',
   'speciality_error_exists' => 'Nie możesz dodać dwóch takich samych specjalności',
-  'doctor_succes_change' => 'Pomyślnie edytowano doktora'
+  'doctor_succes_change' => 'Pomyślnie edytowano doktora',
+  'doctor_succed_change_specjalization' => 'Pomyślnie edytowano specjalizację doktora',
+  'appointments_succed_create' => 'Pomyślnie utworzono wizytę',
+  'unauthorized' => 'Brak dostępu'
 ];

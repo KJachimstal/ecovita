@@ -18,6 +18,7 @@ return [
   'speciality_succed_change' => 'Pomoślnie zaktualizowano specjalizację',
   'speciality_succed_delete' => 'Pomyślnie usunięto specjalizację',
   'doctor_succed_change' => 'Pomyślnie edytowano doktora',
+  'doctor_succed_change_specjalization' => 'Pomyślnie edytowano specjalizację doktora',
   'unauthorized_user_appointments' => 'Niepowołano dostęp do wizyt użytkownika',
   '' => 'Pomyślnie edytowano doktora'
 ];
