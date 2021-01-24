@@ -11,6 +11,7 @@ use App\Doctor;
 use App\Log;
 use DB;
 use DateTime;
+use App\Http\Helpers\LogHelper;
 
 class UserAppointmentsController extends Controller
 {
@@ -25,6 +26,7 @@ class UserAppointmentsController extends Controller
             $currentUser = Auth::user();
 
             if ($id != $currentUser->id && !$currentUser->isEmployee) {
+                LogHelper::log(__('logs.unauthorized_user_appointments'));
                 return redirect("/users/{$currentUser->id}/appointments")->with('error', __('messages.unauthorized'));
             }
 
@@ -128,8 +130,10 @@ class UserAppointmentsController extends Controller
             $appointment->is_available = true;
             $appointment->save();
 
+            LogHelper::log(__('logs.appointment_succed_cancel'));
             return redirect("users/{$user_id}/appointments")->with('success', __('messages.cancel_appointment_succed'));
         } else {
+            LogHelper::log(__('logs.appointment_error_cancel'));
             return redirect("users/{$user_id}/appointments")->with('error', __('messages.cancel_appointment_unavailable'));
         }
     }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Speciality;
 use App\Log;
 use DB;
+use App\Http\Helpers\LogHelper;
 
 class SpecialitiesController extends Controller
 {
@@ -64,6 +65,7 @@ class SpecialitiesController extends Controller
         $new_speciality->name = $request->get('name');
         $new_speciality->save();
 
+        LogHelper::log(__('logs.speciality_succed_create'));
         return redirect('specialities')->with('success', __('messages.speciality_succed_add'));
     }
 
@@ -106,6 +108,7 @@ class SpecialitiesController extends Controller
         $speciality->name = $request->get('name');
         $speciality->save();
         
+        LogHelper::log(__('logs.speciality_succed_change'));
         return redirect('specialities')->with('success', __('messages.speciality_succed_change'));
     }
 
@@ -120,6 +123,7 @@ class SpecialitiesController extends Controller
         $speciality = Speciality::find($id);
         $speciality->delete();
 
+        LogHelper::log(__('logs.speciality_succed_delete'));
         return redirect('specialities')->with('success', __('messages.speciality_succed_delete'));
     }
 }

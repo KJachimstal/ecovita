@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Log;
+use App\Http\Helpers\LogHelper;
 
 class SettingsController extends Controller
 {
@@ -45,7 +46,8 @@ class SettingsController extends Controller
         $user->street_number = $request->get('street_number');
         $user->is_verified = 0;
         $user->save();
-        
+
+        LogHelper::log(__('logs.user_succed_change_profile'));
         return redirect('/')->with('success', __('messages.succed_change'));
     }
 
@@ -68,10 +70,12 @@ class SettingsController extends Controller
             $user = Auth::user();
             $user->password = Hash::make($requestData['new_password']);
             $user->save();
+            LogHelper::log(__('logs.user_succed_change_passsword'));
             return back()->with('success', 'Hasło zostało pomyślnie zmienione.');
         }
         else
         {
+            LogHelper::log(__('logs.user_error_change_password'));
             return back()->withErrors(['Przepraszamy twoje hasło nie zostało rozpoznane. Spróbuj ponownie.']);
         }
     }

@@ -10,6 +10,7 @@ use App\Doctor;
 use DB;
 use App\Log;
 use DateTime;
+use App\Http\Helpers\LogHelper;
 
 
 class AppointmentsController extends Controller
@@ -93,8 +94,7 @@ class AppointmentsController extends Controller
         $appointment->is_available = empty($request->get('user_id'));
         $appointment->save();
 
-        log("Dupa dupa");
-
+        LogHelper::log(__('logs.appointments_succed_create'));
         return redirect('appointments')->with('success', __('messages.appointments_succed_create'));
     }
 
@@ -146,6 +146,7 @@ class AppointmentsController extends Controller
         $appointment->is_available = empty($appointment->user_id);
         $appointment->save();
 
+        LogHelper::log(__('logs.appointment_succed_change'));
         return redirect('appointments')->with('success', __('messages.appointment_succed_change'));
     }
 
@@ -160,7 +161,8 @@ class AppointmentsController extends Controller
         $appointment = Appointment::find($id);
         print_r($appointment);
         $appointment->delete();
-
+        
+        LogHelper::log(__('logs.appointments_succed_delete'));
         return redirect('appointments')->with('success', __('messages.appointments_succed_delete'));
     }
 
@@ -179,8 +181,10 @@ class AppointmentsController extends Controller
             $appointment->is_available = false;
             $appointment->save();
 
+            LogHelper::log(__('logs.appointment_succed_enroll'));
             return redirect('/appointments')->with('success', __('messages.appointment_succed'));
         } else {
+            LogHelper::log(__('logs.appointment_unavailable_enroll'));
             return redirect('/appointments')->with('error', __('messages.appointment_unavailable'));
         }
     }

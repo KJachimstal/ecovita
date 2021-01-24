@@ -12,6 +12,7 @@ use App\DoctorSpeciality;
 use Illuminate\Support\Facades\Hash;
 use App\Exceptions\ActiveAppointmentException;
 use DB;
+use App\Http\Helpers\LogHelper;
 
 class UsersController extends Controller
 {
@@ -87,6 +88,7 @@ class UsersController extends Controller
         $user->is_verified = 0;
         $user->save();
         
+        LogHelper::log(__('logs.user_succed_create'));
         return redirect('users')->with('success', __('messages.user_succed_create'));
     }
 
@@ -125,6 +127,7 @@ class UsersController extends Controller
                 $appointments = $user->userable->appointments->toArray();
 
                 if (!empty($appointments)) {
+                    LogHelper::log(__('logs.appointment_active_error'));
                     return redirect('users')->with('error', __('messages.active_appointment_error'));  
                 }
             }
@@ -166,6 +169,7 @@ class UsersController extends Controller
         }
         $user->save();
         
+        LogHelper::log(__('logs.user_succed_change'));
         return redirect('users')->with('success', __('messages.user_succed_change'));
     }
 
@@ -214,10 +218,12 @@ class UsersController extends Controller
             }
 
             DB::commit();
-            return redirect('users')->with('success', __('messages.doctor_succes_change'));
+            LogHelper::log(__('logs.doctor_succed_change'));
+            return redirect('users')->with('success', __('messages.doctor_succed_change'));
 
         } catch (ActiveAppointmentException $e) {
             DB::rollback();
+            LogHelper::log(__('logs.appointment_active_error'));
             return redirect('users')->with('error', __('messages.active_appointment_error'));
         }
 
@@ -225,6 +231,7 @@ class UsersController extends Controller
         $doctor->licensure = $request->get('licensure');
         $doctor->save();
 
+        LogHelper::log(__('logs.doctor_succed_change'));
         return redirect('users')->with('success', __('messages.doctor_succed_change'));
     }
 
