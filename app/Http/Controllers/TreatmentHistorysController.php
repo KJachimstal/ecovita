@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use App\Http\Helpers\LogHelper;
 
 class TreatmentHistoryController extends Controller
 {
+    public function __construct(Request $request) 
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index()
     {
-        //
+        $treatment_histories = treatment_histories::query();
+
+        return view('treatment_histories.index', ['treatment_histories' => $treatment_histories->paginate(8)]);
     }
 
     /**

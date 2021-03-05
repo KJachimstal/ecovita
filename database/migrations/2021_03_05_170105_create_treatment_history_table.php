@@ -13,7 +13,7 @@ class CreateTreatmentHistoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('treatment_history', function (Blueprint $table) {
+        Schema::create('treatment_histories', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->date('visit_date');
@@ -30,6 +30,6 @@ class CreateTreatmentHistoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('treatment_history');
+        Schema::dropIfExists('treatment_histories');
     }
 }
