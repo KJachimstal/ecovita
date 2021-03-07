@@ -13,7 +13,7 @@ class CreateRegisterTable extends Migration
      */
     public function up()
     {
-        Schema::create('register', function (Blueprint $table) {
+        Schema::create('registers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->date('visit_date');
