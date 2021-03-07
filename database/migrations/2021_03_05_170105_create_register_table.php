@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTreatmentHistoryTable extends Migration
+class CreateRegisterTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTreatmentHistoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('treatment_histories', function (Blueprint $table) {
+        Schema::create('register', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->date('visit_date');
@@ -30,6 +30,6 @@ class CreateTreatmentHistoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('treatment_histories');
+        Schema::dropIfExists('register');
     }
 }

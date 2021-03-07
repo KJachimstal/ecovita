@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Helpers\LogHelper;
 
-class TreatmentHistoryController extends Controller
+class RegistersController extends Controller
 {
     public function __construct(Request $request) 
     {
@@ -19,9 +19,7 @@ class TreatmentHistoryController extends Controller
      */
      public function index()
     {
-        $treatment_histories = treatment_histories::query();
-
-        return view('treatment_histories.index', ['treatment_histories' => $treatment_histories->paginate(8)]);
+        //
     }
 
     /**
