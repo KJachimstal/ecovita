@@ -25,6 +25,7 @@ Route::resource('users', 'UsersController');
 Route::resource('specialities', 'SpecialitiesController');
 Route::resource('appointments', 'AppointmentsController');
 Route::resource('users.appointments', 'UserAppointmentsController');
+Route::resource('registers', 'RegistersController');
 
 // ----------------------------------- \/
 Route::get('settings/profile', 'SettingsController@edit_profile')->name('settings.edit_profile');
