@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRegisterTable extends Migration
+class CreateDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,10 +16,9 @@ class CreateRegisterTable extends Migration
         Schema::create('details', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('appointments_id')->constrained('appointments');
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('doctor_speciality_id')->constrained('doctor_speciality');
-            $table->text('description');
+            $table->foreignId('appointment_id')->nullable(false)->constrained('appointments');
+            $table->foreignId('doctor_speciality_id')->nullable(false)->constrained('doctor_speciality');
+            $table->string('description')->nullable(false);
         });
     }
 
@@ -30,6 +29,6 @@ class CreateRegisterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('register');
+        Schema::dropIfExists('details');
     }
 }

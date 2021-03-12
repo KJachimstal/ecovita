@@ -26,4 +26,8 @@ class DoctorSpeciality extends Model
     public function getNameAttribute() {
         return "{$this->doctor->user->fullName} - {$this->speciality->name}";
     }
+
+    public function detail() {
+        return $this->hasOne(Detail::class);
+    }
 }
