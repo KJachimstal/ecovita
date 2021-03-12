@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Helpers\LogHelper;
 
-class RegistersController extends Controller
+class DetailsController extends Controller
 {
     public function __construct(Request $request) 
     {

@@ -13,12 +13,12 @@ class CreateRegisterTable extends Migration
      */
     public function up()
     {
-        Schema::create('registers', function (Blueprint $table) {
+        Schema::create('details', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->date('visit_date');
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('doctor_speciality_id')->constrained('doctor_speciality')->onDelete('cascade');
+            $table->foreignId('appointments_id')->constrained('appointments');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('doctor_speciality_id')->constrained('doctor_speciality');
             $table->text('description');
         });
     }
