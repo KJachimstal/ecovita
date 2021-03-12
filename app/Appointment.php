@@ -9,7 +9,7 @@ use App\User;
 class Appointment extends Model
 {
     protected $fillable = [
-        'begin_date', 'is_available',
+        'begin_date', 'status',
     ];
     
     public function doctorSpeciality() {

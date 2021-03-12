@@ -3,12 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\ModelStatus\HasStatuses;
 
 class Details extends Model
 {
-    use HasStatuses;
-
     protected $fillable = [
         'description',
     ];

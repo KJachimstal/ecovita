@@ -32,11 +32,9 @@ class AppointmentsController extends Controller
             $join->on('users.userable_id', '=', 'doctors.id');
             $join->where('users.userable_type', '=', 'App\Doctor');
         })->select(DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'), 'doctors.id')->pluck('full_name', 'id');
-        
 
-        $appointments = Auth::user()->isActiveEmployee ? Appointment::query() : Appointment::where('is_available', true);
+        $appointments = Auth::user()->isActiveEmployee ? Appointment::query() : Appointment::where('status', 'Available');
         
-
         if ($request->filled('speciality_id') || $request->filled('doctor_id')) {
             $appointments->leftJoin('doctor_speciality as doctor_speciality', 'doctor_speciality.id', '=', 'doctor_speciality_id')
             ->select('appointments.*');
@@ -143,7 +141,7 @@ class AppointmentsController extends Controller
         $appointment->user_id = $request->get('user_id');
         $appointment->doctor_speciality_id = $request->get('doctor_speciality_id');
         $appointment->begin_date = $request->get('begin_date');
-        $appointment->is_available = empty($appointment->user_id);
+        $appointment->status = empty($appointment->user_id) ? 'available' : 'booked';
         $appointment->save();
 
         LogHelper::log(__('logs.appointment_succed_change'));
@@ -176,9 +174,9 @@ class AppointmentsController extends Controller
     public function enroll($id)
     {
         $appointment = Appointment::find($id);
-        if ($appointment->is_available) {
+        if ($appointment->status == 'Available') {
             $appointment->user_id = Auth::user()->id;
-            $appointment->is_available = false;
+            $appointment->status = 'Booked';
             $appointment->save();
 
             LogHelper::log(__('logs.appointment_succed_enroll'));

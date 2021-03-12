@@ -40,7 +40,14 @@ class DetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $detail = new Detail;
+        $detail->doctor_speciality_id = $request->get('doctor_speciality_id');
+        $detail->appointment_id = $request->get('appointment_id');
+        $detail->description = $request->get('description');
+        $detail->save();
+
+        LogHelper::log(__('logs.details_succed_create'));
+        return redirect('')->with('success', __('messages.details_succed_create'));
     }
 
     /**

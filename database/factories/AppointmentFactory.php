@@ -14,15 +14,15 @@ $factory->define(Appointment::class, function (Faker $faker) {
     $user_id = $faker->randomElement([null, User::all()->random()->id]);
     
     if (empty($user_id)) {
-        $is_avaliable = 1;
+        $status = 'Available';
     }else {
-        $is_avaliable = 0;
+        $status = 'Booked';
     }
     
     return [
         'doctor_speciality_id' => $doctor_speciality_id,
         'begin_date' => $begin_date,
         'user_id' => $user_id,
-        'is_available' => $is_avaliable,
+        'status' => $status,
     ];
 });
