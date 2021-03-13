@@ -1,8 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
-class AppointmentSeeder extends Seeder
+class DetailSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +13,6 @@ class AppointmentSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Appointment::class, 20)->create();
+        factory(App\Register::class, 50)->create();
     }
 }

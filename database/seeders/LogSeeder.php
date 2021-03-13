@@ -1,8 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
-class DetailSeeder extends Seeder
+class LogSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +13,6 @@ class DetailSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Register::class, 50)->create();
+        //
     }
 }

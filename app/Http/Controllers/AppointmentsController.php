@@ -11,6 +11,7 @@ use DB;
 use App\Log;
 use DateTime;
 use App\Http\Helpers\LogHelper;
+use App\Enums\AppointmentStatus;
 
 
 class AppointmentsController extends Controller
@@ -33,7 +34,7 @@ class AppointmentsController extends Controller
             $join->where('users.userable_type', '=', 'App\Doctor');
         })->select(DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'), 'doctors.id')->pluck('full_name', 'id');
 
-        $appointments = Auth::user()->isActiveEmployee ? Appointment::query() : Appointment::where('status', 'Available');
+        $appointments = Auth::user()->isActiveEmployee ? Appointment::query() : Appointment::where('status', AppointmentStatus::Available);
         
         if ($request->filled('speciality_id') || $request->filled('doctor_id')) {
             $appointments->leftJoin('doctor_speciality as doctor_speciality', 'doctor_speciality.id', '=', 'doctor_speciality_id')
@@ -89,7 +90,7 @@ class AppointmentsController extends Controller
         $appointment->user_id = $request->get('user_id');
         $appointment->doctor_speciality_id = $request->get('doctor_speciality_id');
         $appointment->begin_date = $request->get('begin_date');
-        $appointment->is_available = empty($request->get('user_id'));
+        $appointment->status = empty($request->get('user_id')) ? AppointmentStatus::Available : AppointmentStatus::Booked;
         $appointment->save();
 
         LogHelper::log(__('logs.appointments_succed_create'));
@@ -141,7 +142,7 @@ class AppointmentsController extends Controller
         $appointment->user_id = $request->get('user_id');
         $appointment->doctor_speciality_id = $request->get('doctor_speciality_id');
         $appointment->begin_date = $request->get('begin_date');
-        $appointment->status = empty($appointment->user_id) ? 'available' : 'booked';
+        $appointment->status = empty($appointment->user_id) ? AppointmentStatus::Available : AppointmentStatus::Booked;
         $appointment->save();
 
         LogHelper::log(__('logs.appointment_succed_change'));
@@ -176,7 +177,7 @@ class AppointmentsController extends Controller
         $appointment = Appointment::find($id);
         if ($appointment->status == 'Available') {
             $appointment->user_id = Auth::user()->id;
-            $appointment->status = 'Booked';
+            $appointment->status = AppointmentStatus::Booked;
             $appointment->save();
 
             LogHelper::log(__('logs.appointment_succed_enroll'));
