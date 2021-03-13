@@ -3,9 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\DoctorSpeciality;
+use App\Appointment;
 
 class Details extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'description',
     ];

@@ -13,6 +13,6 @@ class DetailSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Register::class, 50)->create();
+        Detail::factory()->count(50)->create();
     }
 }

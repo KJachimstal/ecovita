@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeders;
+use App\Appointment;
+use Illuminate\Database\Seeder;
 
 class AppointmentSeeder extends Seeder
 {
@@ -13,6 +14,6 @@ class AppointmentSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Appointment::class, 20)->create();
+        Appointment::factory()->count(40)->create();
     }
 }

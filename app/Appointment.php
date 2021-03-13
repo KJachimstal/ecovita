@@ -3,11 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\DoctorSpeciality;
 use App\User;
+use App\Detail;
 
 class Appointment extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'begin_date', 'status',
     ];

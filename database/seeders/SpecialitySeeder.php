@@ -4,13 +4,15 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Flynsarmy\CsvSeeder\CsvSeeder;
+use App\Speciality;
+use DB;
 
 class SpecialitySeeder extends CsvSeeder
 {
 	public function __construct()
 	{
 		$this->table = 'specialities';
-		$this->filename = base_path().'/database/seeds/csvs/specialities.csv';
+		$this->filename = base_path().'/database/seeders/csvs/specialities.csv';
 	}
 
 	public function run()
