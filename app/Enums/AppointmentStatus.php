@@ -11,7 +11,8 @@ use BenSampo\Enum\Enum;
  */
 final class AppointmentStatus extends Enum
 {
-    const OptionOne =   0;
-    const OptionTwo =   1;
-    const OptionThree = 2;
+    const Available = 0;
+    const Booked = 1;
+    const Pending = 2;
+    const Finished = 3;
 }
