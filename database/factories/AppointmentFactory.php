@@ -6,6 +6,7 @@ use App\Appointment;
 use Faker\Generator as Faker;
 use App\DoctorSpeciality;
 use App\User;
+use App\Enums\AppointmentStatus;
 
 $factory->define(Appointment::class, function (Faker $faker) {
     
@@ -14,9 +15,9 @@ $factory->define(Appointment::class, function (Faker $faker) {
     $user_id = $faker->randomElement([null, User::all()->random()->id]);
     
     if (empty($user_id)) {
-        $status = 'Available';
+        $status = AppointmentStatus::Available;
     }else {
-        $status = 'Booked';
+        $status = AppointmentStatus::Booked;
     }
     
     return [

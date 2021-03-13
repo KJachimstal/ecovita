@@ -18,7 +18,7 @@ class CreateAppointmentsTable extends Migration
             $table->foreignId('doctor_speciality_id')->constrained('doctor_speciality')->onDelete('cascade');
             $table->dateTime('begin_date');
             $table->foreignId('user_id')->nullable()->constrained();
-            $table->string('status');
+            $table->integer('status');
             $table->timestamps();
         });
     }
