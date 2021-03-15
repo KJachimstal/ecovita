@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use App\Doctor;
+use App\Employee;
 
 class UserFactory extends Factory
 {
@@ -37,8 +39,8 @@ class UserFactory extends Factory
             'street' => $this->faker->streetName,
             'street_number' => $this->faker->streetAddress,
             'userable_type' => $this->faker->randomElement([
-                App\Doctor::class,
-                App\Employee::class,
+                Doctor::class,
+                Employee::class,
                 null
             ]),
             'userable_id' => function(array $user) {
@@ -46,11 +48,11 @@ class UserFactory extends Factory
                     return null;
                 }
 
-                if ($user['userable_type'] == App\Doctor::class) {
-                    return \App\Doctor::factory()->create()->id;
+                if ($user['userable_type'] == Doctor::class) {
+                    return Doctor::factory()->create()->id;
                 }
 
-                return \App\Employee::factory()->create()->id;
+                return Employee::factory()->create()->id;
             }
         ];
     }
