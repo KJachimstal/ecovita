@@ -3,12 +3,19 @@
 @section('content')
 
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
+  <form action="" class="form-inline">
+    {{-- {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...'])}} --}}
+    {{-- {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz lekarza...'])}} --}}
+    <button type="submit" class="btn btn-primary">Filtruj</button>
+  </form>
+
   <table class="table table-striped">
     <thead>
         <tr>
             <th scope="col">Termin</th>
             <th scope="col">Specjalizacja</th>   
             <th scope="col">Lekarz</th>
+            <th scope="col">Status</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -23,6 +30,9 @@
             </td>
             <td>
               {{ $appointment->doctorSpeciality->doctor->user->fullName }}
+            </td>
+            <td>
+              @lang("models/appointment.status.{$appointment->statusKey}")
             </td>
             <td>
               <a href="{{ url("users/{$appointment->user_id}/appointments/{$appointment->id}/cancel") }}">Odwołaj wizytę</a>

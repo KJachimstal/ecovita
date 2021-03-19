@@ -15,4 +15,8 @@ final class AppointmentStatus extends Enum
     const Booked = 1;
     const Pending = 2;
     const Finished = 3;
+
+    public static function getKey($value): string {
+        return strtolower(parent::getKey($value));
+    }
 }

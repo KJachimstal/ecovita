@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\DoctorSpeciality;
 use App\User;
 use App\Detail;
+use App\Enums\AppointmentStatus;
 
 class Appointment extends Model
 {
@@ -26,5 +27,9 @@ class Appointment extends Model
 
     public function detail() {
         return $this->hasOne(Detail::class);
+    }
+
+    public function getStatusKeyAttribute() {
+        return AppointmentStatus::getKey($this->status);
     }
 }

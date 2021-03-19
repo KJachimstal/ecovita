@@ -137,4 +137,8 @@ class UserAppointmentsController extends Controller
             return redirect("users/{$user_id}/appointments")->with('error', __('messages.cancel_appointment_unavailable'));
         }
     }
+
+    public function show_history($user_id, Request $request) {
+        return view('home', ['user_id' => $user_id]);
+    }
 }

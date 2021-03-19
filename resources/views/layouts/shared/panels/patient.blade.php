@@ -7,6 +7,3 @@
 <li class="nav-item {{ Request::is('users/*/appointments*') ? 'active' : '' }}">
   <a class="nav-link" href="{{ route('users.appointments.index', ['user' => Auth::user()]) }}">Moje wizyty</a>
 </li>
-<li class="nav-item {{ Request::is('users/*/appointments*') ? 'active' : '' }}">
-  <a class="nav-link" href="{{ route('details.index', ['user' => Auth::user()]) }}">Historia wizyt</a>
-</li>
