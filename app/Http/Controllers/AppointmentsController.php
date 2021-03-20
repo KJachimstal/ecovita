@@ -12,6 +12,7 @@ use App\Log;
 use DateTime;
 use App\Http\Helpers\LogHelper;
 use App\Enums\AppointmentStatus;
+use App\Queries\Appointments;
 
 
 class AppointmentsController extends Controller
@@ -34,30 +35,11 @@ class AppointmentsController extends Controller
             $join->where('users.userable_type', '=', 'App\Doctor');
         })->select(DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'), 'doctors.id')->pluck('full_name', 'id');
 
-        $appointments = Auth::user()->isActiveEmployee ? Appointment::query() : Appointment::where('status', AppointmentStatus::Available);
-        
-        if ($request->filled('speciality_id') || $request->filled('doctor_id')) {
-            $appointments->leftJoin('doctor_speciality as doctor_speciality', 'doctor_speciality.id', '=', 'doctor_speciality_id')
-            ->select('appointments.*');
-
-            if ($request->filled('speciality_id')) {
-                $appointments->where('doctor_speciality.speciality_id', $request->speciality_id);
-            }
-
-            if ($request->filled('doctor_id')) {
-                $appointments->where('doctor_speciality.doctor_id', $request->doctor_id);
-            }
-        }
-
-        if ($request->filled('begin_date')) {
-            $appointments->whereBetween('begin_date', ["{$request->begin_date} 00:00:00", "{$request->begin_date} 23:59:59"]);
-        }
-
-        $appointments->orderBy('begin_date');
+        $appointments = new Appointments\GetAllWithFiltersQuery($request, Auth::user());
 
         $viewName = Auth::user()->isActiveEmployee ? 'appointments.admin.index' : 'appointments.index';
         return view($viewName, 
-            ['appointments' => $appointments->paginate(8),
+            ['appointments' => $appointments->call()->paginate(8),
             'specialities' => $specialities,
             'doctors' => $doctors]
         );

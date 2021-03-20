@@ -4,7 +4,7 @@
 
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
   <form action="" class="form-inline">
-    {{-- {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...'])}} --}}
+    {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...'])}}
     {{-- {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz lekarza...'])}} --}}
     <button type="submit" class="btn btn-primary">Filtruj</button>
   </form>

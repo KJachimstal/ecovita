@@ -9,6 +9,7 @@ use App\Appointment;
 use App\Speciality;
 use App\Doctor;
 use App\Log;
+use App\Enums\AppointmentStatus;
 use DB;
 use DateTime;
 use App\Http\Helpers\LogHelper;
@@ -41,8 +42,15 @@ class UserAppointmentsController extends Controller
      */
     public function index()
     {
+        $specialities = Speciality::pluck('name', 'id');
         $appointments = $this->user->appointments;
-        return view('users.appointments.index', ['appointments' => $appointments]);
+
+        return view('users.appointments.index', 
+        [
+            'appointments' => $appointments,
+            'specialities' => $specialities,
+            // 'doctors' => $doctors
+        ]);
     }
 
     /**
