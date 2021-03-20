@@ -13,6 +13,7 @@ use DateTime;
 use App\Http\Helpers\LogHelper;
 use App\Enums\AppointmentStatus;
 use App\Queries\Appointments;
+use App\Queries\Doctors;
 
 
 class AppointmentsController extends Controller
@@ -30,19 +31,15 @@ class AppointmentsController extends Controller
     public function index(Request $request)
     {
         $specialities = Speciality::pluck('name', 'id');
-        $doctors = Doctor::leftJoin('users', function($join) {
-            $join->on('users.userable_id', '=', 'doctors.id');
-            $join->where('users.userable_type', '=', 'App\Doctor');
-        })->select(DB::raw('CONCAT(users.first_name, " ", users.last_name) AS full_name'), 'doctors.id')->pluck('full_name', 'id');
-
-        $appointments = new Appointments\GetAllWithFiltersQuery($request, Auth::user());
+        $doctors = (new Doctors\GetAllWithUsersQuery())->call();
+        $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user()))->call();
 
         $viewName = Auth::user()->isActiveEmployee ? 'appointments.admin.index' : 'appointments.index';
-        return view($viewName, 
-            ['appointments' => $appointments->call()->paginate(8),
+        return view($viewName, [
+            'appointments' => $appointments->paginate(8),
             'specialities' => $specialities,
-            'doctors' => $doctors]
-        );
+            'doctors' => $doctors->pluck('full_name', 'id')
+        ]);
     }
 
     /**

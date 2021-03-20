@@ -13,6 +13,8 @@ use App\Enums\AppointmentStatus;
 use DB;
 use DateTime;
 use App\Http\Helpers\LogHelper;
+use App\Queries\Appointments;
+use App\Queries\Doctors;
 
 class UserAppointmentsController extends Controller
 {
@@ -40,16 +42,18 @@ class UserAppointmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $specialities = Speciality::pluck('name', 'id');
-        $appointments = $this->user->appointments;
+        $doctors = (new Doctors\GetAllWithUsersQuery())->call();
+        $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user()))->call();
+        $status = AppointmentStatus::asSelectArray();
 
-        return view('users.appointments.index', 
-        [
+        return view('users.appointments.index', [
             'appointments' => $appointments,
             'specialities' => $specialities,
-            // 'doctors' => $doctors
+            'doctors' => $doctors->pluck('full_name', 'id'),
+            'status' => $status
         ]);
     }
 
