@@ -6,7 +6,7 @@
   <form action="" class="form-inline">
     {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...'])}}
     {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz lekarza...'])}}
-    {{Form::select('status', $status, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz status...'])}}
+    {{Form::select('status', $statuses, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz status...'])}}
     <button type="submit" class="btn btn-primary">Filtruj</button>
   </form>
 

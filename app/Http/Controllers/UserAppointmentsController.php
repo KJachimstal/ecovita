@@ -15,6 +15,7 @@ use DateTime;
 use App\Http\Helpers\LogHelper;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
+use App\Helpers\AppointmentHelper;
 
 class UserAppointmentsController extends Controller
 {
@@ -47,13 +48,13 @@ class UserAppointmentsController extends Controller
         $specialities = Speciality::pluck('name', 'id');
         $doctors = (new Doctors\GetAllWithUsersQuery())->call();
         $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user()))->call();
-        $status = AppointmentStatus::asSelectArray();
+        $statuses = AppointmentHelper::getStatusesForSelect();
 
         return view('users.appointments.index', [
             'appointments' => $appointments,
             'specialities' => $specialities,
             'doctors' => $doctors->pluck('full_name', 'id'),
-            'status' => $status
+            'statuses' => $statuses
         ]);
     }
 
