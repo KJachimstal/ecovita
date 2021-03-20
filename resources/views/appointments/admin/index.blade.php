@@ -4,16 +4,17 @@
 <h3 class="font-weight-bold mb-4">Zarządzanie wizytami</h3>
   <div class="bg-white rounded p-4 mt-2 shadow-sm">
     <div class="row">
-      <div class="col-8">
+      <div class="col-10">
         <form action="" class="form-inline">
           {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...'])}}
           {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz lekarza...'])}}
           {{Form::date('begin_date', null, ['class' => 'form-control mr-sm-2'])}}
+          {{Form::select('status', $statuses, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz status...'])}}
           {{-- {{Form::date('begin_date', \Carbon\Carbon::now(), ['class' => 'form-control mr-sm-2'])}} --}}
           <button type="submit" class="btn btn-primary">Filtruj</button>
         </form>
       </div>
-      <div class="col-4 text-right">
+      <div class="col-2 text-right">
         <a href="{{ url("appointments/create") }}" class="btn btn-success ml-2">Dodaj wizytę</a>
       </div>
     </div>
@@ -25,7 +26,7 @@
               <th scope="col">Specjalizacja</th>   
               <th scope="col">Lekarz</th>
               <th scope="col">Zapisany pacjent</th>
-              <th scope='col'>Dostępna</th>
+              <th scope='col'>Status</th>
               <th scope="col">Opcje</th>
           </tr>
       </thead>
@@ -47,11 +48,7 @@
                 @endif
               </td>
               <td>
-                @if ($appointment->is_available)
-                  <i class="fas fa-check text-success"></i>
-                @else
-                  <i class="fas fa-times text-muted"></i>
-                @endif
+                @lang("models/appointment.status.{$appointment->statusKey}")
               </td>
               <td>
                 {{ Form::open(['method' => 'DELETE', 'route' => ['appointments.destroy', $appointment->id]]) }}

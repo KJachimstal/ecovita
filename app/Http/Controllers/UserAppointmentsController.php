@@ -47,11 +47,11 @@ class UserAppointmentsController extends Controller
     {
         $specialities = Speciality::pluck('name', 'id');
         $doctors = (new Doctors\GetAllWithUsersQuery())->call();
-        $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user()))->call();
+        $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user(), true))->call();
         $statuses = AppointmentHelper::getStatusesForSelect();
 
         return view('users.appointments.index', [
-            'appointments' => $appointments,
+            'appointments' => $appointments->paginate(8),
             'specialities' => $specialities,
             'doctors' => $doctors->pluck('full_name', 'id'),
             'statuses' => $statuses

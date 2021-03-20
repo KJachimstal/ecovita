@@ -14,7 +14,7 @@ use App\Http\Helpers\LogHelper;
 use App\Enums\AppointmentStatus;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
-
+use App\Helpers\AppointmentHelper;
 
 class AppointmentsController extends Controller
 {
@@ -33,12 +33,14 @@ class AppointmentsController extends Controller
         $specialities = Speciality::pluck('name', 'id');
         $doctors = (new Doctors\GetAllWithUsersQuery())->call();
         $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user()))->call();
+        $statuses = AppointmentHelper::getStatusesForSelect();
 
         $viewName = Auth::user()->isActiveEmployee ? 'appointments.admin.index' : 'appointments.index';
         return view($viewName, [
             'appointments' => $appointments->paginate(8),
             'specialities' => $specialities,
-            'doctors' => $doctors->pluck('full_name', 'id')
+            'doctors' => $doctors->pluck('full_name', 'id'),
+            'statuses' => $statuses
         ]);
     }
 

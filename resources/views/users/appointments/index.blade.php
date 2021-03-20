@@ -46,5 +46,6 @@
       @endforelse
     </tbody>
   </table>
+{{ $appointments->links() }}
 </div>
 @endsection
