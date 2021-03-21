@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('logout', 'Auth\LoginController@logout');
-Route::get('users/search', 'UsersController@search')->name('users.search');
+
 Route::get('doctor_specialities/search', 'DoctorsSpecialitiesController@search')->name('doctor_specialities.search');
 
 Route::resource('users', 'UsersController');
@@ -44,7 +44,11 @@ Route::post('appointments/{appointment}/enroll', 'AppointmentsController@enroll'
 Route::get('users/{user}/appointments/{appointment}/cancel', 'UserAppointmentsController@prepare_cancel');
 Route::post('users/{user}/appointments/{appointment}/cancel', 'UserAppointmentsController@cancel');
 
+Route::get('users/search', 'UsersController@search')->name('users.search');
 Route::get('users/{user}/edit_doctor', 'UsersController@edit_doctor')->name('users.edit_doctor');
 Route::post('users/{user}/update_doctor', 'UsersController@update_doctor')->name('users.update_doctor');
+
 Route::get('logs', 'LogController@index')->name('logs.index');
-// Route::get('doctors/{doctor}/appointments', 'DoctorsAppointmentsController');
+
+Route::get('doctors/{doctor}/appointments', 'DoctorsAppointmentsController@index')->name('doctor.appointments');
+Route::get('doctors/{doctor}/appointments/{appointment}/start', 'DoctorsAppointmentsController@start')->name('doctor.appointments.start');
