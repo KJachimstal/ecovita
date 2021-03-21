@@ -24,7 +24,7 @@
     </table>
     <div class="mt-4 d-flex justify-content-center">
       <button type="submit" class="btn btn-success">Zapisz się</button>
-      <a href="{{ url('appointments') }}" class="btn btn-light ml-2">Rezygnuję</a>
+      <a href="{{ url('appointments') }}" class="btn btn-light ml-2">Powrót</a>
     </div>
   {{ Form::close() }}
 

@@ -16,7 +16,7 @@
             <th scope="col">Termin</th>
             <th scope="col">Specjalizacja</th>   
             <th scope="col">Lekarz</th>
-            <th scope="col"></th>
+            <th scope="col">Opcje</th>
         </tr>
     </thead>
     <tbody>
@@ -32,7 +32,9 @@
               {{ $appointment->doctorSpeciality->doctor->user->fullName }}
             </td>
             <td>
-              <a href="{{ url("appointments/{$appointment->id}/enroll") }}">Zapisz się</a>
+              <a href="{{ url("appointments/{$appointment->id}/enroll") }}" class="btn btn-sm border btn-light">
+                <i class="fas fa-eye"></i>
+              </a>
             </td>
           </tr>
       @empty

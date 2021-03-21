@@ -17,7 +17,7 @@
             <th scope="col">Specjalizacja</th>   
             <th scope="col">Lekarz</th>
             <th scope="col">Status</th>
-            <th scope="col"></th>
+            <th scope="col">Opcje</th>
         </tr>
     </thead>
     <tbody>
@@ -36,7 +36,9 @@
               @lang("models/appointment.status.{$appointment->statusKey}")
             </td>
             <td>
-              <a href="{{ url("users/{$appointment->user_id}/appointments/{$appointment->id}/cancel") }}">Odwołaj wizytę</a>
+              <a href="{{ url("users/{$appointment->user_id}/appointments/{$appointment->id}/cancel") }}" class="btn btn-sm border btn-light">
+                <i class="fas fa-eye"></i>
+              </a>
             </td>
           </tr>
       @empty
