@@ -15,6 +15,23 @@ use App\Queries\Doctors;
 
 class DoctorsAppointmentsController extends Controller
 {
+    public function __construct(Request $request) 
+    {
+        $this->middleware('auth');
+
+        $this->middleware(function ($request, $next) {
+            $id = $request->route('doctor');
+            $currentUser = Auth::user();
+
+            if (!$currentUser->isDoctor) {
+                // LogHelper::log(__('logs.unauthorized_user_appointments'));
+                return $this->redirectToUnauthorized();
+            }
+
+            $this->doctor = Doctor::find($id);
+            return $next($request);
+        });
+    }
     
     public function index(Request $request)
     {
@@ -45,9 +62,10 @@ class DoctorsAppointmentsController extends Controller
     }
 
     
-    public function show($id)
+    public function show($doctor_id, $appointment_id)
     {
-        //
+        $appointment = Appointment::find($appointment_id);
+        return view('appointments.doctor.show', ['appointment' => $appointment]);
     }
 
     
@@ -70,6 +88,23 @@ class DoctorsAppointmentsController extends Controller
 
     public function start($doctor_id, $appointment_id)
     {
-        return view('appointments.doctor.start', ['appointment' => Appointment::find($appointment_id)]);
+        $appointment = Appointment::find($appointment_id);
+        // return print_r($appointment->doctorSpeciality->doctor->id);
+        if (!$this->isDoctorVisit($appointment)) return $this->redirectToUnauthorized();
+
+        // Update
+        $appointment->status = AppointmentStatus::Pending;
+        $appointment->save();
+        return print_r($appointment);
+        return redirect()->route('doctor.appointments.show', ['doctor' => $doctor_id, 'appointment' => $appointment_id])->with('success', __('doctor.appointments_succed_start'));
+    }
+
+    private function redirectToUnauthorized() {
+        return redirect("/")->with('error', __('messages.unauthorized'));
+    }
+    
+    private function isDoctorVisit($appointment)
+    {
+        return $appointment->doctorSpeciality->doctor->id == $this->doctor->id;
     }
 }

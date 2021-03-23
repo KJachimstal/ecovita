@@ -45,6 +45,11 @@
                 <a href="{{ route('appointments.show', ['appointment' => $appointment->id]) }}" class="btn btn-sm border btn-light">
                   <i class="fas fa-info"></i>
                 </a>
+                {{ Form::open(['method' => 'PUT', 'route' => ['doctor.appointments.start', ['doctor' => Auth::user()->userable_id, 'appointment' => $appointment->id]]]) }}
+                  <button class="btn btn-sm btn-secondary">
+                    <i class="fas fa-play mr-2"></i>Rozpocznij
+                  </button>
+                {{ Form::close() }}
               </td>
             </tr>
         @empty
