@@ -6,9 +6,10 @@
     <div class="row">
       <div class="col-10">
         <form action="" class="form-inline">
-          {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...'])}}
-          {{Form::date('begin_date', null, ['class' => 'form-control mr-sm-2'])}}
-          {{Form::select('status', $statuses, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz status...'])}}
+          {{ Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...']) }}
+          {{ Form::date('begin_date', null, ['class' => 'form-control mr-sm-2']) }}
+          {{ Form::select('status', $statuses, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz status...']) }}
+          {{ Form::select('user_id', $user ?? [], null, ['class' => 'form-control mr-sm-2 patient_search', 'placeholder' => 'Wyszukaj pacjenta..']) }}
           <button type="submit" class="btn btn-primary">Filtruj</button>
         </form>
       </div>
@@ -61,4 +62,5 @@
   </table>
   {{ $appointments->links() }}
   </div>
+  <script src="{{ URL::asset('js/search/patient.js') }}"></script>
 @endsection

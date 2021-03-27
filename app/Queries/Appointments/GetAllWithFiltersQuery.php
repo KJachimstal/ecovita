@@ -39,18 +39,21 @@ class GetAllWithFiltersQuery {
     }
 
     private function filterBySpeciality() {
-        if ($this->request->filled('speciality_id'))
-        $this->query = $this->query->where('doctor_speciality.speciality_id', $this->request->speciality_id);
+        if ($this->request->filled('speciality_id')) {
+            $this->query = $this->query->where('doctor_speciality.speciality_id', $this->request->speciality_id);
+        }
     }
 
     private function filterByDoctor() {
-        if ($this->request->filled('doctor_id'))
-        $this->query = $this->query->where('doctor_speciality.doctor_id', $this->request->doctor_id);
+        if ($this->request->filled('doctor_id')) {
+            $this->query = $this->query->where('doctor_speciality.doctor_id', $this->request->doctor_id);
+        }
     }
 
     private function filterByDate() {
-        if ($this->request->filled('begin_date'))
-        $this->query = $this->query->whereBetween('begin_date', ["{$this->request->begin_date} 00:00:00", "{$this->request->begin_date} 23:59:59"]);
+        if ($this->request->filled('begin_date')) {
+            $this->query = $this->query->whereBetween('begin_date', ["{$this->request->begin_date} 00:00:00", "{$this->request->begin_date} 23:59:59"]);
+        }
     }
 
     private function filterByStatus() {
