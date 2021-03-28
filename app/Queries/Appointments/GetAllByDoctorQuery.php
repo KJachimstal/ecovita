@@ -7,6 +7,7 @@ use App\Appointment;
 use App\Speciality;
 use App\User;
 use App\Doctor;
+use App\DoctorSpeciality;
 use App\Enums\AppointmentStatus;
 
 class GetAllByDoctorQuery {
@@ -37,6 +38,10 @@ class GetAllByDoctorQuery {
         }
     }
 
+    private function filterAllByDoctor() {
+        $this->query = $this->query->where('doctor_speciality.doctor_id', DoctorSpeciality::all()->where('doctor_id', $this->user->userable_id)->first()->doctor_id);
+    }
+
     private function filterBySpeciality() {
         if ($this->request->filled('speciality_id')) {
             $this->query = $this->query->where('doctor_speciality.speciality_id', $this->request->speciality_id);
@@ -63,6 +68,7 @@ class GetAllByDoctorQuery {
 
     public function call() {
         $this->joinDoctorSpecialities();
+        $this->filterAllByDoctor();
         $this->filterAllExceptGivenStatus();
         $this->filterBySpeciality();
         $this->filterByDate();

@@ -44,6 +44,7 @@ class DoctorsAppointmentsController extends Controller
         return view('appointments.doctor.index', [
             'appointments' => $appointments->paginate(8),
             'specialities' => $specialities,
+            'doctors' => $doctors,
             'statuses' => $statuses
         ]);
     }
@@ -88,14 +89,20 @@ class DoctorsAppointmentsController extends Controller
     public function start($doctor_id, $appointment_id)
     {
         $appointment = Appointment::find($appointment_id);
-        // return print_r($appointment->doctorSpeciality->doctor->id);
         if (!$this->isDoctorVisit($appointment)) return $this->redirectToUnauthorized();
-
-        // Update
         $appointment->status = AppointmentStatus::Pending;
         $appointment->save();
-        return print_r($appointment);
+
         return redirect()->route('doctor.appointments.show', ['doctor' => $doctor_id, 'appointment' => $appointment_id])->with('success', __('doctor.appointments_succed_start'));
+    }
+
+    public function cancel($doctor_id, $appointment_id) 
+    {
+        $appointment = Appointment::find($appointment_id);
+        $appointment->status = AppointmentStatus::Booked;
+        $appointment->save();
+
+        return redirect()->route('doctor.appointments', ['doctor' => $doctor_id])->with('success', __('doctor.appointments_succed_cancel'));
     }
 
     private function redirectToUnauthorized() {

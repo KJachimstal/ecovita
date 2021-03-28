@@ -12,6 +12,14 @@
     <h4 class="font-weight-light">Data i godzina przyjęcia: {{ $appointment->begin_date}} </h4>
 
     <h3 class="font-weight-bold mu-4">Rozpoznanie:</h3>
-  </div>
+    {{-- {{ Form::open(['method' => 'PUT', 'route' => ['doctor.appointments.update', ['doctor' => Auth::user()->userable_id, 'appointment' => $appointment->id]]]) }}
+      <button class="btn btn-sm btn-danger">
+        <i class="fas fa-save mr-2"></i></i>Zakończ wizytę
+      </button>
+    {{ Form::close() }} --}}
+    {{ Form::open(['method' => 'PUT', 'route' => ['doctor.appointments.cancel', ['doctor' => Auth::user()->userable_id, 'appointment' => $appointment->id]]]) }}
+    <button class="btn btn-secondary">Powrót</button>
+    {{ Form::close() }}
+</div>
 </div>
 @endsection

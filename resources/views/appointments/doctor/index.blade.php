@@ -20,6 +20,7 @@
           <tr>
               <th scope="col">Termin</th>
               <th scope="col">Specjalizacja</th>
+              <th scope="col">Lekarz</th>
               <th scope="col">Zapisany pacjent</th>
               <th scope='col'>Status</th>
               <th scope="col">Opcje</th>
@@ -35,6 +36,9 @@
                 {{ $appointment->doctorSpeciality->speciality->name }}
               </td>
               <td>
+                {{ $appointment->doctorSpeciality->doctor->user->fullName }}
+              </td>
+              <td>
                 @if (!empty($appointment->user->fullName)) 
                   {{ $appointment->user->fullName }}
                 @endif
@@ -43,9 +47,9 @@
                 @lang("models/appointment.status.{$appointment->statusKey}")
               </td>
               <td>
-                <a href="{{ route('appointments.show', ['appointment' => $appointment->id]) }}" class="btn btn-sm border btn-light">
+                {{-- <a href="{{ route('appointments.show', ['appointment' => $appointment->id]) }}" class="btn btn-sm border btn-light">
                   <i class="fas fa-info"></i>
-                </a>
+                </a> --}}
                 {{ Form::open(['method' => 'PUT', 'route' => ['doctor.appointments.start', ['doctor' => Auth::user()->userable_id, 'appointment' => $appointment->id]]]) }}
                   <button class="btn btn-sm btn-secondary">
                     <i class="fas fa-play mr-2"></i>Rozpocznij
