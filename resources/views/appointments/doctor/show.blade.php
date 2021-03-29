@@ -12,14 +12,18 @@
     <h4 class="font-weight-light">Data i godzina przyjęcia: {{ $appointment->begin_date}} </h4>
 
     <h3 class="font-weight-bold mu-4">Rozpoznanie:</h3>
-    {{-- {{ Form::open(['method' => 'PUT', 'route' => ['doctor.appointments.update', ['doctor' => Auth::user()->userable_id, 'appointment' => $appointment->id]]]) }}
-      <button class="btn btn-sm btn-danger">
+    {{ Form::open(['method' => 'PUT', 'route' => ['doctor.appointments.update', ['doctor' => Auth::user()->userable_id, 'appointment' => $appointment->id]]]) }}
+    {{ Form::textarea('description', null, ['class' => 'tinymce']) }}
+    <div class="mt-4 d-flex justify-content-center">
+      <button class="btn btn-danger mr-2">
         <i class="fas fa-save mr-2"></i></i>Zakończ wizytę
       </button>
-    {{ Form::close() }} --}}
+    {{ Form::close() }}
     {{ Form::open(['method' => 'PUT', 'route' => ['doctor.appointments.cancel', ['doctor' => Auth::user()->userable_id, 'appointment' => $appointment->id]]]) }}
     <button class="btn btn-secondary">Powrót</button>
     {{ Form::close() }}
+    </div>
 </div>
+  <script src="{{ URL::asset('js/tinymce.js') }}"></script>
 </div>
 @endsection

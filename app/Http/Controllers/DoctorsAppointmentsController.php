@@ -75,9 +75,11 @@ class DoctorsAppointmentsController extends Controller
     }
 
     
-    public function update(Request $request, $id)
+    public function update(Request $request, $doctor_id, $appointment_id)
     {
-        //
+        return print_r($request->get('textbox'));
+
+        return redirect()->route('doctor.appointments', ['doctor' => $doctor_id])->with('success', __('doctor.appointments_succed_ended'));
     }
 
     

@@ -1,5 +1,5 @@
 <!-- Stored in resources/views/layouts/app.blade.php -->
-
+<!DOCTYPE html>
 <html>
     <head>
         <title>EcoVita - @yield('title')</title>
@@ -9,6 +9,7 @@
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
         <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     </head>
     <body>
         @include('layouts.shared.header')
