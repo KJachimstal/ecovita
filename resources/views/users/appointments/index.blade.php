@@ -37,7 +37,7 @@
             </td>
             <td>
               <a href="{{ url("users/{$appointment->user_id}/appointments/{$appointment->id}/cancel") }}" class="btn btn-sm border btn-light">
-                <i class="fas fa-eye mr-2"></i>Podgląd
+                <i class="fas fa-eye mr-2"></i>
               </a>
             </td>
           </tr>

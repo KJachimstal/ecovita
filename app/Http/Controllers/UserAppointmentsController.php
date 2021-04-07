@@ -138,9 +138,9 @@ class UserAppointmentsController extends Controller
     public function cancel($user_id, $appointment_id)
     {
         $appointment = $this->user->appointments->find($appointment_id);
-        if (!$appointment->is_available) {
+        if ($appointment->status == AppointmentStatus::Booked) {
             $appointment->user_id = null;
-            $appointment->is_available = true;
+            $appointment->status == AppointmentStatus::Available;
             $appointment->save();
 
             LogHelper::log(__('logs.appointment_succed_cancel'));
