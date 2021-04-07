@@ -6,9 +6,9 @@
     <div class="row">
       <div class="col-10">
         <form action="" class="form-inline">
-          {{ Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz specjalizację...']) }}
+          {{ Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolna specjalizacja']) }}
           {{ Form::date('begin_date', null, ['class' => 'form-control mr-sm-2']) }}
-          {{ Form::select('status', $statuses, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Wybierz status...']) }}
+          {{ Form::select('status', $statuses, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolny status']) }}
           {{ Form::select('user_id', $user ?? [], null, ['class' => 'form-control mr-sm-2 patient_search', 'placeholder' => 'Wyszukaj pacjenta..']) }}
           <button type="submit" class="btn btn-primary">Filtruj</button>
         </form>
@@ -47,14 +47,19 @@
                 @lang("models/appointment.status.{$appointment->statusKey}")
               </td>
               <td>
-                {{-- <a href="{{ route('appointments.show', ['appointment' => $appointment->id]) }}" class="btn btn-sm border btn-light">
-                  <i class="fas fa-info"></i>
-                </a> --}}
+                @if ( $appointment->status == 3 )
+                <a href="{{ route('doctor.appointments.show', ['doctor' => Auth::user()->userable_id, 'appointment' => $appointment->id]) }}">
+                  <button class="btn btn-sm btn-info">
+                    <i class="fas fa-info mr-2"></i>Informacje
+                  </button>
+                </a>
+                @else
                 {{ Form::open(['method' => 'PUT', 'route' => ['doctor.appointments.start', ['doctor' => Auth::user()->userable_id, 'appointment' => $appointment->id]]]) }}
                   <button class="btn btn-sm btn-secondary">
                     <i class="fas fa-play mr-2"></i>Rozpocznij
                   </button>
                 {{ Form::close() }}
+                @endif
               </td>
             </tr>
         @empty

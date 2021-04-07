@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\DoctorSpeciality;
 use App\Appointment;
 
-class Details extends Model
+class Detail extends Model
 {
     use HasFactory;
 

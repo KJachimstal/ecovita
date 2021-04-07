@@ -8,6 +8,8 @@ use App\Speciality;
 use App\Doctor;
 use App\Appointment;
 use App\User;
+use App\Detail;
+use App\DoctorSpeciality;
 use App\Enums\AppointmentStatus;
 use App\Helpers\AppointmentHelper;
 use App\Queries\Appointments;
@@ -65,7 +67,8 @@ class DoctorsAppointmentsController extends Controller
     public function show($doctor_id, $appointment_id)
     {
         $appointment = Appointment::find($appointment_id);
-        return view('appointments.doctor.show', ['appointment' => $appointment]);
+        $detail = $appointment->detail;
+        return view('appointments.doctor.show', ['appointment' => $appointment, 'detail' => $detail]);
     }
 
     
@@ -77,7 +80,20 @@ class DoctorsAppointmentsController extends Controller
     
     public function update(Request $request, $doctor_id, $appointment_id)
     {
-        return print_r($request->get('textbox'));
+        $request->validate([
+            'description' => ['required']
+        ]);
+
+        $appointment = Appointment::find($appointment_id);
+
+        $detail = new Detail;
+        $detail->appointment_id = $appointment_id;
+        $detail->doctor_speciality_id = $appointment->doctor_speciality_id;
+        $detail->description = $request->get('description');
+        $detail->save();
+
+        $appointment->status = AppointmentStatus::Finished;
+        $appointment->save();
 
         return redirect()->route('doctor.appointments', ['doctor' => $doctor_id])->with('success', __('doctor.appointments_succed_ended'));
     }

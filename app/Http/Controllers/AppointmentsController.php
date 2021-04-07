@@ -139,7 +139,6 @@ class AppointmentsController extends Controller
     public function destroy($id)
     {
         $appointment = Appointment::find($id);
-        print_r($appointment);
         $appointment->delete();
         
         LogHelper::log(__('logs.appointments_succed_delete'));
@@ -156,7 +155,7 @@ class AppointmentsController extends Controller
     public function enroll($id)
     {
         $appointment = Appointment::find($id);
-        if ($appointment->status == 'Available') {
+        if ($appointment->status == AppointmentStatus::Available) {
             $appointment->user_id = Auth::user()->id;
             $appointment->status = AppointmentStatus::Booked;
             $appointment->save();
