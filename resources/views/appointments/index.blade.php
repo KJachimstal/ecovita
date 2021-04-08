@@ -1,14 +1,33 @@
 @extends('layouts.default')
 @section('title', 'Wizyty')
 @section('content')
-
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
+
+  <div class="multiple-items">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+  </div>
+  
+  <script type="text/javascript">
+    $('.multiple-items').slick({
+    infinite: true,
+    slidesToShow: 10,
+    slidesToScroll: 3
+  });
+  </script>
+
 <form action="" class="form-inline">
   {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolna specjalizacja'])}}
   {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolny lekarz'])}}
   {{Form::date('begin_date', \Carbon\Carbon::now(), ['class' => 'form-control mr-sm-2'])}}
   <button type="submit" class="btn btn-primary">Filtruj</button>
 </form>
+
 
 <table class="table table-striped">
     <thead>
