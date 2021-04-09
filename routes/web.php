@@ -40,6 +40,8 @@ Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('appointments/{appointment}/enroll', 'AppointmentsController@prepare_enroll')->name('appointments.enroll');
 Route::post('appointments/{appointment}/enroll', 'AppointmentsController@enroll')->name('appointments.prepare_enroll');
+Route::get('select_speciality', 'AppointmentsController@prepareSelectSpeciality')->name('appointments.prepare_select_speciality');
+Route::post('select_speciality', 'AppointmentsController@selectSpeciality')->name('appointments.select_speciality');
 
 Route::get('users/{user}/appointments/{appointment}/cancel', 'UserAppointmentsController@prepare_cancel');
 Route::post('users/{user}/appointments/{appointment}/cancel', 'UserAppointmentsController@cancel');

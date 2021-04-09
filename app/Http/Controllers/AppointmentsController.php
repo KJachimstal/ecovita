@@ -167,4 +167,22 @@ class AppointmentsController extends Controller
             return redirect('/appointments')->with('error', __('messages.appointment_unavailable'));
         }
     }
+
+    public function prepareSelectSpeciality() {
+        $specialities = Speciality::pluck('name', 'id');
+
+        return view('appointments.prepare_select_speciality', 
+        [
+            'specialities' => $specialities
+        ]);
+    }
+
+    public function selectSpeciality(Request $request) {
+        $speciality_id = $request->get('speciality_id');
+
+        return view('appointments.select_speciality', 
+        [
+            'speciality_id' => $speciality_id
+        ]);
+    }
 }
