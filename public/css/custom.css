@@ -1,0 +1,11 @@
+.appointment-days {
+  margin-bottom: 5px;
+}
+
+.appointment-days .appointment-days__item {
+  border: 1px solid rgba(0, 0, 0, .2);
+  margin: 5px;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, .2) 0 2px 5px;
+}

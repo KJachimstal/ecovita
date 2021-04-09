@@ -15,6 +15,7 @@ use App\Enums\AppointmentStatus;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
 use App\Helpers\AppointmentHelper;
+use Carbon\Carbon;
 
 class AppointmentsController extends Controller
 {
@@ -30,6 +31,13 @@ class AppointmentsController extends Controller
 
     public function index(Request $request)
     {
+        $today = Carbon::today();
+        $days = [];
+        
+        for ($i = 0; $i < 30; $i++) {
+            $days []= $today->copy()->add('day', $i);
+        }
+
         $specialities = Speciality::pluck('name', 'id');
         $doctors = (new Doctors\GetAllWithUsersQuery())->call();
         $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user()))->call();
@@ -40,7 +48,8 @@ class AppointmentsController extends Controller
             'appointments' => $appointments->paginate(8),
             'specialities' => $specialities,
             'doctors' => $doctors->pluck('full_name', 'id'),
-            'statuses' => $statuses
+            'statuses' => $statuses,
+            'days' => $days
         ]);
     }
 
