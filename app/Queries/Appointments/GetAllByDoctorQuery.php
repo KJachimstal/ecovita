@@ -66,6 +66,10 @@ class GetAllByDoctorQuery {
         }   
     }
 
+    private function orderByDate() {
+        $this->query = $this->query->orderBy('begin_date', 'ASC');
+    }
+
     public function call() {
         $this->joinDoctorSpecialities();
         $this->filterAllByDoctor();
@@ -74,6 +78,7 @@ class GetAllByDoctorQuery {
         $this->filterByDate();
         $this->filterByStatus();
         $this->filterByPatient();
+        $this->orderByDate();
 
         return $this->query;
     }

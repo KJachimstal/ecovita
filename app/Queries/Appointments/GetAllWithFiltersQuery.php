@@ -62,6 +62,10 @@ class GetAllWithFiltersQuery {
         }   
     }
 
+    private function orderByDate() {
+        $this->query = $this->query->orderBy('begin_date', 'ASC');
+    }
+
     public function call() {
       if ($this->isSpecialityOrDoctorFilled()) {
         $this->joinDoctorSpecialities();
@@ -71,6 +75,7 @@ class GetAllWithFiltersQuery {
       
       $this->filterByDate();
       $this->filterByStatus();
+      $this->orderByDate();
 
     //   Return query results
       return $this->query;
