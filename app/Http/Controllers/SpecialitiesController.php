@@ -20,6 +20,7 @@ class SpecialitiesController extends Controller
     public function index(Request $request)
     {
         $specialities = DB::table('specialities');
+        $allSpecialities = Speciality::all();
         
         if ($request->filled('name')) {
             $specialities->where('name', 'like', "%{$request->name}%");
@@ -29,7 +30,7 @@ class SpecialitiesController extends Controller
         }else {
             $viewName = Auth::user()->isActiveEmployee ? 'specialities.admin.index' : 'specialities.index';
         }
-        return view($viewName, ['specialities' => $specialities->paginate(5)]);
+        return view($viewName, ['specialities' => $specialities->paginate(5), 'allSpecialities' => $allSpecialities]);
     }
 
     /**
