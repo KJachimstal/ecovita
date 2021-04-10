@@ -1,11 +1,37 @@
 .appointment-days {
-  margin-bottom: 5px;
+  margin: 0 10px 20px;
+  padding-right: 3px;
+}
+
+.appointment-days .appointment-days__inner {
+  padding: 5px;
 }
 
 .appointment-days .appointment-days__item {
   border: 1px solid rgba(0, 0, 0, .2);
-  margin: 5px;
   padding: 10px;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .2) 0 2px 5px;
+  box-shadow: rgba(0, 0, 0, .1) 0 2px 5px;
+  text-align: center;
+}
+
+.appointments .appointments__item {
+  padding: 5px 0;
+}
+
+.appointments .appointments__item header {
+  border-radius: 4px 4px 0 0;
+  padding: 5px 10px;
+}
+
+.appointments .appointments__row {
+  border: rgb(219, 219, 219);
+}
+
+.button__mouse {
+  display: none;
+}
+
+.button__visibility:hover .button__mouse {
+  display: block;
 }

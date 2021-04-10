@@ -15,7 +15,6 @@ use App\Enums\AppointmentStatus;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
 use App\Helpers\AppointmentHelper;
-use Carbon\Carbon;
 
 class AppointmentsController extends Controller
 {
@@ -31,17 +30,11 @@ class AppointmentsController extends Controller
 
     public function index(Request $request)
     {
-        $today = Carbon::today();
-        $days = [];
-        
-        for ($i = 0; $i < 30; $i++) {
-            $days []= $today->copy()->add('day', $i);
-        }
-
         $specialities = Speciality::pluck('name', 'id');
         $doctors = (new Doctors\GetAllWithUsersQuery())->call();
         $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user()))->call();
         $statuses = AppointmentHelper::getStatusesForSelect();
+        $dailyAppointments = AppointmentHelper::getAppointmentsByDays($appointments->get());
 
         $viewName = Auth::user()->isActiveEmployee ? 'appointments.admin.index' : 'appointments.index';
         return view($viewName, [
@@ -49,7 +42,7 @@ class AppointmentsController extends Controller
             'specialities' => $specialities,
             'doctors' => $doctors->pluck('full_name', 'id'),
             'statuses' => $statuses,
-            'days' => $days
+            'dailyAppointments' => $dailyAppointments
         ]);
     }
 
@@ -178,7 +171,7 @@ class AppointmentsController extends Controller
     }
 
     public function prepareSelectSpeciality() {
-        $specialities = Speciality::pluck('name', 'id');
+        $specialities = Speciality::all();
 
         return view('appointments.prepare_select_speciality', 
         [
