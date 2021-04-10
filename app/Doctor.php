@@ -14,7 +14,7 @@ class Doctor extends Model
     use HasFactory;
 
     protected $fillable = [
-        'licensure',
+        'licensure', 'academic_degree'
     ];
 
     public function user() {
