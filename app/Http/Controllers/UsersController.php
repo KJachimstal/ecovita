@@ -76,6 +76,7 @@ class UsersController extends Controller
             $user->userable_type = $request->get('userable_type');
             $doctor = new Doctor;
             $doctor->licensure = $request->get('licensure');
+            $doctor->academic_degree = $request->get('academic_degree');
             $doctor->save();
             $user->userable_id = $doctor->id;
         }
@@ -139,6 +140,7 @@ class UsersController extends Controller
             if ($request->get('userable_type') == 'App\Doctor') {
                 $doctor = new Doctor;
                 $doctor->licensure = 0;
+                $doctor->academic_degree = '';
                 $doctor->save();
                 $user->userable_id = $doctor->id;
             }
@@ -146,6 +148,7 @@ class UsersController extends Controller
             if ($request->get('userable_type') == 'App\Doctor') {
             $doctor = Doctor::find($user->userable_id);
             $doctor->licensure = $request->get('licensure');
+            $doctor->academic_degree = $request->get('academic_degree');
             $doctor->save();
             }
         }
@@ -229,6 +232,7 @@ class UsersController extends Controller
 
         $doctor = Doctor::find($user->userable->id);
         $doctor->licensure = $request->get('licensure');
+        $doctor->academic_degree = $request->get('academic_degree');
         $doctor->save();
 
         LogHelper::log(__('logs.doctor_succed_change'));

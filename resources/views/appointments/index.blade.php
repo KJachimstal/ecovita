@@ -52,7 +52,7 @@
                 </span>
               </div>
               <div class="col-6">
-                {{ $appointment->doctorSpeciality->doctor->user->fullName }}
+                {{ $appointment->doctorSpeciality->doctor->user->userable->academic_degree }} {{ $appointment->doctorSpeciality->doctor->user->fullName }}
               </div>
               <div class="col-2">
                   <a href="{{ url("appointments/{$appointment->id}/enroll") }}" class="btn btn-sm border btn-light button__mouse">

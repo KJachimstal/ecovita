@@ -25,6 +25,13 @@ class DoctorFactory extends Factory
     {
         return [
             'licensure' => $this->faker->ean8,
+            'academic_degree' => $this->faker->randomElement([
+                'lek. med.',
+                'dr n. med.',
+                'dr hab n. med.',
+                'prof. dr hab'
+            ])
+
         ];
     }
 }

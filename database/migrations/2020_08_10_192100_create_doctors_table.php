@@ -16,6 +16,7 @@ class CreateDoctorsTable extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->string('licensure');
+            $table->string('academic_degree');
             $table->timestamps();
         });
     }
