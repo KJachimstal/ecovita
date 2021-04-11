@@ -16,6 +16,8 @@ use App\Http\Helpers\LogHelper;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
 use App\Helpers\AppointmentHelper;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppointmentsNotification;
 
 class UserAppointmentsController extends Controller
 {
@@ -138,10 +140,15 @@ class UserAppointmentsController extends Controller
     public function cancel($user_id, $appointment_id)
     {
         $appointment = $this->user->appointments->find($appointment_id);
+        $patient_email = $appointment->user->email;
+        
         if ($appointment->status == AppointmentStatus::Booked) {
             $appointment->user_id = null;
             $appointment->status = AppointmentStatus::Available;
             $appointment->save();
+            
+            Mail::to($patient_email)
+                    ->send(new AppointmentsNotification($appointment));
 
             LogHelper::log(__('logs.appointment_succed_cancel'));
             return redirect("users/{$user_id}/appointments")->with('success', __('messages.cancel_appointment_succed'));

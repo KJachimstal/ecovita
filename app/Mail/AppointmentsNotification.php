@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Speciality;
 use App\Doctor;
 use App\User;
+use App\Enums\AppointmentStatus;
 
 class AppointmentsNotification extends Mailable
 {
@@ -35,9 +36,24 @@ class AppointmentsNotification extends Mailable
      */
     public function build()
     {
-        return $this->from('kontaktecovita@gmail.com')
-                    ->markdown('appointments.notifications.enroll',[
-                    'appointment' => $this->appointment
-                    ]);
+        $mail; 
+
+        $mail = $this->from('kontaktecovita@gmail.com');
+
+        if($this->appointment->status == AppointmentStatus::Booked) {
+            
+            $mail = $mail->markdown('appointments.notifications.enroll',[
+                'appointment' => $this->appointment
+                ]);
+
+        }elseif ($this->appointment->status == AppointmentStatus::Available) {
+
+            $mail = $mail->markdown('appointments.notifications.cancel',[
+                'appointment' => $this->appointment
+                ]);
+        }
+                
+
+        return $mail;
     }
 }
