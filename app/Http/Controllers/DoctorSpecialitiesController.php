@@ -7,6 +7,7 @@ use DB;
 use App\Log;
 use App\DoctorSpeciality;
 use App\Doctor;
+use App\Speciality;
 use App\Queries\DoctorSpecialities;
 use App\Queries\Doctors;
 use Illuminate\Support\Facades\Auth;
@@ -31,10 +32,12 @@ class DoctorSpecialitiesController extends Controller
     public function edit($id) {
         $doctorSpeciality = DoctorSpeciality::find($id);
         $doctor = [ $doctorSpeciality->doctor_id => $doctorSpeciality->doctor->user->fullName ];
+        $specialities = Speciality::all()->pluck('name', 'id');
 
         return view('doctor_specialities.edit', [
             'doctorSpeciality' => $doctorSpeciality,
-            'doctor' => $doctor
+            'doctor' => $doctor,
+            'specialities' => $specialities
         ]);
     }
 

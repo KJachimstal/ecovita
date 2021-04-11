@@ -15,11 +15,11 @@
       <div class="form-group row">
         {{ Form::label('speciality_id', 'Specjalizacja', ['class' => 'col-sm-3 col-form-label']) }}
         <div class="col-sm-9">
-          {{ Form::input('speciality_id', 'begin_date', $date ?? null, array('class' => 'form-control')) }}
+          {{ Form::select('speciality_id', $specialities, null, ['class' => 'form-control']) }}
         </div>
       </div>
       <div class="mt-4 d-flex justify-content-center">
-        {{ Form::submit('Wyślij', ['class' => 'btn btn-success'])}}
+        {{ Form::submit('Zapisz', ['class' => 'btn btn-success'])}}
         <a href="{{ url("doctor_specialities") }}" class="btn border btn-light ml-2">Powrót</a>
       </div>
       @include('appointments.shared.search')
