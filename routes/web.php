@@ -19,13 +19,14 @@ Route::get('/', function () {
 
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::get('doctor_specialities/search', 'DoctorsSpecialitiesController@search')->name('doctor_specialities.search');
+Route::get('doctor_specialities/search', 'DoctorSpecialitiesController@search')->name('doctor_specialities.search');
 
 Route::resource('users', 'UsersController');
 Route::resource('specialities', 'SpecialitiesController');
 Route::resource('appointments', 'AppointmentsController');
 Route::resource('users.appointments', 'UserAppointmentsController');
 Route::resource('details', 'DetailsController');
+Route::resource('doctor_specialities', 'DoctorSpecialitiesController');
 
 // ----------------------------------- \/
 Route::get('settings/profile', 'SettingsController@edit_profile')->name('settings.edit_profile');

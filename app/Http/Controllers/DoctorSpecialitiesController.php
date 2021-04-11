@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Log;
 
-class DoctorsSpecialitiesController extends Controller
+class DoctorSpecialitiesController extends Controller
 {
     public function __construct()
     {
