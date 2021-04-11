@@ -32,7 +32,7 @@ class AppointmentsController extends Controller
 
     public function index(Request $request)
     {
-        if (!$request->filled('speciality_id')) {
+        if (!$request->filled('speciality_id') && !Auth::user()->isActiveEmployee) {
             return redirect()->route('appointments.prepare_select_speciality');
         }
 

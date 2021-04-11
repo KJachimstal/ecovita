@@ -53,7 +53,7 @@
               <td>
                 {{ Form::open(['method' => 'DELETE', 'route' => ['appointments.destroy', $appointment->id]]) }}
                   <a href="{{ url("appointments/{$appointment->id}/edit") }}" class="btn btn-sm border btn-light">
-                    <i class="fas fa-user-edit"></i>
+                    <i class="fas fa-edit"></i>
                   </a>
                   <button class="btn btn-sm btn-danger" onclick="return confirm('Czy chcesz usunąć wizytę?')">
                     <i class="fas fa-trash"></i>

@@ -248,8 +248,7 @@ class UsersController extends Controller
         if ($request->has('q')) {
             $search = $request->q;
             
-            $users = User::select('id', 'first_name', 'last_name')
-            ->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%$search%'");
+            $users->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%$search%'");
         }
 
         return response()->json($users->get());

@@ -7,7 +7,7 @@
 <div class="form-group row">
   {{ Form::label('doctor_speciality_id', 'Doktor', ['class' => 'col-sm-3 col-form-label']) }}
   <div class="col-sm-9">
-    {{ Form::select('doctor_speciality_id', $doctor_speciality ?? [], null, ['class' => 'form-control doctor_search']) }}
+    {{ Form::select('doctor_speciality_id', $doctor_speciality ?? [], null, ['class' => 'form-control doctor_speciality_search']) }}
   </div>
 </div>
 <div class="form-group row">
