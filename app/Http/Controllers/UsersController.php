@@ -132,9 +132,10 @@ class UsersController extends Controller
                     return redirect('users')->with('error', __('messages.active_appointment_error'));  
                 }
             }
-
-            $user->userable->delete();
-            $user->userable_id = null;
+            if($user->userable != null) {
+                $user->userable->delete();
+                $user->userable_id = null;
+            }
         }
         if ($user->userable_type == null) { 
             if ($request->get('userable_type') == 'App\Doctor') {

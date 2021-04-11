@@ -11,12 +11,12 @@
         <h3 class="font-weight-bold mb-4 justify-content-center">Wybierz specjalizację: </h3>
         <div class="row">
             @forelse ($specialities as $speciality)
-              <div class="col-3">
+              <div class="col-12 col-md-6 col-lg-3">
                 <div class="card mb-4 bg-white rounded shadow-sm">
                   <div class="card-body">
-                    <h5 class="card-title font-weight-bold text-capitalize">{{ $speciality->name }}</h5>
-                    <a href="{{ url('specialities', [$speciality->id]) }}" class="btn btn-light">
-                      Zapisz się
+                    <h4 class="card-title font-weight-bold text-capitalize" style="height: 80px">{{ $speciality->name }}</h4>
+                    <a href="{{ route('appointments.index', ['speciality_id' => $speciality->id]) }}" class="btn btn-outline-success">
+                      Wybierz
                     </a>
                   </div>
                 </div>

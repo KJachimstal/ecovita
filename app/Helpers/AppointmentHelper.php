@@ -28,16 +28,17 @@ class AppointmentHelper {
         foreach ($appointments as $appointment) {
             $date = Carbon::parse($appointment->begin_date)->startOfDay();
             if ($date->equalTo($thisDay)) {
-                $dayAppointments []= $appointment;
+              $dayAppointments []= $appointment;
             }
         }
 
         $dailyAppointments[] = [
-            'date' => $thisDay,
-            'items' => $dayAppointments,
-            'count' => count($dayAppointments)
+          'date' => $thisDay,
+          'items' => $dayAppointments,
+          'count' => count($dayAppointments)
         ];
     }
+
 
     return $dailyAppointments;
 }

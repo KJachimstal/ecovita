@@ -8,15 +8,28 @@
 }
 
 .appointment-days .appointment-days__item {
+  display: block;
   border: 1px solid rgba(0, 0, 0, .2);
   padding: 10px;
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, .1) 0 2px 5px;
   text-align: center;
+  text-decoration: none;
+}
+
+.appointment-days .appointment-days__item[data-count="0"] {
+  opacity: .5;
+  cursor: default;
+}
+
+.appointment-days .appointment-days__item .appointment-days__date,
+.appointment-days .appointment-days__item:hover .appointment-days__date {
+  color: #666;
 }
 
 .appointments .appointments__item {
   padding: 5px 0;
+  margin-bottom: 15px;
 }
 
 .appointments .appointments__item header {
@@ -26,12 +39,4 @@
 
 .appointments .appointments__row {
   border: rgb(219, 219, 219);
-}
-
-.button__mouse {
-  display: none;
-}
-
-.button__visibility:hover .button__mouse {
-  display: block;
 }

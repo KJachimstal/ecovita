@@ -14,6 +14,8 @@ use App\Http\Helpers\LogHelper;
 use App\Enums\AppointmentStatus;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppointmentsNotification;
 use App\Helpers\AppointmentHelper;
 
 class AppointmentsController extends Controller
@@ -30,11 +32,17 @@ class AppointmentsController extends Controller
 
     public function index(Request $request)
     {
+        if (!$request->filled('speciality_id')) {
+            return redirect()->route('appointments.prepare_select_speciality');
+        }
+
         $specialities = Speciality::pluck('name', 'id');
-        $doctors = (new Doctors\GetAllWithUsersQuery())->call();
+        $doctors = (new Doctors\GetAllWithUsersQuery($request->get('speciality_id')))->call();
         $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user()))->call();
         $statuses = AppointmentHelper::getStatusesForSelect();
         $dailyAppointments = AppointmentHelper::getAppointmentsByDays($appointments->get());
+
+        
 
         $viewName = Auth::user()->isActiveEmployee ? 'appointments.admin.index' : 'appointments.index';
         return view($viewName, [
@@ -162,6 +170,9 @@ class AppointmentsController extends Controller
             $appointment->status = AppointmentStatus::Booked;
             $appointment->save();
 
+            Mail::to($appointment->user->email)
+                    ->send(new AppointmentsNotification());
+
             LogHelper::log(__('logs.appointment_succed_enroll'));
             return redirect('/appointments')->with('success', __('messages.appointment_succed'));
         } else {
@@ -176,15 +187,6 @@ class AppointmentsController extends Controller
         return view('appointments.prepare_select_speciality', 
         [
             'specialities' => $specialities
-        ]);
-    }
-
-    public function selectSpeciality(Request $request) {
-        $speciality_id = $request->get('speciality_id');
-
-        return view('appointments.select_speciality', 
-        [
-            'speciality_id' => $speciality_id
         ]);
     }
 }
