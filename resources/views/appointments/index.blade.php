@@ -45,7 +45,7 @@
             <div class="appointments__row row py-2 my-1 border rounded">
                 <div class="col-4">
                   <span class="appointments__hour rounded bg-light py-1 px-2 text-center d-inline-block font-weight-bold">
-                    {{ \Carbon\Carbon::parse($appointment->begin_date)->format('H:m') }} {{$appointment->id}}
+                    {{ \Carbon\Carbon::parse($appointment->begin_date)->format('H:m') }}
                   </span>
                 </div>
                 <div class="col-6">

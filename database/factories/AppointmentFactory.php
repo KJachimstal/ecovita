@@ -26,7 +26,7 @@ class AppointmentFactory extends Factory
     public function definition()
     {
         $doctor_speciality_id = DoctorSpeciality::all()->random()->id;
-        $begin_date = $this->faker->dateTimeBetween('now', '+2 weeks');
+        $begin_date = $this->faker->dateTimeBetween('now', '+4 weeks');
         $user_id = $this->faker->randomElement([null, User::all()->random()->id]);
         $status = empty($user_id) ? AppointmentStatus::Available : AppointmentStatus::Booked;
 
