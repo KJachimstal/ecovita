@@ -171,13 +171,13 @@ class AppointmentsController extends Controller
             $appointment->save();
 
             Mail::to($appointment->user->email)
-                    ->send(new AppointmentsNotification());
+                    ->send(new AppointmentsNotification($appointment));
 
             LogHelper::log(__('logs.appointment_succed_enroll'));
-            return redirect('/appointments')->with('success', __('messages.appointment_succed'));
+            return redirect('/users/{$currentUser->id}/appointments')->with('success', __('messages.appointment_succed'));
         } else {
             LogHelper::log(__('logs.appointment_unavailable_enroll'));
-            return redirect('/appointments')->with('error', __('messages.appointment_unavailable'));
+            return redirect('/users/{$currentUser->id}/appointments')->with('error', __('messages.appointment_unavailable'));
         }
     }
 

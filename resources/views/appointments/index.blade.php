@@ -2,7 +2,7 @@
 @section('title', 'Wizyty')
 @section('content')
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
-
+  @include('shared.errors')
   <div class="multiple-items appointment-days">
     @foreach ($dailyAppointments as $key => $dailyAppointment)
       <div class="appointment-days__inner">
@@ -45,7 +45,7 @@
             <div class="appointments__row row py-2 my-1 border rounded">
                 <div class="col-4">
                   <span class="appointments__hour rounded bg-light py-1 px-2 text-center d-inline-block font-weight-bold">
-                    {{ \Carbon\Carbon::parse($appointment->begin_date)->format('H:m') }}
+                    {{ \Carbon\Carbon::parse($appointment->begin_date)->format('H:m') }} {{$appointment->id}}
                   </span>
                 </div>
                 <div class="col-6">

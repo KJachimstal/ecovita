@@ -140,7 +140,7 @@ class UserAppointmentsController extends Controller
         $appointment = $this->user->appointments->find($appointment_id);
         if ($appointment->status == AppointmentStatus::Booked) {
             $appointment->user_id = null;
-            $appointment->status == AppointmentStatus::Available;
+            $appointment->status = AppointmentStatus::Available;
             $appointment->save();
 
             LogHelper::log(__('logs.appointment_succed_cancel'));
