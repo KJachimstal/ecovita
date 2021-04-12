@@ -13,7 +13,7 @@
 <div class="form-group row">
   {{ Form::label('begin_date', 'Data wizyty', ['class' => 'col-sm-3 col-form-label']) }}
   <div class="col-sm-9">
-    {{ Form::input('dateTime-local', 'begin_date', $date ?? null, array('class' => 'form-control')) }}
+    {{ Form::input('dateTime-local', 'begin_date', $date ?? null, ['class' => 'form-control']) }}
   </div>
 </div>
 <div class="mt-4 d-flex justify-content-center">

@@ -18,6 +18,39 @@
           {{ Form::select('speciality_id', $specialities, null, ['class' => 'form-control']) }}
         </div>
       </div>
+
+      <div class="form-group row">
+        {{ Form::label('speciality_id', 'Poniedziałek', ['class' => 'col-sm-3 col-form-label pt-3']) }}
+        <div class="col-sm-9">
+          <div class="row">
+              <div class="col">
+                {{ Form::label('day_id', 'Godzina rozpoczęcia', ['class' => 'col-form-label mt-2']) }}
+                {{ Form::input('time', 'start_time', null, ['class' => 'form-control']) }}
+              </div>
+              <div class="col">
+                {{ Form::label('day_id', 'Godzina zakończenia', ['class' => ' col-form-label mt-2']) }}
+                {{ Form::input('time', 'start_time', null, ['class' => 'form-control']) }}
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        {{ Form::label('speciality_id', 'Wtorek', ['class' => 'col-sm-3 col-form-label pt-3']) }}
+        <div class="col-sm-9">
+          <div class="row">
+              <div class="col">
+                {{ Form::label('day_id', 'Godzina rozpoczęcia', ['class' => 'col-form-label mt-2']) }}
+                {{ Form::input('time', 'start_time', null, ['class' => 'form-control']) }}
+              </div>
+              <div class="col">
+                {{ Form::label('day_id', 'Godzina zakończenia', ['class' => ' col-form-label mt-2']) }}
+                {{ Form::input('time', 'start_time', null, ['class' => 'form-control']) }}
+              </div>
+          </div>
+        </div>
+      </div>
+      
       <div class="mt-4 d-flex justify-content-center">
         {{ Form::submit('Zapisz', ['class' => 'btn btn-success'])}}
         <a href="{{ url("doctor_specialities") }}" class="btn border btn-light ml-2">Powrót</a>
