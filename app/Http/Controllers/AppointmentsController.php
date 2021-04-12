@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Appointment;
 use App\Speciality;
 use App\Doctor;
+use App\DoctorSpeciality;
 use DB;
 use App\Log;
 use DateTime;
@@ -165,6 +166,13 @@ class AppointmentsController extends Controller
     public function enroll($id)
     {
         $appointment = Appointment::find($id);
+        $doctor_id = Auth::user()->userable_id;
+        $doctor_speciality_id = DoctorSpeciality::all()->where('doctor_id', $doctor_id)->first()->id;
+        
+        if ($appointment->doctor_speciality_id == $doctor_speciality_id) {
+            return redirect('/users/{$currentUser->id}/appointments')->with('error', __('messages.doctor_self_appointment'));
+        }
+
         if ($appointment->status == AppointmentStatus::Available) {
             $appointment->user_id = Auth::user()->id;
             $appointment->status = AppointmentStatus::Booked;

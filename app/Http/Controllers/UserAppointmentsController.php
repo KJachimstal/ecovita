@@ -31,7 +31,7 @@ class UserAppointmentsController extends Controller
             $id = $request->route('user');
             $currentUser = Auth::user();
 
-            if ($id != $currentUser->id && !$currentUser->isEmployee) {
+            if (($id != $currentUser->id && !$currentUser->isEmployee && !$currentUser->isDoctor )) {
                 LogHelper::log(__('logs.unauthorized_user_appointments'));
                 return redirect("/users/{$currentUser->id}/appointments")->with('error', __('messages.unauthorized'));
             }
