@@ -9,13 +9,9 @@ class GetAllWithFiltersQuery {
     private Request $request;
     private $query;
 
-    public function __construct(Request $request = null, Bolean $allDoctors = null) {
+    public function __construct(Request $request = null) {
         $this->request = $request;
         $this->query = DoctorSpeciality::query();
-
-        if ($allDoctors) {
-            $this->query = $this->query->all();
-        }
     }
 
     private function filterByDoctor() {
