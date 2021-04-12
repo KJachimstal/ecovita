@@ -18,5 +18,6 @@ return [
   'appointments_succed_create' => 'Pomyślnie utworzono wizytę',
   'unauthorized' => 'Brak dostępu',
   'cancel_appointment_succed' => 'Pomyślnie odwołano wizytę',
-  'doctor_self_appointment' => 'Nie możesz zapisać się na wiztę do samego siebie'
+  'doctor_self_appointment' => 'Nie możesz zapisać się na wiztę do samego siebie',
+  'doctor_speciality_success_edit' => 'Gabinet został pomyślnie edytowany'
 ];
