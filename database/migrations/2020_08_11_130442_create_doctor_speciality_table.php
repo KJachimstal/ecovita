@@ -18,6 +18,7 @@ class CreateDoctorSpecialityTable extends Migration
             $table->foreignId('doctor_id')->constrained()->onDelete('cascade');
             $table->foreignId('speciality_id')->constrained()->onDelete('cascade');
             $table->json('schedule')->nullable();
+            $table->integer('visit_length');
             $table->timestamps();
         });
     }
