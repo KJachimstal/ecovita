@@ -64,6 +64,8 @@ class GenerateAppointments extends Command
 
             while ($start->lessThan($stop->copy()->add('minute', $appointmentDuration))) {
               // Create appointment
+
+              if ( !$start->isMidnight() )
               $appointment = new Appointment;
               $appointment->doctor_speciality_id = $doctorSpeciality->id;
               $appointment->begin_date = $start;
