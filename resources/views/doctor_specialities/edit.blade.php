@@ -6,56 +6,13 @@
   <div class="p-4 bg-white shadow-sm">
     @include('shared.errors')
     {{ Form::model($doctorSpeciality, ['route' => ['doctor_specialities.update', $doctorSpeciality->id], 'method' => 'PUT']) }}
-      <div class="form-group row">
-        {{ Form::label('doctor_id', 'Doktor', ['class' => 'col-sm-3 col-form-label']) }}
-        <div class="col-sm-9">
-          {{ Form::select('doctor_id', $doctor ?? [], null, ['class' => 'form-control doctor_search']) }}
-        </div>
-      </div>
-      <div class="form-group row">
-        {{ Form::label('speciality_id', 'Specjalizacja', ['class' => 'col-sm-3 col-form-label']) }}
-        <div class="col-sm-9">
-          {{ Form::select('speciality_id', $specialities, null, ['class' => 'form-control']) }}
-        </div>
-      </div>
-
-      <div class="form-group row">
-        {{ Form::label('speciality_id', 'Poniedziałek', ['class' => 'col-sm-3 col-form-label pt-3']) }}
-        <div class="col-sm-9">
-          <div class="row">
-              <div class="col">
-                {{ Form::label('day_id', 'Godzina rozpoczęcia', ['class' => 'col-form-label mt-2']) }}
-                {{ Form::input('time', 'start_time', null, ['class' => 'form-control']) }}
-              </div>
-              <div class="col">
-                {{ Form::label('day_id', 'Godzina zakończenia', ['class' => ' col-form-label mt-2']) }}
-                {{ Form::input('time', 'start_time', null, ['class' => 'form-control']) }}
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        {{ Form::label('speciality_id', 'Wtorek', ['class' => 'col-sm-3 col-form-label pt-3']) }}
-        <div class="col-sm-9">
-          <div class="row">
-              <div class="col">
-                {{ Form::label('day_id', 'Godzina rozpoczęcia', ['class' => 'col-form-label mt-2']) }}
-                {{ Form::input('time', 'start_time', null, ['class' => 'form-control']) }}
-              </div>
-              <div class="col">
-                {{ Form::label('day_id', 'Godzina zakończenia', ['class' => ' col-form-label mt-2']) }}
-                {{ Form::input('time', 'start_time', null, ['class' => 'form-control']) }}
-              </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mt-4 d-flex justify-content-center">
-        {{ Form::submit('Zapisz', ['class' => 'btn btn-success'])}}
-        <a href="{{ url("doctor_specialities") }}" class="btn border btn-light ml-2">Powrót</a>
-      </div>
-      @include('appointments.shared.search')
+    @include('doctor_specialities.shared.form', [
+      'doctorSpeciality' => $doctorSpeciality,
+      'doctor' => $doctor,
+      'specialities' => $specialities,
+      'days' => $days,
+      'schedule' => $schedule
+    ])
     {{ Form::close() }}
   </div>
 </div>

@@ -86,7 +86,10 @@ class DoctorsController extends Controller
     public function search(Request $request)
     {
         $doctors = DB::table('doctors')
-        ->join('users', 'users.userable_id', '=', 'doctors.id')
+        ->leftJoin('users', function($join) {
+            $join->on('users.userable_id', '=', 'doctors.id');
+            $join->where('users.userable_type', '=', 'App\Doctor');
+        })
         ->select('doctors.id', 'users.first_name', 'users.last_name')
         ->limit(20);
 

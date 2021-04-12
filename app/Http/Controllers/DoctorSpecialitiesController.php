@@ -33,12 +33,86 @@ class DoctorSpecialitiesController extends Controller
         $doctorSpeciality = DoctorSpeciality::find($id);
         $doctor = [ $doctorSpeciality->doctor_id => $doctorSpeciality->doctor->user->fullName ];
         $specialities = Speciality::all()->pluck('name', 'id');
+        $days = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
+        $schedule = json_decode($doctorSpeciality->schedule, true);
 
         return view('doctor_specialities.edit', [
             'doctorSpeciality' => $doctorSpeciality,
             'doctor' => $doctor,
-            'specialities' => $specialities
+            'specialities' => $specialities,
+            'days' => $days,
+            'schedule' => $schedule
         ]);
+    }
+
+    public function update(Request $request, $id) {
+
+        $request->validate ([
+            'doctor_id' => ['required'],
+            'speciality_id' => ['required']
+        ]);
+
+        $schedule = [];
+
+        $start = $request->get('start');
+        $stop = $request->get('stop');
+
+        foreach ($start as $index => $element) {
+            $schedule[$index] = [
+                "start" => $element,
+                "stop" => $stop[$index]
+            ];
+        }
+
+        $doctorSpeciality = DoctorSpeciality::find($id);
+        $doctorSpeciality->doctor_id = $request->get('doctor_id');
+        $doctorSpeciality->speciality_id = $request->get('speciality_id');
+        $doctorSpeciality->schedule = $schedule;
+
+        $doctorSpeciality->save();
+
+        return redirect('doctor_specialities')->with('success', __('messages.doctor_speciality_success_edit'));
+    }
+
+    public function create() 
+    {
+        $doctor = (new Doctors\GetAllWithUsersQuery())->call();
+        $specialities = Speciality::all()->pluck('name', 'id');
+        $days = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
+
+        return view('doctor_specialities.create', [
+            'doctor' => $doctor,
+            'specialities' => $specialities,
+            'days' => $days
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate ([
+            'doctor_id' => ['required'],
+            'speciality_id' => ['required']
+        ]);
+
+        $schedule = [];
+
+        $start = $request->get('start');
+        $stop = $request->get('stop');
+
+        foreach ($start as $index => $element) {
+            $schedule[$index] = [
+                "start" => $element,
+                "stop" => $stop[$index]
+            ];
+        }
+
+        $doctorSpeciality = new DoctorSpeciality;
+        $doctorSpeciality->doctor_id = $request->get('doctor_id');
+        $doctorSpeciality->speciality_id = $request->get('speciality_id');
+        $doctorSpeciality->schedule = json_encode($schedule);
+        $doctorSpeciality->save();
+
+        return redirect('doctor_specialities')->with('success', __('messages.doctor_speciality_success_create'));
     }
 
     public function search(Request $request)

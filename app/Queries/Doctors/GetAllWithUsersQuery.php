@@ -41,10 +41,15 @@ class GetAllWithUsersQuery {
         }
     }
 
+    private function orderByName() {
+        $this->query = $this->query->orderBy('users.first_name', 'ASC');
+    }
+
     public function call() {
         $this->joinUsers();
         $this->filterBySpeciality();
         $this->selectFields();
+        $this->orderByName();
         
         return $this->query;
     }

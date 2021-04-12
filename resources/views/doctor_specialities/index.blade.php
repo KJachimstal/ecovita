@@ -10,6 +10,9 @@
             <button type="submit" class="btn btn-primary">Filtruj</button>
           </form>
         </div>
+        <div class="col-2 text-right">
+          <a href="{{ route('doctor_specialities.create') }}" class="btn btn-success ml-2">Dodaj gabinet</a>
+        </div>
       </div>
   
     <table class="table table-striped">
