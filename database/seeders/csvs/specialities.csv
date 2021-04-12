@@ -1,37 +1,34 @@
 id,name
-1,endokrynologia
-2,diabetologia
-3,choroby wewnętrzne
-4,choroby zakaźne
-5,kardiologia
-6,neurologia
-7,reumatologia
-8,radiologia
-9,Alergologia
-10,Angiologia
-11,Balneologia i medycyna fizykalna
-12,Chirurgia naczyniowa
-13,Chirurgia onkologiczna
-14,Choroby płuc (pulmonologia)
-15,Diabetologia
-16,Endokrynologia
-17,Farmakologia kliniczna
-18,Gastroenterologia
-19,Geriatria
-20,Ginekologia onkologiczna
-21,Hematologia
-22,Hipertensjologia
-23,Immunologia kliniczna
-24,Kardiologia dziecięca
-25,Medycyna paliatywna
-26,Medycyna sportowa
-27,Nefrologia
-28,Neurologia dziecięca
-29,Neuropatologia
-30,Onkologia i hematologia dziecięca
-31,Otorynolaryngologia dziecięca
-32,Reumatologia
-33,Seksuologia
-34,Toksykologia kliniczna
-35,Transplantologia kliniczna
-36,Urologia dziecięca
+1,choroby wewnętrzne
+2,choroby zakaźne
+3,kardiologia
+4,neurologia
+5,radiologia
+6,Alergologia
+7,Angiologia
+8,Balneologia i medycyna fizykalna
+9,Chirurgia naczyniowa
+10,Chirurgia onkologiczna
+11,Choroby płuc (pulmonologia)
+12,Diabetologia
+13,Endokrynologia
+14,Farmakologia kliniczna
+15,Gastroenterologia
+16,Geriatria
+17,Ginekologia onkologiczna
+18,Hematologia
+19,Hipertensjologia
+20,Immunologia kliniczna
+21,Kardiologia dziecięca
+22,Medycyna paliatywna
+23,Medycyna sportowa
+24,Nefrologia
+25,Neurologia dziecięca
+26,Neuropatologia
+27,Onkologia i hematologia dziecięca
+28,Otorynolaryngologia dziecięca
+29,Reumatologia
+30,Seksuologia
+31,Toksykologia kliniczna
+32,Transplantologia kliniczna
+33,Urologia dziecięca
