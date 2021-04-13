@@ -43,7 +43,7 @@
           </tr>
       @empty
         <tr>
-          <td colspan="4">Brak terminów</td>
+          <td colspan="5">Brak terminów</td>
         </tr>
       @endforelse
     </tbody>

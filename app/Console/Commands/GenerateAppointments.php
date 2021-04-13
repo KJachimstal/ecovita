@@ -43,7 +43,7 @@ class GenerateAppointments extends Command
     public function handle()
     {
         $numberOfDays = $this->option('days');
-        echo $numberOfDays;
+        echo "Generowanie wizyt dla: " . $numberOfDays . " dni \n";
     
         $today = Carbon::today();
         $doctorSpecialities = DoctorSpeciality::all();
@@ -57,15 +57,26 @@ class GenerateAppointments extends Command
               continue;
             }
 
+            if (!$schedule[$weekDay]['start'] || !$schedule[$weekDay]['stop']) {
+              continue;
+            }
+
+            $appointmentsExists = Appointment::where('doctor_speciality_id', $doctorSpeciality->id)
+                                    ->whereBetween('begin_date', [$day->startOfDay()->toDateTimeString(), $day->endOfDay()->toDateTimeString()])
+                                    ->exists();
+            if ($appointmentsExists) {
+              continue;
+            }
+            
             $appointmentDuration = 10; //$doctorSpeciality->visit_length
             // 1975-12-25 22:43
-            $start = Carbon::parse($day->toDateString() . " " . $schedule[$weekDay]['start']);
-            $stop = Carbon::parse($day->toDateString() . " " . $schedule[$weekDay]['stop']);
-
-            while ($start->lessThan($stop->copy()->add('minute', $appointmentDuration))) {
+            $start = Carbon::parse($day->toDateString() . " " . $schedule[$weekDay]['start'] . ":00");
+            $stop = Carbon::parse($day->toDateString() . " " . $schedule[$weekDay]['stop'] . ":00");
+            $stopWithDuration = $stop->copy()->sub('minute', $appointmentDuration);
+                        
+            while ($start->lessThanOrEqualTo($stopWithDuration)) {
+              echo 'Generowanie wizyty ' . $start->toDateTimeString() . " - " . $stop->toDateTimeString() . "\n";
               // Create appointment
-
-              if ( !$start->isMidnight() )
               $appointment = new Appointment;
               $appointment->doctor_speciality_id = $doctorSpeciality->id;
               $appointment->begin_date = $start;
@@ -73,7 +84,7 @@ class GenerateAppointments extends Command
               $appointment->save();
               $start->add('minute', $appointmentDuration);
             }
-            echo "\n";
+            echo "Nowy dzień \n";
           }
         }
         
