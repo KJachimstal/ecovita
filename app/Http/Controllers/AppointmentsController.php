@@ -38,8 +38,14 @@ class AppointmentsController extends Controller
             return redirect()->route('appointments.prepare_select_speciality');
         }
 
-        $speciality = Speciality::find($request->get('speciality_id'));
-        $doctors = (new Doctors\GetAllWithUsersQuery($speciality->id))->call();
+        if (!Auth::user()->isActiveEmployee) {
+            $speciality = Speciality::find($request->get('speciality_id'));
+            $doctors = (new Doctors\GetAllWithUsersQuery($speciality->id))->call();
+        } else {
+            $speciality = Speciality::all()->pluck('name','id');
+            $doctors = Doctor::all();
+        }
+        
         $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user(), false, true))->call();
         $statuses = AppointmentHelper::getStatusesForSelect();
         $dailyAppointments = AppointmentHelper::getAppointmentsByDays($appointments->get());
@@ -85,6 +91,9 @@ class AppointmentsController extends Controller
         $appointment->begin_date = $request->get('begin_date');
         $appointment->status = empty($request->get('user_id')) ? AppointmentStatus::Available : AppointmentStatus::Booked;
         $appointment->save();
+
+        Mail::to($appointment->user->email)
+                    ->send(new AppointmentsNotification($appointment));
 
         LogHelper::log(__('logs.appointments_succed_create'));
         return redirect('appointments')->with('success', __('messages.appointments_succed_create'));
@@ -151,8 +160,13 @@ class AppointmentsController extends Controller
     public function destroy($id)
     {
         $appointment = Appointment::find($id);
+        $appointment->status = AppointmentStatus::Available;
+        $appointment->save();
+
+        Mail::to($appointment->user->email)
+        ->send(new AppointmentsNotification($appointment));
+
         $appointment->delete();
-        
         LogHelper::log(__('logs.appointments_succed_delete'));
         return redirect('appointments')->with('success', __('messages.appointments_succed_delete'));
     }
@@ -196,7 +210,7 @@ class AppointmentsController extends Controller
     }
 
     public function prepareSelectSpeciality() {
-        $specialities = Speciality::query();
+        $specialities = Speciality::all()->sortBy('name');
 
         return view('appointments.prepare_select_speciality', 
         [

@@ -12,7 +12,7 @@
       {{ Form::text('licensure',  !empty($user) && $user->isDoctor ? $user->userable->licensure : null, ['class' => 'form-control']) }}
     </div>
   </div>
-  <div id="academic_degree" class="form-group row">
+  <div id="academic_degree" class="form-group row" style="display:none;">
     {{ Form::label('academic_degree', 'Stopień naukowy', ['class' => 'col-sm-3 col-form-label']) }}
     <div class="col-sm-9">
       {{ Form::text('academic_degree',  !empty($user) && $user->isDoctor ? $user->userable->academic_degree : null, ['class' => 'form-control']) }}
@@ -35,8 +35,10 @@
   function updateType(value) {
     if (value === DOCTOR_VALUE) {
       $('#pwz').show();
+      $('#academic_degree').show();
     } else {
       $('#pwz').hide();
+      $('#academic_degree').hide();
     }
   }
 

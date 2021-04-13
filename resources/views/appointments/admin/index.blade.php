@@ -3,10 +3,10 @@
 @section('content')
 <h3 class="font-weight-bold mb-4">Zarządzanie wizytami</h3>
   <div class="bg-white rounded p-4 mt-2 shadow-sm">
-    <div class="row">
+    <div class="row mb-2">
       <div class="col-10">
         <form action="" class="form-inline">
-          {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolna specjalizacja'])}}
+          {{Form::select('speciality_id', $speciality, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolna specjalizacja'])}}
           {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolny lekarz'])}}
           {{Form::date('begin_date', null, ['class' => 'form-control mr-sm-2'])}}
           {{Form::select('status', $statuses, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolny status'])}}

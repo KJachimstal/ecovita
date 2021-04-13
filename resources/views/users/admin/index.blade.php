@@ -3,7 +3,7 @@
 @section('content')
 <h3 class="font-weight-bold mb-4">Zarządzanie użytkownikami</h3>
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
-  <div class="row">
+  <div class="row mb-2">
     <div class="col-8">
       <form action="" class="form-inline">
         {{ Form::text('search', null, ['class' => 'form-control mr-sm-3', 'placeholder' => 'Wpisz słowo...']) }}

@@ -26,6 +26,34 @@
       {{ Form::close() }}
     </div>
     @endif
+
+    @if (!empty($prevAppointments))
+      <h3 class="font-weight-bold mb-4 mt-5">Poprzednie rozpoznania:</h3>
+      @forelse ($prevAppointments as $prevAppointment)
+        <table class="table table-borderless mt-2 border border-1 rounded">
+          <tbody>
+            <tr>
+              <th scope="row">Lekarz</th>
+              <td>{{ $appointment->doctorSpeciality->doctor->user->fullName}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Data wizyty</th>
+              <td>{{ \Carbon\Carbon::parse($prevAppointment->begin_date)->format('Y-m-d') }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Godzina wizyty</th>
+              <td>{{ \Carbon\Carbon::parse($prevAppointment->begin_date)->format('H:i') }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Rozpoznanie</th>
+              <td>{!! $prevAppointment->description !!}</td>
+            </tr>
+          </tbody>
+        </table>
+      @empty
+      <h5 class="font-weight-bold mb-4 mt-5">Brak poprzednich rozpoznań</h5>
+      @endforelse
+    @endif
 </div>
   <script src="{{ URL::asset('js/tinymce.js') }}"></script>
 </div>

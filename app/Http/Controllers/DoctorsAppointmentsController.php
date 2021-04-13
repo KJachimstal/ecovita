@@ -67,8 +67,14 @@ class DoctorsAppointmentsController extends Controller
     public function show($doctor_id, $appointment_id)
     {
         $appointment = Appointment::find($appointment_id);
+        $user = User::find($appointment->user_id);
+        $prevAppointments = (new Appointments\GetAllByUserQuery($user, $appointment->doctor_speciality_id))->call();
         $detail = $appointment->detail;
-        return view('appointments.doctor.show', ['appointment' => $appointment, 'detail' => $detail]);
+        return view('appointments.doctor.show', [
+            'appointment' => $appointment, 
+            'detail' => $detail,
+            'prevAppointments' => $prevAppointments
+        ]);
     }
 
     
@@ -108,15 +114,13 @@ class DoctorsAppointmentsController extends Controller
     {
 
         $appointment = Appointment::find($appointment_id);
-        $prevAppointments = (new Appointments\GetAllByUserQuery(User::find($appointment->user_id)))->call();
         if (!$this->isDoctorVisit($appointment)) return $this->redirectToUnauthorized();
         $appointment->status = AppointmentStatus::Pending;
         $appointment->save();
 
         return redirect()->route('doctor.appointments.show', [
             'doctor' => $doctor_id, 
-            'appointment' => $appointment_id,
-            'prevAppointments' => $prevAppointments
+            'appointment' => $appointment_id
         ])->with('success', __('messages.appointments_succed_start'));
     }
 
