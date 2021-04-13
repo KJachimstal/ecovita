@@ -3,6 +3,9 @@
 @section('content')
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
   @include('shared.errors')
+
+  <h3 class="font-weight-bold mb-4">{{ $speciality->name }}</h3>
+
   <div class="multiple-items appointment-days">
     @foreach ($dailyAppointments as $key => $dailyAppointment)
       <div class="appointment-days__inner">
@@ -26,44 +29,57 @@
     });
   </script>
 
-<form action="" class="form-inline">
-  {{ Form::hidden('speciality_id', app('request')->speciality_id) }}
-  {{ Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolny lekarz']) }}
-  <button type="submit" class="btn btn-primary">Filtruj</button>
-</form>
+  <form action="" class="form-inline">
+    {{ Form::hidden('speciality_id', app('request')->speciality_id) }}
+    {{ Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolny lekarz']) }}
+    <button type="submit" class="btn btn-primary">Filtruj</button>
+  </form>
 
-<div class="appointments mt-3">
-  @foreach($dailyAppointments as $key => $dailyAppointment)
-    @if($dailyAppointment['count'] > 0)
-      <div class="appointments__item" id="d{{ $key }}">
-        <header class="bg-success text-white">
-          {{ $dailyAppointment['date']->formatLocalized('%d %B') }},
-          <span class="text-capitalize">{{ $dailyAppointment['date']->formatLocalized('%A') }}</span>
-        </header>  
-        <div class="appointments__rows container">
-          @forelse ($dailyAppointment['items'] as $appointment)
-            <div class="appointments__row row py-2 my-1 border rounded">
-                <div class="col-4">
-                  <span class="appointments__hour rounded bg-light py-1 px-2 text-center d-inline-block font-weight-bold">
-                    {{ \Carbon\Carbon::parse($appointment->begin_date)->format('H:i') }}
-                  </span>
-                </div>
-                <div class="col-6">
-                  {{ $appointment->doctorSpeciality->doctor->academic_degree }} <strong>{{ $appointment->doctorSpeciality->doctor->user->fullName }}</strong>
-                </div>
-                <div class="col-2">
-                    <a href="{{ url("appointments/{$appointment->id}/enroll") }}" class="btn btn-sm border btn-light">
-                      <i class="fas fa-calendar-check mr-2"></i>Zapisz się
-                    </a>
-                </div>
-            </div>
-          @empty
+  <div class="appointments mt-3">
+    @foreach($dailyAppointments as $key => $dailyAppointment)
+      @if($dailyAppointment['count'] > 0)
+        <div class="appointments__item" id="d{{ $key }}">
+          <header class="bg-success text-white">
+            {{ $dailyAppointment['date']->formatLocalized('%d %B') }},
+            <span class="text-capitalize">{{ $dailyAppointment['date']->formatLocalized('%A') }}</span>
+          </header>  
+          <div class="appointments__rows container">
+            @forelse ($dailyAppointment['items'] as $appointment)
+              <div class="appointments__row row py-2 my-1 border rounded">
+                  <div class="col-4">
+                    <span class="appointments__hour rounded bg-light py-1 px-2 text-center d-inline-block font-weight-bold">
+                      {{ \Carbon\Carbon::parse($appointment->begin_date)->format('H:i') }}
+                    </span>
+                  </div>
+                  <div class="col-6">
+                    {{ $appointment->doctorSpeciality->doctor->academic_degree }} <strong>{{ $appointment->doctorSpeciality->doctor->user->fullName }}</strong>
+                  </div>
+                  <div class="col-2">
+                      <a href="{{ url("appointments/{$appointment->id}/enroll") }}" class="btn btn-sm border btn-light">
+                        <i class="fas fa-calendar-check mr-2"></i>Zapisz się
+                      </a>
+                  </div>
+              </div>
+            @empty
 
-          @endforelse
+            @endforelse
+
+            @if ($dailyAppointment['count'] > 5)
+              <div class="row">
+                <div class="appointments__expand col bg-light rounded p-2 text-center">
+                  <i class="fa fa-caret-down mr-2"></i> Rozwiń
+                </div>
+              </div>
+            @endif
+          </div>
         </div>
-      </div>
-    @endif
-  @endforeach   
+      @endif
+    @endforeach   
+  </div>
 </div>
-</div>
+<script>
+  $('.appointments__expand').on('click', function() {
+    $(this).parent().parent().toggleClass('expanded');
+  });
+</script>
 @endsection

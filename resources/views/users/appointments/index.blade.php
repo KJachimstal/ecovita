@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
-  <form action="" class="form-inline">
+  <form action="" class="form-inline mb-2">
     {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolna specjalizacja'])}}
     {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolny lekarz'])}}
     {{Form::select('status', $statuses, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolny status'])}}
@@ -37,7 +37,7 @@
             </td>
             <td>
               <a href="{{ url("users/{$appointment->user_id}/appointments/{$appointment->id}/cancel") }}" class="btn btn-sm border btn-light">
-                <i class="fas fa-eye mr-2"></i>
+                <i class="fas fa-eye mr-1"></i> Podgląd
               </a>
             </td>
           </tr>

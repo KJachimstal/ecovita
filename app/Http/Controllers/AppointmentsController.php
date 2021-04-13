@@ -18,6 +18,7 @@ use App\Queries\Doctors;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentsNotification;
 use App\Helpers\AppointmentHelper;
+use Carbon\Carbon;
 
 class AppointmentsController extends Controller
 {
@@ -37,9 +38,9 @@ class AppointmentsController extends Controller
             return redirect()->route('appointments.prepare_select_speciality');
         }
 
-        $specialities = Speciality::pluck('name', 'id');
-        $doctors = (new Doctors\GetAllWithUsersQuery($request->get('speciality_id')))->call();
-        $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user()))->call();
+        $speciality = Speciality::find($request->get('speciality_id'));
+        $doctors = (new Doctors\GetAllWithUsersQuery($speciality->id))->call();
+        $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user(), false, true))->call();
         $statuses = AppointmentHelper::getStatusesForSelect();
         $dailyAppointments = AppointmentHelper::getAppointmentsByDays($appointments->get());
 
@@ -48,7 +49,7 @@ class AppointmentsController extends Controller
         $viewName = Auth::user()->isActiveEmployee ? 'appointments.admin.index' : 'appointments.index';
         return view($viewName, [
             'appointments' => $appointments->paginate(8),
-            'specialities' => $specialities,
+            'speciality' => $speciality,
             'doctors' => $doctors->pluck('full_name', 'id'),
             'statuses' => $statuses,
             'dailyAppointments' => $dailyAppointments
@@ -166,11 +167,16 @@ class AppointmentsController extends Controller
     public function enroll($id)
     {
         $appointment = Appointment::find($id);
-        $doctor_id = Auth::user()->userable_id;
-        $doctor_speciality_id = DoctorSpeciality::all()->where('doctor_id', $doctor_id)->first()->id;
-        
-        if ($appointment->doctor_speciality_id == $doctor_speciality_id) {
-            return redirect('/users/{$currentUser->id}/appointments')->with('error', __('messages.doctor_self_appointment'));
+        $currentUser = Auth::user();
+        $limitTime = Carbon::now()->add('minute', 15);
+        $appointmentTime = Carbon::parse($appointment->begin_date);
+
+        if ($appointmentTime->lessThan($limitTime)) {
+            return redirect("/users/{$currentUser->id}/appointments")->with('error', __('messages.appointment_enroll_to_late'));
+        }
+
+        if ($appointment->doctorSpeciality->doctor->user->id == $currentUser->id) {
+            return redirect("/users/{$currentUser->id}/appointments")->with('error', __('messages.doctor_self_appointment'));
         }
 
         if ($appointment->status == AppointmentStatus::Available) {
@@ -182,15 +188,15 @@ class AppointmentsController extends Controller
                     ->send(new AppointmentsNotification($appointment));
 
             LogHelper::log(__('logs.appointment_succed_enroll'));
-            return redirect('/users/{$currentUser->id}/appointments')->with('success', __('messages.appointment_succed'));
+            return redirect("/users/{$currentUser->id}/appointments")->with('success', __('messages.appointment_succed'));
         } else {
             LogHelper::log(__('logs.appointment_unavailable_enroll'));
-            return redirect('/users/{$currentUser->id}/appointments')->with('error', __('messages.appointment_unavailable'));
+            return redirect("/users/{$currentUser->id}/appointments")->with('error', __('messages.appointment_unavailable'));
         }
     }
 
     public function prepareSelectSpeciality() {
-        $specialities = Speciality::all();
+        $specialities = Speciality::query();
 
         return view('appointments.prepare_select_speciality', 
         [

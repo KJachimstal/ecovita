@@ -8,17 +8,20 @@ use App\Doctor;
 use App\User;
 use App\Enums\AppointmentStatus;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class GetAllWithFiltersQuery {
     private Request $request;
     private User $user;
     private $onlyForUser;
     private $query;
+    private $hidePast;
 
-    public function __construct(Request $request, User $user, $onlyForUser = false) {
+    public function __construct(Request $request, User $user, $onlyForUser = false, $hidePast = false) {
         $this->request = $request;
         $this->user = $user;
         $this->onlyForUser = $onlyForUser;
+        $this->hidePast = $hidePast;
         $this->query = $this->getQueryType();
     }
 
@@ -62,6 +65,13 @@ class GetAllWithFiltersQuery {
         }   
     }
 
+    private function filterPast() {
+        if ($this->hidePast) {
+            $limitTime = Carbon::now()->add('minute', 15);
+            $this->query = $this->query->where('begin_date', '>', $limitTime->toDateTimeString());
+        }
+    }
+
     private function orderByDate() {
         $this->query = $this->query->orderBy('begin_date', 'ASC');
     }
@@ -75,6 +85,7 @@ class GetAllWithFiltersQuery {
       
       $this->filterByDate();
       $this->filterByStatus();
+      $this->filterPast();
       $this->orderByDate();
 
     //   Return query results

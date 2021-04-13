@@ -95,7 +95,7 @@ class DoctorsAppointmentsController extends Controller
         $appointment->status = AppointmentStatus::Finished;
         $appointment->save();
 
-        return redirect()->route('doctor.appointments', ['doctor' => $doctor_id])->with('success', __('doctor.appointments_succed_ended'));
+        return redirect()->route('doctor.appointments', ['doctor' => $doctor_id])->with('success', __('messages.appointments_succed_ended'));
     }
 
     
@@ -106,12 +106,18 @@ class DoctorsAppointmentsController extends Controller
 
     public function start($doctor_id, $appointment_id)
     {
+
         $appointment = Appointment::find($appointment_id);
+        $prevAppointments = (new Appointments\GetAllByUserQuery(User::find($appointment->user_id)))->call();
         if (!$this->isDoctorVisit($appointment)) return $this->redirectToUnauthorized();
         $appointment->status = AppointmentStatus::Pending;
         $appointment->save();
 
-        return redirect()->route('doctor.appointments.show', ['doctor' => $doctor_id, 'appointment' => $appointment_id])->with('success', __('doctor.appointments_succed_start'));
+        return redirect()->route('doctor.appointments.show', [
+            'doctor' => $doctor_id, 
+            'appointment' => $appointment_id,
+            'prevAppointments' => $prevAppointments
+        ])->with('success', __('messages.appointments_succed_start'));
     }
 
     public function cancel($doctor_id, $appointment_id) 
@@ -120,7 +126,7 @@ class DoctorsAppointmentsController extends Controller
         $appointment->status = AppointmentStatus::Booked;
         $appointment->save();
 
-        return redirect()->route('doctor.appointments', ['doctor' => $doctor_id])->with('success', __('doctor.appointments_succed_cancel'));
+        return redirect()->route('doctor.appointments', ['doctor' => $doctor_id])->with('success', __('messages.appointments_succed_cancel'));
     }
 
     private function redirectToUnauthorized() {

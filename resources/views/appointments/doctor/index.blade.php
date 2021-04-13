@@ -5,12 +5,12 @@
   <div class="bg-white rounded p-4 mt-2 shadow-sm">
     <div class="row">
       <div class="col-10">
-        <form action="" class="form-inline">
+        <form action="" class="form-inline mb-2">
           {{ Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolna specjalizacja']) }}
           {{ Form::date('begin_date', null, ['class' => 'form-control mr-sm-2']) }}
           {{ Form::select('status', $statuses, app('request')->status, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Dowolny status']) }}
           {{ Form::select('user_id', $user ?? [], null, ['class' => 'form-control mr-sm-2 patient_search', 'placeholder' => 'Wyszukaj pacjenta..']) }}
-          <button type="submit" class="btn btn-primary">Filtruj</button>
+          <button type="submit" class="btn btn-primary ml-2">Filtruj</button>
         </form>
       </div>
     </div>

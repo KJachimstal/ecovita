@@ -40,3 +40,18 @@
 .appointments .appointments__row {
   border: rgb(219, 219, 219);
 }
+
+.appointments .appointments__rows .appointments__expand {
+  cursor: pointer;
+  transition-duration: 300ms;
+}
+
+.appointments .appointments__rows .appointments__expand:hover {
+  background-color: #e0e0e0 !important;
+  transition-duration: 300ms;
+}
+
+.appointments .appointments__rows:not(.expanded) > .appointments__row:nth-child(n+5),
+.appointments .appointments__rows.expanded .appointments__expand {
+  display: none;
+}
