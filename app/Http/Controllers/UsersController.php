@@ -32,7 +32,7 @@ class UsersController extends Controller
 
     public function index(Request $request) 
     {
-        $users = User::query();
+        $users = User::query()->orderBy('first_name')->orderBy('last_name');
         
         if ($request->filled('search')){
             $users->whereRaw("CONCAT(`first_name`, ' ', `last_name`) LIKE '%{$request->search}%'");
