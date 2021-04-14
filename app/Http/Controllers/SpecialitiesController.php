@@ -19,8 +19,8 @@ class SpecialitiesController extends Controller
      */
     public function index(Request $request)
     {
-        $specialities = DB::table('specialities');
-        $allSpecialities = Speciality::all();
+        $specialities = DB::table('specialities')->orderBy('name');
+        $allSpecialities = Speciality::all()->sortBy('name');
         
         if ($request->filled('name')) {
             $specialities->where('name', 'like', "%{$request->name}%");

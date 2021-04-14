@@ -22,10 +22,12 @@ class DoctorSpecialitiesController extends Controller
     public function index(Request $request) {
         $doctorSpecialities = (new DoctorSpecialities\GetAllWithFiltersQuery($request))->call();
         $doctors = (new Doctors\GetAllWithUsersQuery($request->get('speciality_id')))->call();
+        $specialities = Speciality::all()->sortBy('name')->pluck('name', 'id');
 
         return view('doctor_specialities.index', [
             'doctorSpecialities' => $doctorSpecialities->paginate(8),
-            'doctors' => $doctors->pluck('full_name', 'id')
+            'doctors' => $doctors->pluck('full_name', 'id'),
+            'specialities' => $specialities
         ]);
     }
 

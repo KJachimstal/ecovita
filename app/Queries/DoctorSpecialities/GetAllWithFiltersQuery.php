@@ -20,8 +20,25 @@ class GetAllWithFiltersQuery {
         }
     }
 
+    private function joinSpecialities() {
+        $this->query = $this->query->join('specialities', 'specialities.id', '=', 'speciality_id');
+    }
+
+    private function filterBySpeciality() {
+        if ($this->request->filled('speciality_id')) {
+            $this->query = $this->query->where('speciality_id', $this->request->speciality_id);
+        }
+    }
+
+    private function orderBySpecialityName() {
+        $this->query = $this->query->orderBy('name');
+    }
+
     public function call() {
         $this->filterByDoctor();
+        $this->joinSpecialities();
+        $this->filterBySpeciality();
+        // $this->orderBySpecialityName();
 
         return $this->query;
     }

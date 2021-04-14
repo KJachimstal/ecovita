@@ -6,7 +6,8 @@
     <div class="row">
         <div class="col-10">
           <form action="" class="form-inline mb-3">
-            {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2 col-6', 'placeholder' => 'Dowolny lekarz'])}}
+            {{Form::select('doctor_id', $doctors, app('request')->doctor_id, ['class' => 'form-control mr-sm-2 col-4', 'placeholder' => 'Dowolny lekarz'])}}
+            {{Form::select('speciality_id', $specialities, app('request')->speciality_id, ['class' => 'form-control mr-sm-2 col-4', 'placeholder' => 'Dowolna specjalizacja'])}}
             <button type="submit" class="btn btn-primary">Filtruj</button>
           </form>
         </div>
