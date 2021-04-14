@@ -30,8 +30,8 @@
     </table>
     <div class="mt-4 d-flex justify-content-center">
       @if ( $appointment->status != 3) <button type="submit" class="btn btn-success">Odwołaj wizytę </button> @endif
-      <a href="{{ url("users/{$appointment->user_id}/appointments") }}" class="btn btn-light ml-2 border border-secondary">Powrót</a>
-    </div>
+      {{-- <a href="{{ url("users/{$appointment->user_id}/appointments") }}" class="btn btn-light ml-2 border border-secondary">Powrót</a> --}}
+      <div onclick="window.history.back()" class="btn btn-light ml-2 border border-secondary"> Powrót</div>
   {{ Form::close() }}
 
 

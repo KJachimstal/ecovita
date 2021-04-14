@@ -18,6 +18,7 @@
 </div>
 <div class="mt-4 d-flex justify-content-center">
   {{ Form::submit('Wyślij', ['class' => 'btn btn-success'])}}
-  <a href="{{ url("appointments") }}" class="btn border btn-light ml-2">Powrót</a>
+  {{-- <a href="{{ url("appointments") }}" class="btn border btn-light ml-2">Powrót</a> --}}
+  <div onclick="window.history.back()" class="btn btn-light ml-2 border border-secondary"> Powrót</div>
 </div>
 @include('appointments.shared.search')

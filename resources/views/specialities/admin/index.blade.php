@@ -5,7 +5,7 @@
 <div class="bg-white rounded p-4 mt-2 shadow-sm text-capitalize">
   <div class="row">
     <div class="col-8">
-      <form action="" class="form-inline">
+      <form action="" class="form-inline mb-2">
         {{Form::text('name', null, ['class' => 'form-control mr-sm-3', 'placeholder' => 'Wpisz nazwę specjalizacji...'])}}
         <button type="submit" class="btn btn-primary">Filtruj</button>
       </form>

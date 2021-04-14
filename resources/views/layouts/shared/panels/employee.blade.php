@@ -8,7 +8,7 @@
   <li class="nav-item {{ Request::is('appointments*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('appointments.index') }}">Wizyty</a>
   </li>
-  <li class="nav-item {{ Request::is('appointments*') ? 'active' : '' }}">
+  <li class="nav-item {{ Request::is('doctor_specialities*') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('doctor_specialities.index') }}">Gabinety</a>
   </li>
   <li class="nav-item {{ Request::is('logs') ? 'active' : '' }}">

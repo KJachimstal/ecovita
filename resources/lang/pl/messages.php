@@ -20,6 +20,7 @@ return [
   'cancel_appointment_succed' => 'Pomyślnie odwołano wizytę',
   'doctor_self_appointment' => 'Nie możesz zapisać się na wiztę do samego siebie',
   'doctor_speciality_success_edit' => 'Gabinet został pomyślnie edytowany',
+  'doctor_speciality_success_create' => 'Pomyślnie stworzono gabinet',
   'user_succed_create' => 'Pomyślnie stworzono nowego użytkownika',
   'appointment_enroll_to_late' => 'Zapisanie się wizytę możliwe jest maksymalnie 15 minut przed wizytą',
   'appointments_succed_ended' => 'Pomyślnie zakończono wizytę',
