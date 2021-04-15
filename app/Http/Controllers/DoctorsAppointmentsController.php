@@ -69,12 +69,12 @@ class DoctorsAppointmentsController extends Controller
         $appointment = Appointment::find($appointment_id);
         if (!$this->isDoctorVisit($appointment)) return $this->redirectToUnauthorized();
         $user = User::find($appointment->user_id);
-        $prevAppointments = (new Appointments\GetAllByUserQuery($user, $appointment->doctor_speciality_id))->call();
+        $prevAppointments = (new Appointments\GetAllByUserQuery($user, $appointment->doctorSpeciality->speciality_id))->call();
         $detail = $appointment->detail;
         return view('appointments.doctor.show', [
             'appointment' => $appointment, 
             'detail' => $detail,
-            'prevAppointments' => $prevAppointments
+            'prevAppointments' => $prevAppointments->get()
         ]);
     }
 

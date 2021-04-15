@@ -28,13 +28,16 @@
           @forelse ($doctorSpecialities as $doctorSpeciality)
               <tr>
                 <td>
+                  {{ $doctorSpeciality->id}}
+                </td>
+                <td>
                   {{ $doctorSpeciality->doctor->academic_degree }} <strong>{{ $doctorSpeciality->doctor->user->fullName }}</strong>
                 </td>
                 <td>
                   {{ $doctorSpeciality->speciality->name }}
                 </td>
                 <td>
-                    <a href="{{ route('doctor_specialities.edit', [ 'doctor_speciality' => $doctorSpeciality ]) }}" class="btn btn-sm border btn-light">
+                    <a href="{{ route('doctor_specialities.edit', ['doctor_speciality' => $doctorSpeciality->id]) }}" class="btn btn-sm border btn-light">
                         <i class="fas fa-edit"></i> Edytuj
                     </a>
                 </td>
