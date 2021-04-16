@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Http\Helpers\LogHelper;
+use App\Helpers\LogHelper;
 
 class DetailsController extends Controller
 {

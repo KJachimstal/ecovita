@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Speciality;
 use App\Log;
 use DB;
-use App\Http\Helpers\LogHelper;
+use App\Helpers\LogHelper;
 
 class SpecialitiesController extends Controller
 {

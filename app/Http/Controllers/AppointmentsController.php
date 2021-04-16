@@ -11,7 +11,7 @@ use App\DoctorSpeciality;
 use DB;
 use App\Log;
 use DateTime;
-use App\Http\Helpers\LogHelper;
+use App\Helpers\LogHelper;
 use App\Enums\AppointmentStatus;
 use App\Queries\Appointments;
 use App\Queries\Doctors;

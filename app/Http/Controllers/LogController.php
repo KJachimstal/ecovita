@@ -11,7 +11,7 @@ use App\Appointment;
 use App\DoctorSpeciality;
 use App\Log;
 use DB;
-use App\Http\Helpers\LogHelper;
+use App\Helpers\LogHelper;
 
 
 class LogController extends Controller

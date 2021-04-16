@@ -12,7 +12,7 @@ use App\Log;
 use App\Enums\AppointmentStatus;
 use DB;
 use DateTime;
-use App\Http\Helpers\LogHelper;
+use App\Helpers\LogHelper;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
 use App\Helpers\AppointmentHelper;

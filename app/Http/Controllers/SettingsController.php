@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Log;
-use App\Http\Helpers\LogHelper;
+use App\Helpers\LogHelper;
 
 class SettingsController extends Controller
 {

@@ -12,7 +12,7 @@ use App\DoctorSpeciality;
 use Illuminate\Support\Facades\Hash;
 use App\Exceptions\ActiveAppointmentException;
 use DB;
-use App\Http\Helpers\LogHelper;
+use App\Helpers\LogHelper;
 
 class UsersController extends Controller
 {
