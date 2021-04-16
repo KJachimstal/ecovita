@@ -17,6 +17,15 @@ class DoctorSpecialitiesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+         
+        $this->middleware(function ($request, $next) {
+
+            if(Auth::guest() || !Auth::user()->isEmployee) {
+                return $this->redirectToUnauthorized();
+            }
+            
+            return $next($request);
+        });
     }
 
     public function index(Request $request) {
@@ -134,5 +143,9 @@ class DoctorSpecialitiesController extends Controller
         }
 
         return response()->json($doctorSpecialities->get());
+    }
+
+    private function redirectToUnauthorized() {
+        return redirect('/')->with('error', __('messages.unauthorized'));
     }
 }
