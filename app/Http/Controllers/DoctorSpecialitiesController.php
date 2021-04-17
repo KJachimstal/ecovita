@@ -152,11 +152,11 @@ class DoctorSpecialitiesController extends Controller
 
     public function destroy($id)
     {
-        $doctorSpecialities = DoctorSpeciality::find($id);
-        $original_record = json_encode($appointment);
+        // $doctorSpecialities = DoctorSpeciality::find($id);
+        // $original_record = json_encode($appointment);
         
-        LogHelper::log(ActionType::Delete, __('messages.appointments_succed_delete'), $doctorSpecialities, $original_record);
-        return redirect('doctor_specialities')->with('success', __('messages.doctor_speciality_success_delete'));
+        // LogHelper::log(ActionType::Delete, __('messages.appointments_succed_delete'), $doctorSpecialities, $original_record);
+        // return redirect('doctor_specialities')->with('success', __('messages.doctor_speciality_success_delete'));
     }
 
     private function redirectToUnauthorized() {

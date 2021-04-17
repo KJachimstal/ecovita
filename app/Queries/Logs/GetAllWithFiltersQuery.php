@@ -33,7 +33,7 @@ class GetAllWithFiltersQuery {
     }
 
     private function orderByDate() {
-        $this->query = $this->query->orderBy('created_at');
+        $this->query = $this->query->orderBy('created_at', 'DESC');
     }
 
     public function call() {

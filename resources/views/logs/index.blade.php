@@ -33,7 +33,7 @@
                 {{ App\User::find($log->user_id)->fullName }}
               </td>
               <td>
-                @lang("models/action.status.{$log->action}")
+                @lang("models/log.status.{$log->actionKey}")
               </td>
               <td>
                 {{ $log->description }}
@@ -46,7 +46,7 @@
             </tr>
         @empty
           <tr>
-            <td colspan="4">Brak wpisów</td>
+            <td colspan="5">Brak wpisów</td>
           </tr>
         @endforelse
       </tbody>

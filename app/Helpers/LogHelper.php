@@ -35,7 +35,7 @@ class LogHelper {
     
         $callback = function($element) {
           $key = strtolower($element);
-          return trans("models/action.status.{$key}");
+          return trans("models/log.status.{$key}");
         };
     
         return array_map($callback, $statuses);

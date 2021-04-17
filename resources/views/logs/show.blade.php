@@ -4,12 +4,12 @@
 <div class="bg-white rounded p-4 mt-2 shadow-sm">
     <h3 class="font-weight-bold mb-4">Szegóły zapisu</h3>
     <div class="row">
-        <div class="font-weight-bold mb-4 col-3">Czas wykonania:</div>
-        <div class="col-sm-9">{{ $log->created_at }}</div>
-    </div>
-    <div class="row">
         <div class="font-weight-bold mb-4 col-3">ID:</div>
         <div class="col-sm-9">{{ $log->id }}</div>
+    </div>
+    <div class="row">
+        <div class="font-weight-bold mb-4 col-3">Czas wykonania:</div>
+        <div class="col-sm-9">{{ $log->created_at }}</div>
     </div>
     <div class="row">
         <div class="font-weight-bold mb-4 col-3">Użytkownik:</div>
@@ -21,7 +21,7 @@
     </div>
     <div class="row">
         <div class="font-weight-bold mb-4 col-3">Wykonana akcja:</div>
-        <div class="col-sm-9">@lang("models/action.status.{$log->statusKey}")</div>
+        <div class="col-sm-9">@lang("models/log.status.{$log->actionKey}")</div>
     </div>
     <div class="row">
         <div class="font-weight-bold mb-4 col-3">Adres URL:</div>
@@ -29,7 +29,7 @@
     </div>
     <div class="row">
         <div class="font-weight-bold mb-4 col-3">Użyte parametry:</div>
-        <div class="col-sm-9">{{ $log->params }}</div>
+        <div class="col-sm-9 mb-3"><code>{{ $log->params }}</code></div>
     </div>
     <div class="row">
         <div class="font-weight-bold mb-4 col-3">Przeglądarka:</div>
@@ -45,8 +45,8 @@
     </div>
     @if ($log->details)
         <div class="row">
-            <div class="font-weight-bold mb-4 col-3">Objekt:</div>
-            <div class="col-sm-9"><code>{{ $log->details }}</code></div>
+            <div class="font-weight-bold mb-4 col-3">Obiekt:</div>
+            <div class="col-sm-9 mb-3"><code>{{ $log->details }}</code></div>
         </div>
         <div class="row">
             <div class="font-weight-bold mb-4 col-3">Typ obiektu:</div>

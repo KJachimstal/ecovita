@@ -45,8 +45,6 @@ class LogController extends Controller
 
    public function show($id)
     {
-      // echo json_encode(Log::find($id)->details, JSON_PRETTY_PRINT);
-      // return;
         return view('logs.show', ['log' => Log::find($id)]);
     }
     

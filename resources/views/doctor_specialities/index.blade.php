@@ -37,15 +37,9 @@
                   {{ $doctorSpeciality->speciality->name }}
                 </td>
                 <td>
-                    
-                    {{ Form::open(['method' => 'DELETE', 'route' => ['doctor_specialities.destroy', $doctorSpeciality->id]]) }}
                       <a href="{{ route('doctor_specialities.edit', ['doctor_speciality' => $doctorSpeciality->id]) }}" class="btn btn-sm border btn-light">
                         <i class="fas fa-edit"></i> Edytuj
                       </a>
-                      <button class="btn btn-sm btn-danger" onclick="return confirm('Czy chcesz usunąć gabinet?')">
-                      <i class="fas fa-trash"></i>
-                      </button>
-                    {{ Form::close() }}
                 </td>
               </tr>
           @empty
