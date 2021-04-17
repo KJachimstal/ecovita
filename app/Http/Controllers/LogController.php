@@ -17,6 +17,20 @@ use App\Queries\Logs;
 
 class LogController extends Controller
 {
+   public function __construct()
+    {
+        $this->middleware('auth');
+         
+        $this->middleware(function ($request, $next) {
+
+            if(Auth::guest() || !Auth::user()->isEmployee) {
+                return $this->redirectToUnauthorized();
+            }
+            
+            return $next($request);
+        });
+    }
+    
    public function index(Request $request) 
    {
       $logs = (new Logs\GetAllWithFiltersQuery($request))->call();
