@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Helpers\LogHelper;
+use App\Enums\ActionType;
 
 class DetailsController extends Controller
 {
@@ -46,7 +47,7 @@ class DetailsController extends Controller
         $detail->description = $request->get('description');
         $detail->save();
 
-        LogHelper::log(__('logs.details_succed_create'));
+        LogHelper::log(ActionType::Create, __('messages.details_succed_create'), $detail);
         return redirect('')->with('success', __('messages.details_succed_create'));
     }
 

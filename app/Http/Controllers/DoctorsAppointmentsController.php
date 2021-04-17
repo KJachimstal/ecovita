@@ -14,6 +14,8 @@ use App\Enums\AppointmentStatus;
 use App\Helpers\AppointmentHelper;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
+use App\Helpers\LogHelper;
+use App\Enums\ActionType;
 
 class DoctorsAppointmentsController extends Controller
 {
@@ -26,7 +28,7 @@ class DoctorsAppointmentsController extends Controller
             $currentUser = Auth::user();
 
             if (!$currentUser->isDoctor) {
-                // LogHelper::log(__('logs.unauthorized_user_appointments'));
+                LogHelper::log(ActionType::View, __('messages.unauthorized'), $currentUser);
                 return $this->redirectToUnauthorized();
             }
 
@@ -67,7 +69,7 @@ class DoctorsAppointmentsController extends Controller
     public function show($doctor_id, $appointment_id)
     {
         $appointment = Appointment::find($appointment_id);
-        if (!$this->isDoctorVisit($appointment)) return $this->redirectToUnauthorized();
+        $this->isDoctorVisit($appointment);
         $user = User::find($appointment->user_id);
         $prevAppointments = (new Appointments\GetAllByUserQuery($user, $appointment->doctorSpeciality->speciality_id))->call();
         $detail = $appointment->detail;
@@ -92,7 +94,7 @@ class DoctorsAppointmentsController extends Controller
         ]);
 
         $appointment = Appointment::find($appointment_id);
-        
+        $original_record = json_encode($appointment);
         $detail = new Detail;
         $detail->appointment_id = $appointment_id;
         $detail->doctor_speciality_id = $appointment->doctor_speciality_id;
@@ -102,6 +104,7 @@ class DoctorsAppointmentsController extends Controller
         $appointment->status = AppointmentStatus::Finished;
         $appointment->save();
 
+        LogHelper::log(ActionType::Update, __('messages.appointments_succed_ended'), $appointment, $original_record);
         return redirect()->route('doctor.appointments', ['doctor' => $doctor_id])->with('success', __('messages.appointments_succed_ended'));
     }
 
@@ -115,10 +118,12 @@ class DoctorsAppointmentsController extends Controller
     {
 
         $appointment = Appointment::find($appointment_id);
-        if (!$this->isDoctorVisit($appointment)) return $this->redirectToUnauthorized();
+        $this->isDoctorVisit($appointment);
+        $original_record = json_encode($appointment);
         $appointment->status = AppointmentStatus::Pending;
         $appointment->save();
 
+        LogHelper::log(ActionType::Update, __('messages.appointments_succed_start'), $appointment, $original_record);
         return redirect()->route('doctor.appointments.show', [
             'doctor' => $doctor_id, 
             'appointment' => $appointment_id
@@ -128,9 +133,11 @@ class DoctorsAppointmentsController extends Controller
     public function cancel($doctor_id, $appointment_id) 
     {
         $appointment = Appointment::find($appointment_id);
+        $original_record = json_encode($appointment);
         $appointment->status = AppointmentStatus::Booked;
         $appointment->save();
 
+        LogHelper::log(ActionType::Update, __('messages.appointments_succed_cancel'), $appointment, $original_record);
         return redirect()->route('doctor.appointments', ['doctor' => $doctor_id])->with('success', __('messages.appointments_succed_cancel'));
     }
 
@@ -140,6 +147,10 @@ class DoctorsAppointmentsController extends Controller
     
     private function isDoctorVisit($appointment)
     {
-        return $appointment->doctorSpeciality->doctor->id == $this->doctor->id;
+        if ($appointment->doctorSpeciality->doctor->id == $this->doctor->id) {
+            LogHelper::log(ActionType::View, __('messages.unauthorized'), Auth::user());
+
+            return $this->redirectToUnauthorized();
+        }
     }
 }

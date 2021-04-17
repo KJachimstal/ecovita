@@ -13,6 +13,7 @@ use App\Log;
 use DateTime;
 use App\Helpers\LogHelper;
 use App\Enums\AppointmentStatus;
+use App\Enums\ActionType;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
 use Illuminate\Support\Facades\Mail;
@@ -92,10 +93,11 @@ class AppointmentsController extends Controller
         $appointment->status = empty($request->get('user_id')) ? AppointmentStatus::Available : AppointmentStatus::Booked;
         $appointment->save();
 
+        LogHelper::log(ActionType::Create, __('messages.appointments_succed_create'), $appointment);
+
         Mail::to($appointment->user->email)
                     ->send(new AppointmentsNotification($appointment));
 
-        LogHelper::log(__('logs.appointments_succed_create'));
         return redirect('appointments')->with('success', __('messages.appointments_succed_create'));
     }
 
@@ -122,7 +124,7 @@ class AppointmentsController extends Controller
         $doctor_speciality = [ $appointment->doctor_speciality_id => $appointment->doctorSpeciality->name ];
         $user = !empty($appointment->user_id) ? [$appointment->user_id => $appointment->user->fullName] : [];
         $date = date('Y-m-d\Th:m:s',  strtotime($appointment->begin_date));
-        
+
         return view('appointments.admin.edit', [
             'appointment' => $appointment, 
             'doctor_speciality' => $doctor_speciality, 
@@ -141,13 +143,15 @@ class AppointmentsController extends Controller
     public function update(Request $request, $id)
     {
         $appointment = Appointment::find($id);
+        $original_record = json_encode($appointment);
         $appointment->user_id = $request->get('user_id');
         $appointment->doctor_speciality_id = $request->get('doctor_speciality_id');
         $appointment->begin_date = $request->get('begin_date');
         $appointment->status = empty($appointment->user_id) ? AppointmentStatus::Available : AppointmentStatus::Booked;
         $appointment->save();
 
-        LogHelper::log(__('logs.appointment_succed_change'));
+        LogHelper::log(ActionType::Update, __('messages.appointment_succed_change'), $appointment, $original_record);
+
         return redirect('appointments')->with('success', __('messages.appointment_succed_change'));
     }
 
@@ -166,8 +170,11 @@ class AppointmentsController extends Controller
         Mail::to($appointment->user->email)
         ->send(new AppointmentsNotification($appointment));
 
+        $original_record = json_encode($appointment);
         $appointment->delete();
-        LogHelper::log(__('logs.appointments_succed_delete'));
+        
+        LogHelper::log(ActionType::Delete, __('messages.appointments_succed_delete'), $appointment, $original_record);
+        
         return redirect('appointments')->with('success', __('messages.appointments_succed_delete'));
     }
 
@@ -181,6 +188,7 @@ class AppointmentsController extends Controller
     public function enroll($id)
     {
         $appointment = Appointment::find($id);
+        $original_record = json_encode($appointment);
         $currentUser = Auth::user();
         $limitTime = Carbon::now()->add('minute', 15);
         $appointmentTime = Carbon::parse($appointment->begin_date);
@@ -201,10 +209,10 @@ class AppointmentsController extends Controller
             Mail::to($appointment->user->email)
                     ->send(new AppointmentsNotification($appointment));
 
-            LogHelper::log(__('logs.appointment_succed_enroll'));
+            LogHelper::log(ActionType::Update, __('messages.appointment_succed'), $appointment, $original_record);
             return redirect("/users/{$currentUser->id}/appointments")->with('success', __('messages.appointment_succed'));
         } else {
-            LogHelper::log(__('logs.appointment_unavailable_enroll'));
+            LogHelper::log(ActionType::Update, __('messages.appointment_unavailable'), $appointment, $original_record);
             return redirect("/users/{$currentUser->id}/appointments")->with('error', __('messages.appointment_unavailable'));
         }
     }

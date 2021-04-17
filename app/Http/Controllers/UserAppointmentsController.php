@@ -10,6 +10,7 @@ use App\Speciality;
 use App\Doctor;
 use App\Log;
 use App\Enums\AppointmentStatus;
+use App\Enums\ActionType;
 use DB;
 use DateTime;
 use App\Helpers\LogHelper;
@@ -32,7 +33,7 @@ class UserAppointmentsController extends Controller
             $currentUser = Auth::user();
 
             if (($id != $currentUser->id && !$currentUser->isEmployee && !$currentUser->isDoctor )) {
-                LogHelper::log(__('logs.unauthorized_user_appointments'));
+                LogHelper::log(ActionType::View, __('messages.unauthorized'), $currentUser);
                 return redirect("/users/{$currentUser->id}/appointments")->with('error', __('messages.unauthorized'));
             }
 
@@ -140,6 +141,7 @@ class UserAppointmentsController extends Controller
     public function cancel($user_id, $appointment_id)
     {
         $appointment = $this->user->appointments->find($appointment_id);
+        $original_record = json_encode($appointment);
         $patient_email = $appointment->user->email;
         
         if ($appointment->status == AppointmentStatus::Booked) {
@@ -150,10 +152,10 @@ class UserAppointmentsController extends Controller
             Mail::to($patient_email)
                     ->send(new AppointmentsNotification($appointment));
 
-            LogHelper::log(__('logs.appointment_succed_cancel'));
+            LogHelper::log(ActionType::Update, __('messages.cancel_appointment_succed'), $appointment, $original_record);
             return redirect("users/{$user_id}/appointments")->with('success', __('messages.cancel_appointment_succed'));
         } else {
-            LogHelper::log(__('logs.appointment_error_cancel'));
+            LogHelper::log(ActionType::Update, __('messages.cancel_appointment_unavailable'), $appointment);
             return redirect("users/{$user_id}/appointments")->with('error', __('messages.cancel_appointment_unavailable'));
         }
     }

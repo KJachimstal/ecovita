@@ -19,7 +19,7 @@
               <th scope="col">Czas wystąpienia</th>
               <th scope="col">Użytkownik</th>   
               <th scope="col">Akcja</th>
-              <th scope="col">Adres</th>
+              <th scope="col">Opis</th>
               <th scope="col">Opcje</th>
           </tr>
       </thead>
@@ -36,7 +36,7 @@
                 @lang("models/action.status.{$log->action}")
               </td>
               <td>
-                {{ $log->url }}
+                {{ $log->description }}
               </td>
               <td>
                 <a href="{{ url("logs/{$log->id}") }}" class="btn btn-sm border btn-light">

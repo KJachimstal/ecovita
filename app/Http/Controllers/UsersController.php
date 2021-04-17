@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Exceptions\ActiveAppointmentException;
 use DB;
 use App\Helpers\LogHelper;
+use App\Enums\ActionType;
 
 class UsersController extends Controller
 {
@@ -23,6 +24,7 @@ class UsersController extends Controller
         $this->middleware(function ($request, $next) {
 
             if (!Auth::user()->IsActiveEmployee) {
+                LogHelper::log(ActionType::View, __('messages.unauthorized'), Auth::user());
                 return redirect('home')->with('error', __('messages.unauthorized'));
             }
             
@@ -89,7 +91,7 @@ class UsersController extends Controller
         $user->is_verified = 0;
         $user->save();
         
-        LogHelper::log(__('logs.user_succed_create'));
+        LogHelper::log(ActionType::Create, __('messages.user_succed_create'), $user);
         return redirect('users')->with('success', __('messages.user_succed_create'));
     }
 
@@ -118,6 +120,7 @@ class UsersController extends Controller
         ]);
 
         $user = User::find($id);
+        $original_object = json_encode($user);
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
         $user->email = $request->get('email');
@@ -154,11 +157,6 @@ class UsersController extends Controller
             }
         }
 
-        // if ($request->get('userable_type') == 'App\Employee') {
-        //     $employee = new Employee;
-        //     $employee->save();
-        // }
-
         $user->userable_type = $request->get('userable_type');
         $user->pesel = $request->get('pesel');
         $user->phone_number = $request->get('phone_number');
@@ -173,7 +171,7 @@ class UsersController extends Controller
         }
         $user->save();
         
-        LogHelper::log(__('logs.user_succed_change'));
+        LogHelper::log(ActionType::Update, __('messages.user_succed_change'), $user, $original_object);
         return redirect('users')->with('success', __('messages.user_succed_change'));
     }
 
@@ -194,6 +192,7 @@ class UsersController extends Controller
     public function update_doctor(Request $request, $id)
     {
         $user = User::find($id);
+        $original_object = json_encode($user);
         $doctor = $user->userable;
         $currentSpecialities = $doctor->specialities->pluck('id')->toArray();
         $formSpecialities = $request->get('specialities') ?? [];
@@ -222,12 +221,12 @@ class UsersController extends Controller
             }
 
             DB::commit();
-            LogHelper::log(__('logs.doctor_succed_change_specjalization'));
+            LogHelper::log(ActionType::Update, __('messages.doctor_succed_change_specjalization'), $user, $original_object);
             return redirect('users')->with('success', __('messages.doctor_succed_change_specjalization'));
 
         } catch (ActiveAppointmentException $e) {
             DB::rollback();
-            LogHelper::log(__('logs.appointment_active_error'));
+            LogHelper::log(ActionType::Update, __('messages.active_appointment_error'), $user, $original_object);
             return redirect('users')->with('error', __('messages.active_appointment_error'));
         }
 
@@ -236,7 +235,7 @@ class UsersController extends Controller
         $doctor->academic_degree = $request->get('academic_degree');
         $doctor->save();
 
-        LogHelper::log(__('logs.doctor_succed_change'));
+        LogHelper::log(ActionType::Update, __('messages.doctor_succed_change'), $user, $original_object);
         return redirect('users')->with('success', __('messages.doctor_succed_change'));
     }
 

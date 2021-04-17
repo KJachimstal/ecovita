@@ -12,6 +12,7 @@ use App\Queries\DoctorSpecialities;
 use App\Queries\Doctors;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\LogHelper;
+use App\Enums\ActionType;
 
 class DoctorSpecialitiesController extends Controller
 {
@@ -77,12 +78,14 @@ class DoctorSpecialitiesController extends Controller
         }
 
         $doctorSpeciality = DoctorSpeciality::find($id);
+        $original_record = json_encode($doctorSpeciality);
         $doctorSpeciality->doctor_id = $request->get('doctor_id');
         $doctorSpeciality->speciality_id = $request->get('speciality_id');
         $doctorSpeciality->schedule = $schedule;
 
         $doctorSpeciality->save();
 
+        LogHelper::log(ActionType::Update, __('messages.doctor_speciality_success_edit'), $doctorSpeciality, $original_record);
         return redirect('doctor_specialities')->with('success', __('messages.doctor_speciality_success_edit'));
     }
 
@@ -123,7 +126,8 @@ class DoctorSpecialitiesController extends Controller
         $doctorSpeciality->speciality_id = $request->get('speciality_id');
         $doctorSpeciality->schedule = json_encode($schedule);
         $doctorSpeciality->save();
-
+        
+        LogHelper::log(ActionType::Create, __('messages.doctor_speciality_success_create'), $doctorSpeciality);
         return redirect('doctor_specialities')->with('success', __('messages.doctor_speciality_success_create'));
     }
 
@@ -147,6 +151,7 @@ class DoctorSpecialitiesController extends Controller
     }
 
     private function redirectToUnauthorized() {
+        LogHelper::log(ActionType::View, __('messages.unauthorized'), Auth::user());
         return redirect('/')->with('error', __('messages.unauthorized'));
     }
 }

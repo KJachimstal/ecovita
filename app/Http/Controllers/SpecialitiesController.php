@@ -9,6 +9,7 @@ use App\Speciality;
 use App\Log;
 use DB;
 use App\Helpers\LogHelper;
+use App\Enums\ActionType;
 
 class SpecialitiesController extends Controller
 {
@@ -58,6 +59,7 @@ class SpecialitiesController extends Controller
         $specialities = Speciality::all();
         foreach ($specialities as $speciality) {
             if ($speciality->name == $request->get('name')) {
+                LogHelper::log(ActionType::Create, __('messages.speciality_error_exists'), $speciality);
                 return redirect('specialities')->with('error', __('messages.speciality_error_exists'));
             }
         }
@@ -66,7 +68,7 @@ class SpecialitiesController extends Controller
         $new_speciality->name = $request->get('name');
         $new_speciality->save();
 
-        LogHelper::log(__('logs.speciality_succed_create'));
+        LogHelper::log(ActionType::Update, __('messages.speciality_succed_add'), $speciality);
         return redirect('specialities')->with('success', __('messages.speciality_succed_add'));
     }
 
@@ -106,10 +108,11 @@ class SpecialitiesController extends Controller
         ]);
 
         $speciality = Speciality::find($id);
+        $original_record = json_encode($speciality);
         $speciality->name = $request->get('name');
         $speciality->save();
         
-        LogHelper::log(__('logs.speciality_succed_change'));
+        LogHelper::log(ActionType::Update, __('messages.speciality_succed_change'), $speciality, $original_record);
         return redirect('specialities')->with('success', __('messages.speciality_succed_change'));
     }
 
@@ -122,9 +125,10 @@ class SpecialitiesController extends Controller
     public function destroy($id)
     {
         $speciality = Speciality::find($id);
+        $original_record = json_encode($speciality);
         $speciality->delete();
 
-        LogHelper::log(__('logs.speciality_succed_delete'));
+        LogHelper::log(ActionType::Delete, __('messages.speciality_succed_delete'), $speciality, $original_record);
         return redirect('specialities')->with('success', __('messages.speciality_succed_delete'));
     }
 }

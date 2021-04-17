@@ -49,4 +49,9 @@ class LogController extends Controller
       // return;
         return view('logs.show', ['log' => Log::find($id)]);
     }
+    
+    private function redirectToUnauthorized() {
+        LogHelper::log(ActionType::View, __('messages.unauthorized'), Auth::user());
+        return redirect('/')->with('error', __('messages.unauthorized'));
+    }
 }

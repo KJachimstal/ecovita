@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Log;
 use App\Helpers\LogHelper;
+use App\Enums\ActionType;
 
 class SettingsController extends Controller
 {
@@ -36,6 +37,7 @@ class SettingsController extends Controller
         ]);
 
         $user = Auth::user();
+        $original_record = json_encode($user);
         $user->first_name = $request->get('first_name');
         $user->last_name = $request->get('last_name');
         $user->pesel = $request->get('pesel');
@@ -47,7 +49,7 @@ class SettingsController extends Controller
         $user->is_verified = 0;
         $user->save();
 
-        LogHelper::log(__('logs.user_succed_change_profile'));
+        LogHelper::log(ActionType::Update, __('messages.succed_change'), $user, $original_record);
         return redirect('/')->with('success', __('messages.succed_change'));
     }
 
@@ -68,14 +70,15 @@ class SettingsController extends Controller
         if (Hash::check($requestData['password'], $currentPassword))
         {
             $user = Auth::user();
+            $original_record = json_encode($user);
             $user->password = Hash::make($requestData['new_password']);
             $user->save();
-            LogHelper::log(__('logs.user_succed_change_passsword'));
+            LogHelper::log(ActionType::Update, __('messages.user_succed_change_passsword'), $user, $original_record);
             return back()->with('success', 'Hasło zostało pomyślnie zmienione.');
         }
         else
         {
-            LogHelper::log(__('logs.user_error_change_password'));
+            LogHelper::log(ActionType::Update, __('messages.user_error_change_password'), $user, $original_record);
             return back()->withErrors(['Przepraszamy twoje hasło nie zostało rozpoznane. Spróbuj ponownie.']);
         }
     }
