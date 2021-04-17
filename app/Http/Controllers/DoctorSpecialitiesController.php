@@ -92,7 +92,7 @@ class DoctorSpecialitiesController extends Controller
     public function create() 
     {
         $doctor = (new Doctors\GetAllWithUsersQuery())->call();
-        $specialities = Speciality::all()->pluck('name', 'id');
+        $specialities = Speciality::all()->sortBy('name')->pluck('name', 'id');
         $days = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
 
         return view('doctor_specialities.create', [
@@ -148,6 +148,15 @@ class DoctorSpecialitiesController extends Controller
         }
 
         return response()->json($doctorSpecialities->get());
+    }
+
+    public function destroy($id)
+    {
+        $doctorSpecialities = DoctorSpeciality::find($id);
+        $original_record = json_encode($appointment);
+        
+        LogHelper::log(ActionType::Delete, __('messages.appointments_succed_delete'), $doctorSpecialities, $original_record);
+        return redirect('doctor_specialities')->with('success', __('messages.doctor_speciality_success_delete'));
     }
 
     private function redirectToUnauthorized() {
