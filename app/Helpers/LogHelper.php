@@ -5,6 +5,7 @@ namespace App\Helpers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Log;
+use App\Enums\ActionType;
 
 class LogHelper {
     public static function log($action, $description, $record = null, $original_record = '') { 
@@ -28,4 +29,15 @@ class LogHelper {
     
         $log->save();
     }  
+
+    public static function getStatusesForSelect() {
+        $statuses = ActionType::asSelectArray();
+    
+        $callback = function($element) {
+          $key = strtolower($element);
+          return trans("models/action.status.{$key}");
+        };
+    
+        return array_map($callback, $statuses);
+      }
 }

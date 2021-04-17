@@ -33,8 +33,6 @@ class DoctorSpecialitiesController extends Controller
         $doctorSpecialities = (new DoctorSpecialities\GetAllWithFiltersQuery($request))->call();
         $doctors = (new Doctors\GetAllWithUsersQuery($request->get('speciality_id')))->call();
         $specialities = Speciality::all()->sortBy('name')->pluck('name', 'id');
-        print (LogHelper::log());
-        return;
 
         return view('doctor_specialities.index', [
             'doctorSpecialities' => $doctorSpecialities->paginate(8),

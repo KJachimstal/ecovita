@@ -16,8 +16,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {   
-        
-        // LogHelper::log(ActionType::Create, __('logs.appointments_succed_create'), User::find(1));
+        // LogHelper::log(ActionType::Update, __('logs.appointments_succed_create'), User::find(3));
         // return;
 
         return view('welcome');

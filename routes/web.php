@@ -51,6 +51,7 @@ Route::get('users/{user}/edit_doctor', 'UsersController@edit_doctor')->name('use
 Route::post('users/{user}/update_doctor', 'UsersController@update_doctor')->name('users.update_doctor');
 
 Route::get('logs', 'LogController@index')->name('logs.index');
+Route::get('logs/{log}', 'LogController@show')->name('logs.show');
 
 Route::get('doctors/{doctor}/appointments', 'DoctorsAppointmentsController@index')->name('doctor.appointments');
 Route::put('doctors/{doctor}/appointments/{appointment}/start', 'DoctorsAppointmentsController@start')->name('doctor.appointments.start');
