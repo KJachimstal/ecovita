@@ -30,7 +30,7 @@
                 {{ $log->created_at }}
               </td>
               <td>
-                {{ $log->user_id }}
+                {{ App\User::find($log->user_id)->fullName }}
               </td>
               <td>
                 @lang("models/action.status.{$log->action}")
