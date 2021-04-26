@@ -31,7 +31,7 @@
     <div class="mt-4 d-flex justify-content-center">
       @if ( $appointment->status != 3)
       <a href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Wizyta+{{ $appointment->doctorSpeciality->doctor->user->fullName }}
-        &details=Wizyta+u+{{ $appointment->doctorSpeciality->doctor->user->fullName}}+Specjalizacja+{{ $appointment->doctorSpeciality->speciality->name }}
+        &details=Wizyta+u+{{ $appointment->doctorSpeciality->doctor->user->fullName}}+specjalizacja+{{ $appointment->doctorSpeciality->speciality->name }}
         &dates={{ $date }}
         &location=Piotrkowska+12b
         &sprop
