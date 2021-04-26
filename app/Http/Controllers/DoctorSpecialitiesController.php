@@ -62,7 +62,8 @@ class DoctorSpecialitiesController extends Controller
 
         $request->validate ([
             'doctor_id' => ['required'],
-            'speciality_id' => ['required']
+            'speciality_id' => ['required'],
+            'visit_length' => ['numeric']
         ]);
 
         $schedule = [];
@@ -82,6 +83,7 @@ class DoctorSpecialitiesController extends Controller
         $doctorSpeciality->doctor_id = $request->get('doctor_id');
         $doctorSpeciality->speciality_id = $request->get('speciality_id');
         $doctorSpeciality->schedule = $schedule;
+        $doctorSpeciality->visit_length = intval($request->get('visit_lenght'));
 
         $doctorSpeciality->save();
 
@@ -106,7 +108,8 @@ class DoctorSpecialitiesController extends Controller
     {
         $request->validate ([
             'doctor_id' => ['required'],
-            'speciality_id' => ['required']
+            'speciality_id' => ['required'],
+            'visit_length' => ['numeric']
         ]);
 
         $schedule = [];
@@ -125,6 +128,7 @@ class DoctorSpecialitiesController extends Controller
         $doctorSpeciality->doctor_id = $request->get('doctor_id');
         $doctorSpeciality->speciality_id = $request->get('speciality_id');
         $doctorSpeciality->schedule = json_encode($schedule);
+        $doctorSpeciality->visit_lenght = $request->get('visit_lenght');
         $doctorSpeciality->save();
         
         LogHelper::log(ActionType::Create, __('messages.doctor_speciality_success_create'), $doctorSpeciality);

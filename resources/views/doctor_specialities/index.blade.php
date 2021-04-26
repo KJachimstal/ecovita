@@ -19,6 +19,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th scope="col">ID gabinetu</th>
                 <th scope="col">Lekarz</th>
                 <th scope="col">Specjalizacja</th>
                 <th scope="col">Opcje</th>

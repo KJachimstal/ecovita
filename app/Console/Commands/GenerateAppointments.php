@@ -67,8 +67,14 @@ class GenerateAppointments extends Command
             if ($appointmentsExists) {
               continue;
             }
+
+            if ($doctorSpeciality->visit_length != null || $doctorSpeciality->visit_length != 0) {
+              $appointmentDuration = $doctorSpeciality->visit_length;
+              
+            }else {
+              $appointmentDuration = 10;
+            }
             
-            $appointmentDuration = 10; //$doctorSpeciality->visit_length
             // 1975-12-25 22:43
             $start = Carbon::parse($day->toDateString() . " " . $schedule[$weekDay]['start'] . ":00");
             $stop = Carbon::parse($day->toDateString() . " " . $schedule[$weekDay]['stop'] . ":00");

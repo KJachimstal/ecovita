@@ -1,15 +1,21 @@
 
 <div class="form-group row">
-{{ Form::label('doctor_id', 'Doktor', ['class' => 'col-sm-3 col-form-label']) }}
-<div class="col-sm-9">
-    {{ Form::select('doctor_id', $doctor ?? [], null, ['class' => 'form-control doctor_search']) }}
-</div>
+    {{ Form::label('doctor_id', 'Doktor', ['class' => 'col-sm-3 col-form-label']) }}
+    <div class="col-sm-9">
+        {{ Form::select('doctor_id', $doctor ?? [], null, ['class' => 'form-control doctor_search']) }}
+    </div>
 </div>
 <div class="form-group row">
-{{ Form::label('speciality_id', 'Specjalizacja', ['class' => 'col-sm-3 col-form-label']) }}
-<div class="col-sm-9">
-    {{ Form::select('speciality_id', $specialities, null, ['class' => 'form-control']) }}
+    {{ Form::label('speciality_id', 'Specjalizacja', ['class' => 'col-sm-3 col-form-label']) }}
+    <div class="col-sm-9">
+        {{ Form::select('speciality_id', $specialities, null, ['class' => 'form-control']) }}
+    </div>
 </div>
+<div class="form-group row">
+    {{ Form::label('visit_lenght', 'Długość wizyty', ['class' => 'col-sm-3 col-form-label']) }}
+    <div class="col-sm-9">
+        {{ Form::input('number', 'visit_lenght', $doctorSpeciality->visit_length, ['class' => 'form-control']) }}
+    </div>
 </div>
 
 @foreach ($days as $index => $day)
