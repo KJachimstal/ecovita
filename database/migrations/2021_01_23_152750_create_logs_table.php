@@ -17,11 +17,11 @@ class CreateLogsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->integer('action');
-            $table->string('url');
-            $table->string('params');
-            $table->string('user_agent');
-            $table->string('ip_address');
-            $table->string('description');
+            $table->text('url');
+            $table->text('params');
+            $table->text('user_agent');
+            $table->text('ip_address');
+            $table->text('description');
             $table->json('details');
             $table->nullableMorphs('record');
             $table->timestamps();

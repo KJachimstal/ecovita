@@ -43,8 +43,8 @@ class AppointmentsController extends Controller
             $speciality = Speciality::find($request->get('speciality_id'));
             $doctors = (new Doctors\GetAllWithUsersQuery($speciality->id))->call();
         } else {
-            $speciality = Speciality::all()->pluck('name','id');
-            $doctors = Doctor::all();
+            $speciality = Speciality::all()->sortBy('name')->pluck('name','id');
+            $doctors = (new Doctors\GetAllWithUsersQuery(1))->call(); // doctors employee
         }
         
         $appointments = (new Appointments\GetAllWithFiltersQuery($request, Auth::user(), false, true))->call();
@@ -57,7 +57,7 @@ class AppointmentsController extends Controller
         return view($viewName, [
             'appointments' => $appointments->paginate(8),
             'speciality' => $speciality,
-            'doctors' => $doctors->pluck('full_name', 'id'),
+            'doctors' => $doctors,
             'statuses' => $statuses,
             'dailyAppointments' => $dailyAppointments
         ]);
