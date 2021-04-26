@@ -29,8 +29,14 @@
       </tbody>
     </table>
     <div class="mt-4 d-flex justify-content-center">
-      @if ( $appointment->status != 3) <button type="submit" class="btn btn-success">Odwołaj wizytę </button> @endif
-      {{-- <a href="{{ url("users/{$appointment->user_id}/appointments") }}" class="btn btn-light ml-2 border border-secondary">Powrót</a> --}}
+      @if ( $appointment->status != 3)
+      <a href="https://calendar.google.com/calendar/u/0/r/eventedit?text=Wizyta+{{ $appointment->doctorSpeciality->doctor->user->fullName }}
+        &details=Wizyta+u+{{ $appointment->doctorSpeciality->doctor->user->fullName}}+Specjalizacja+{{ $appointment->doctorSpeciality->speciality->name }}
+        &dates={{ $date }}
+        &location=Piotrkowska+12b
+        &sprop
+        &sprop=name:" class="btn btn-primary mx-2">Dodaj do kalandarza Google</a>
+      <button type="submit" class="btn btn-success">Odwołaj wizytę </button> @endif
       <div onclick="window.history.back()" class="btn btn-light ml-2 border border-secondary"> Powrót</div>
     </div>
   {{ Form::close() }}

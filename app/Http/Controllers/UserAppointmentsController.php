@@ -13,6 +13,7 @@ use App\Enums\AppointmentStatus;
 use App\Enums\ActionType;
 use DB;
 use DateTime;
+use Carbon\Carbon;
 use App\Helpers\LogHelper;
 use App\Queries\Appointments;
 use App\Queries\Doctors;
@@ -132,7 +133,12 @@ class UserAppointmentsController extends Controller
         $appointment = $this->user->appointments->find($appointment_id);
         if ($appointment) {
             $user_id = User::find($user_id)->id;
-            return view('users.appointments.prepare_cancel', ['appointment' => $appointment, 'user_id' => $user_id]);
+
+            $date_begin = Carbon::create($appointment->begin_date);
+            $date_end = Carbon::create($appointment->begin_date)->addMinutes(10);
+            $date = $date_begin->format('Ymd')."T".$date_begin->format('His')."/".$date_end->format('Ymd')."T".$date_end->format('His');
+
+            return view('users.appointments.prepare_cancel', ['appointment' => $appointment, 'user_id' => $user_id, 'date' => $date]);
         } else {
             return redirect("users/{$user_id}/appointments")->with('error', __('messages.appointment_not_found'));
         }
